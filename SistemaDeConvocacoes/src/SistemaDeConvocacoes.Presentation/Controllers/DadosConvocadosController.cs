@@ -2,6 +2,7 @@
 using System.IO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using SistemaDeConvocacoes.Application.Interfaces.Services;
 using SistemaDeConvocacoes.Application.ViewModels;
 
@@ -12,11 +13,13 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
     {
         private readonly IDadosConvocacaoAppService _dadosConvocacaoAppService;
         private readonly IProcessoAppService _processoAppService;
+        private readonly IConfiguration _configuration; 
 
-        public DadosConvocadosController(IDadosConvocacaoAppService dadosConvocacaoAppService, IProcessoAppService processoAppService)
+        public DadosConvocadosController(IDadosConvocacaoAppService dadosConvocacaoAppService, IProcessoAppService processoAppService, IConfiguration configuration)
         {
             _dadosConvocacaoAppService = dadosConvocacaoAppService;
             _processoAppService = processoAppService;
+            _configuration = configuration;
         }
 
         public ActionResult Create(Guid id)
@@ -33,8 +36,8 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         {
             if (!ModelState.IsValid) return View(dadosConvocadosViewModel);
 
-            var pathArquivo = WebConfigurationManager.AppSettings["SisConvDocs"];
-            var arquivo = Request.Files[0];
+            var pathArquivo = _configuration.GetSection("SisConvDocs").Value; /*WebConfigurationManager.AppSettings["SisConvDocs"];*/
+            var arquivo = Request.Form.Files[0];
 
             if (arquivo == null) return View(dadosConvocadosViewModel);
 
@@ -53,8 +56,8 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
 
         private bool SalvarArquivoConvocados(out ActionResult view)
         {
-            var pathArquivo = WebConfigurationManager.AppSettings["SisConvDocs"];
-            var arquivo = Request.Files[0];
+            var pathArquivo = _configuration.GetSection("SisConvDocs").Value; 
+            var arquivo = Request.Form.Files[0];
             if (arquivo == null)
             {
                 view = null;
@@ -69,7 +72,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             if (!Directory.Exists(pathArquivo))
                 Directory.CreateDirectory(pathArquivo);
 
-            arquivo.SaveAs(pathArquivo + nomeArquivo);
+            //arquivo.SaveAs(pathArquivo + nomeArquivo);
             return true;
         }
 

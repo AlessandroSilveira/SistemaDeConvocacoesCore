@@ -3,6 +3,7 @@ using System.IO;
 using System.Net;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using SistemaDeConvocacoes.Application.Interfaces.Services;
 using SistemaDeConvocacoes.Application.ViewModels;
 
@@ -14,18 +15,19 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         private readonly ITipoDocumentoAppService _tipoDocumentoAppService;
         private readonly IConvocadoAppService _convocadoAppService;
         private readonly IProcessoAppService _processoAppService;
+        private readonly IConfiguration _configuration;
 
         public DocumentoCandidatoController(
             IDocumentoCandidatoAppService documentoCandidatoAppService,
              ITipoDocumentoAppService tipoDocumentoAppService,
              IConvocadoAppService convocadoAppService,
-             IProcessoAppService processoAppService
-            )
+             IProcessoAppService processoAppService, IConfiguration configuration)
         {
             _documentoCandidatoAppService = documentoCandidatoAppService;
             _tipoDocumentoAppService = tipoDocumentoAppService;
             _convocadoAppService = convocadoAppService;
             _processoAppService = processoAppService;
+            _configuration = configuration;
         }
 
         // GET: DocumentoCandidato
@@ -81,8 +83,8 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         {
             if (!ModelState.IsValid) return View(documentoCandidatoViewModel);
 
-            var pathArquivo = WebConfigurationManager.AppSettings["SisConvDocs"];
-            var arquivo = Request.Files[0];
+            var pathArquivo = _configuration.GetSection("SisConvDocs").Value;
+            var arquivo = Request.Form.Files[0];
             var nomeArquivo = Path.GetFileName(arquivo.FileName);
 
             var file = new FileInfo(Path.Combine(pathArquivo, nomeArquivo));
@@ -104,9 +106,9 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
 
         public string SalvarDocumemento(DocumentoCandidatoViewModel documentoCandidatoViewModel)
         {
-            var pathArquivo = WebConfigurationManager.AppSettings["SisConvDocs"];
+            var pathArquivo = _configuration.GetSection("SisConvDocs").Value; 
             var caminho = pathArquivo.Replace(@"\\\\", @"\");
-            var arquivo = Request.Files[0];
+            var arquivo = Request.Form.Files[0];
             if (arquivo == null)
                 return string.Empty;
 
@@ -115,8 +117,8 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             if (!Directory.Exists(pathArquivo))
                 Directory.CreateDirectory(pathArquivo);
 
-            if (nomeArquivo != null)
-                arquivo.SaveAs(Path.Combine(pathArquivo, nomeArquivo));
+            //if (nomeArquivo != null)
+            //    arquivo.SaveAs(Path.Combine(pathArquivo, nomeArquivo));
 
             return nomeArquivo;
         }
@@ -180,18 +182,18 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         public void Download(Guid DocumentoCandidatoId)
         {
 
-            var dadosDocumento = _documentoCandidatoAppService.GetById(DocumentoCandidatoId);
+            //var dadosDocumento = _documentoCandidatoAppService.GetById(DocumentoCandidatoId);
 
-            var pathArquivo = WebConfigurationManager.AppSettings[@"SisConvDocs"];
-            var caminhoArquivo = Path.Combine(pathArquivo, dadosDocumento.Path);
-            var fInfo = new FileInfo(caminhoArquivo);
-            HttpContext.Response.Clear();
-            HttpContext.Response.ContentType = "application/octet-stream";
-            HttpContext.Response.AddHeader("Content-Disposition", "attachment; filename=\"" + fInfo.Name + "\"");
-            HttpContext.Response.AddHeader("Content-Length", fInfo.Length.ToString());
-            HttpContext.Response.Flush();
-            HttpContext.Response.WriteFile(fInfo.FullName);
-            fInfo = null;
+            //var pathArquivo = WebConfigurationManager.AppSettings[@"SisConvDocs"];
+            //var caminhoArquivo = Path.Combine(pathArquivo, dadosDocumento.Path);
+            //var fInfo = new FileInfo(caminhoArquivo);
+            //HttpContext.Response.Clear();
+            //HttpContext.Response.ContentType = "application/octet-stream";
+            //HttpContext.Response.AddHeader("Content-Disposition", "attachment; filename=\"" + fInfo.Name + "\"");
+            //HttpContext.Response.AddHeader("Content-Length", fInfo.Length.ToString());
+            //HttpContext.Response.Flush();
+            //HttpContext.Response.WriteFile(fInfo.FullName);
+            //fInfo = null;
         }
 
         public ActionResult Protocolo(Guid id, Guid ConvocadoId, Guid ProcessoId)

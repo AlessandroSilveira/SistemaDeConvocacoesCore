@@ -139,14 +139,14 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
 
         //
         // GET: /Roles/Delete/5
-        public async Task<ActionResult> Delete(string id)
-        {
-            if (id == null) 
-                return new StatusCodeResult((int)HttpStatusCode.BadRequest);
-            var role = await _roleManager.FindByIdAsync(id);
-            if (role == null) return NotFound();
-            return View(role);
-        }
+        //public async Task<ActionResult> Delete(string id)
+        //{
+        //    if (id == null) 
+        //        return new StatusCodeResult((int)HttpStatusCode.BadRequest);
+        //    var role = await _roleManager.FindByIdAsync(id);
+        //    if (role == null) return NotFound();
+        //    return View(role);
+        //}
 
         //
         // POST: /Roles/Delete/5

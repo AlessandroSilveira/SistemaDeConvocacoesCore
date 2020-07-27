@@ -214,12 +214,12 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         }
 
         [HttpPost]
-        public ActionResult AtualizarConvocacao(string opcaoConvocacao, Guid ConvocacaoId)
+        public IActionResult AtualizarConvocacao(string opcaoConvocacao, Guid ConvocacaoId)
         {
             var dadosConvocacao = _convocacaoAppService.GetById(ConvocacaoId);
             dadosConvocacao.StatusConvocacao = opcaoConvocacao;
             var dados = _convocacaoAppService.Update(dadosConvocacao);
-            return Json(dados, JsonRequestBehavior.AllowGet);
+            return Ok(dados);
         }
 
         public ActionResult AtualizarStatusEstudante(Guid id)
@@ -308,7 +308,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             var dadosConvocacao = _convocacaoAppService.GetById(convocacaoId);
             dadosConvocacao.StatusContratacao = opcaoStatus;
             var dados = _convocacaoAppService.Update(dadosConvocacao);
-            return Json(dados, JsonRequestBehavior.AllowGet);
+            return Ok(dados);
         }
     }
 }

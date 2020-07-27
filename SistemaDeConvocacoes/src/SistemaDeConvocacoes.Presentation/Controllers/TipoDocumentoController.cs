@@ -70,7 +70,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         public ActionResult Edit(Guid? id)
         {
             if (id.Equals(null))
-                return new StatusCodeResult(HttpStatusCode.BadRequest);
+                return new StatusCodeResult((int)HttpStatusCode.BadRequest);
 
             var docCandidatoViewModel = _tipoDocumentoAppService.GetById(Guid.Parse(id.ToString()));
             ViewBag.dadosProcesso = _processoAppService.GetById(docCandidatoViewModel.ProcessoId);
