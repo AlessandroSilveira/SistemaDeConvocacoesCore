@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Services\ConvocacaoAppService.cs.orig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SistemaDeConvocacoes.Domain\SistemaDeConvocacoes.Domain.csproj" />
+    <ProjectReference Include="..\SistemaDeConvocacoes.Infra\SistemaDeConvocacoes.Infra.csproj" />
+  </ItemGroup>
+
+</Project>
