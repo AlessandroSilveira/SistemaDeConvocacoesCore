@@ -1,13 +1,13 @@
 ﻿using SistemaDeConvocacoes.Domain.Entities;
-using SistemaDeConvocacoes.Domain.Interfaces;
-using SistemaDeConvocacoes.Infra.Context;
+using SistemaDeConvocacoes.Domain.Interfaces.Repositories;
 using SistemaDeConvocacoes.Infra.Context.ASPNetCoreIdentity.Data;
+using SistemaDeConvocacoes.Infra.Repositories.Base;
 
 namespace SistemaDeConvocacoes.Infra.Repositories
 {
-    public class PessoaRepository : Repository<Pessoa>, IPessoaRepository
+    public class PessoaRepository : RepositoryBase<Pessoa>, IPessoaRepository
     {
-        public PessoaRepository(ApplicationDbContext dbContext) : base(dbContext)
+        public PessoaRepository(ApplicationDbContext context) : base(context)
         {
         }
     }

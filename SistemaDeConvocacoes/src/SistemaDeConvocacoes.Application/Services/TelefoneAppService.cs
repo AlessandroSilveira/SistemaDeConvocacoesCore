@@ -50,7 +50,7 @@ namespace SistemaDeConvocacoes.Application.Services
 
         public void Remove(Guid id)
         {           
-            _telefoneService.Delete(id);            
+            _telefoneService.Remove(id);            
         }
 
         public IEnumerable<TelefoneViewModel> Search(Expression<Func<Telefone, bool>> predicate)

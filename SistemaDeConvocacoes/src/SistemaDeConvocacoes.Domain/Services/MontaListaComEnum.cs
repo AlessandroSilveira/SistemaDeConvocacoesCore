@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using SistemaDeConvocacoes.Domain.Enums;
 using SistemaDeConvocacoes.Domain.Interfaces.Services;
 
-namespace SisConv.Domain.Core.Services
+namespace SistemaDeConvocacoes.Domain.Services
 {
     public class MontaListaComEnum : IMontaListaComEnum
     {

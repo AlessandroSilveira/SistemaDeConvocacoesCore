@@ -52,9 +52,7 @@ namespace SistemaDeConvocacoes.Application.Services
 
         public void Remove(Guid id)
         {
-
-            _pessoaService.Delete(id);
-
+            _pessoaService.Remove(id);
         }
 
         public IEnumerable<PessoaViewModel> Search(Expression<Func<Pessoa, bool>> predicate)

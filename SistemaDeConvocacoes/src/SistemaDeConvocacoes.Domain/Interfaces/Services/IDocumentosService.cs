@@ -9,12 +9,12 @@ namespace SistemaDeConvocacoes.Domain.Interfaces.Services
 {
     public interface IDocumentosService 
     {
-        IQueryable<Documentos> GetAll();
-        Task Create(Documentos entity);
-        Task Update(int id, Documentos entity);
+        IQueryable<Documento> GetAll();
+        Task Create(Documento entity);
+        Task Update(int id, Documento entity);
         Task Delete(int id);
-        IEnumerable<Documentos> Search(Expression<Func<Documentos, bool>> predicate);
-        Documentos GetOne(Expression<Func<Documentos, bool>> predicate);
+        IEnumerable<Documento> Search(Expression<Func<Documento, bool>> predicate);
+        Documento GetOne(Expression<Func<Documento, bool>> predicate);
         int SaveChanges();
         
     }

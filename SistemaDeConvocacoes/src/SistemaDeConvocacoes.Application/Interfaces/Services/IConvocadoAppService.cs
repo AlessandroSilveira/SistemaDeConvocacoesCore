@@ -18,10 +18,10 @@ namespace SistemaDeConvocacoes.Application.Interfaces.Services
 
         void Remove(Guid id);
 
-        IEnumerable<ConvocadoViewModel> Search(Expression<Func<Convocados, bool>> predicate);
+        IEnumerable<ConvocadoViewModel> Search(Expression<Func<Convocado, bool>> predicate);
 
         bool VerificaSeHaSobrenome(string nome);
 
-        ConvocadoViewModel GetOne(Expression<Func<Convocados, bool>> predicate);
+        ConvocadoViewModel GetOne(Expression<Func<Convocado, bool>> predicate);
     }
 }

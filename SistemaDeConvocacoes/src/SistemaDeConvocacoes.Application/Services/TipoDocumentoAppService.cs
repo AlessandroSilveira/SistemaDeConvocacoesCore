@@ -54,7 +54,7 @@ namespace SistemaDeConvocacoes.Application.Services
 
         public void Remove(Guid id)
         {            
-            _tipoDocumentoService.Delete(id);            
+            _tipoDocumentoService.Remove(id);            
         }
 
         public IEnumerable<TipoDocumentoViewModel> Search(Expression<Func<TipoDocumento, bool>> predicate)

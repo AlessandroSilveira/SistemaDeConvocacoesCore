@@ -11,10 +11,10 @@ namespace SistemaDeConvocacoes.Application.Services
 {
     public class ClienteAppService : IClienteAppService
     {
-        private readonly IClientesService _clienteService;
+        private readonly IClienteService _clienteService;
         private readonly IMapper _mapper;
 
-        public ClienteAppService(IClientesService clienteService, IMapper mapper)
+        public ClienteAppService(IClienteService clienteService, IMapper mapper)
         {
             _clienteService = clienteService;
             _mapper = mapper;
@@ -27,7 +27,7 @@ namespace SistemaDeConvocacoes.Application.Services
 
         public ClienteViewModel Add(ClienteViewModel obj)
         {
-            var cliente = _mapper.Map<ClienteViewModel, Clientes>(obj);
+            var cliente = _mapper.Map<ClienteViewModel, Cliente>(obj);
             _clienteService.Add(cliente);
 
             return obj;
@@ -35,33 +35,33 @@ namespace SistemaDeConvocacoes.Application.Services
 
         public ClienteViewModel GetById(Guid id)
         {
-            return _mapper.Map<Clientes, ClienteViewModel>(_clienteService.GetById(id));
+            return _mapper.Map<Cliente, ClienteViewModel>(_clienteService.GetById(id));
         }
 
         public IEnumerable<ClienteViewModel> GetAll()
         {
-            return _mapper.Map<IEnumerable<Clientes>, IEnumerable<ClienteViewModel>>(_clienteService.GetAll());
+            return _mapper.Map<IEnumerable<Cliente>, IEnumerable<ClienteViewModel>>(_clienteService.GetAll());
         }
 
         public ClienteViewModel Update(ClienteViewModel obj)
         {
-            _clienteService.Update(_mapper.Map<ClienteViewModel, Clientes>(obj));
+            _clienteService.Update(_mapper.Map<ClienteViewModel, Cliente>(obj));
             return obj;
         }
 
         public void Remove(Guid id)
         {
-            _clienteService.Delete(id);
+            _clienteService.Remove(id);
         }
 
-        public IEnumerable<ClienteViewModel> Search(Expression<Func<Clientes, bool>> predicate)
+        public IEnumerable<ClienteViewModel> Search(Expression<Func<Cliente, bool>> predicate)
         {
-            return _mapper.Map<IEnumerable<Clientes>, IEnumerable<ClienteViewModel>>(_clienteService.Search(predicate));
+            return _mapper.Map<IEnumerable<Cliente>, IEnumerable<ClienteViewModel>>(_clienteService.Search(predicate));
         }
 
-        public ClienteViewModel GetOne(Expression<Func<Clientes, bool>> predicate)
+        public ClienteViewModel GetOne(Expression<Func<Cliente, bool>> predicate)
         {
-            return _mapper.Map<Clientes, ClienteViewModel>(_clienteService.GetOne(predicate));
+            return _mapper.Map<Cliente, ClienteViewModel>(_clienteService.GetOne(predicate));
         }
     }
 }

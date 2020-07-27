@@ -44,7 +44,6 @@ namespace SistemaDeConvocacoes.Application.Services
 
         public UsuarioViewModel Update(UsuarioViewModel obj)
         {
-
             _usuarioService.Update(_mapper.Map<UsuarioViewModel, Usuario>(obj));
 
             return obj;
@@ -52,9 +51,7 @@ namespace SistemaDeConvocacoes.Application.Services
 
         public void Remove(Guid id)
         {
-
-            _usuarioService.Delete(id);
-
+            _usuarioService.Remove(id);
         }
 
         public IEnumerable<UsuarioViewModel> Search(Expression<Func<Usuario, bool>> predicate)

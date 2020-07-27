@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using SisConv.Application.ViewModels;
 using SistemaDeConvocacoes.Application.ViewModels;
 using SistemaDeConvocacoes.Domain.Entities;
 
@@ -26,6 +25,6 @@ namespace SistemaDeConvocacoes.Application.Interfaces.Services
         List<ConvocadoViewModel> MontaListaDeConvocados(IEnumerable<ConvocacaoViewModel> dadosConfirmados,
             IEnumerable<ConvocadoViewModel> convocados);
 
-        ConvocacaoViewModel GetOne(Expression<Func<Convocacoes, bool>> predicate);
+        ConvocacaoViewModel GetOne(Expression<Func<Convocacao, bool>> predicate);
     }
 }

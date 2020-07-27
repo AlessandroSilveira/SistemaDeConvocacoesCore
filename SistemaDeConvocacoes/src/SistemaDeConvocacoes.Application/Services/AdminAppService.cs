@@ -50,7 +50,7 @@ namespace SistemaDeConvocacoes.Application.Services
 
         public void Remove(Guid id)
         {           
-            _adminService.Delete(id);            
+            _adminService.Remove(id);            
         }
 
         public IEnumerable<Admin2ViewModel> Search(Expression<Func<Admin, bool>> predicate)
@@ -62,7 +62,5 @@ namespace SistemaDeConvocacoes.Application.Services
         {
             return _mapper.Map<Admin, Admin2ViewModel>(_adminService.GetOne(predicate));
         }
-
-      
     }
 }

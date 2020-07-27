@@ -18,8 +18,8 @@ namespace SistemaDeConvocacoes.Application.Interfaces.Services
 
         void Remove(Guid id);
 
-        IEnumerable<CargoViewModel> Search(Expression<Func<Cargos, bool>> predicate);
+        IEnumerable<CargoViewModel> Search(Expression<Func<Cargo, bool>> predicate);
 
-        CargoViewModel GetOne(Expression<Func<Cargos, bool>> predicate);
+        CargoViewModel GetOne(Expression<Func<Cargo, bool>> predicate);
     }
 }

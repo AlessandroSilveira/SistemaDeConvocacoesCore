@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using SisConv.Application.ViewModels;
 using SistemaDeConvocacoes.Application.Interfaces.Services;
 using SistemaDeConvocacoes.Application.ViewModels;
 using SistemaDeConvocacoes.Domain.Entities;
@@ -14,13 +13,13 @@ namespace SistemaDeConvocacoes.Application.Services
 {
     public class ConvocacaoAppService : IConvocacaoAppService
     {
-        private readonly IConvocacoesService _convocacaoService;
+        private readonly IConvocacaoService _convocacaoService;
         private readonly IListaOpcoes _opcoesComparecimento;
         private readonly IPrimeiroAcessoService _primeiroAcessoService;
         private readonly IMapper _mapper;
 
         public ConvocacaoAppService(
-            IConvocacoesService convocacaoService,
+            IConvocacaoService convocacaoService,
             IListaOpcoes opcoesComparecimento,
             IPrimeiroAcessoService primeiroAcessoService, IMapper mapper)
         {
@@ -37,35 +36,35 @@ namespace SistemaDeConvocacoes.Application.Services
 
         public ConvocacaoViewModel Add(ConvocacaoViewModel obj)
         {
-            var convocacao = _mapper.Map<ConvocacaoViewModel, Convocacoes>(obj);
+            var convocacao = _mapper.Map<ConvocacaoViewModel, Convocacao>(obj);
             _convocacaoService.Add(convocacao);
             return obj;
         }
 
         public ConvocacaoViewModel GetById(Guid id)
         {
-            return _mapper.Map<Convocacoes, ConvocacaoViewModel>(_convocacaoService.GetById(id));
+            return _mapper.Map<Convocacao, ConvocacaoViewModel>(_convocacaoService.GetById(id));
         }
 
         public IEnumerable<ConvocacaoViewModel> GetAll()
         {
-            return _mapper.Map<IEnumerable<Convocacoes>, IEnumerable<ConvocacaoViewModel>>(_convocacaoService.GetAll());
+            return _mapper.Map<IEnumerable<Convocacao>, IEnumerable<ConvocacaoViewModel>>(_convocacaoService.GetAll());
         }
 
         public ConvocacaoViewModel Update(ConvocacaoViewModel obj)
         {
-            _convocacaoService.Update(_mapper.Map<ConvocacaoViewModel, Convocacoes>(obj));
+            _convocacaoService.Update(_mapper.Map<ConvocacaoViewModel, Convocacao>(obj));
             return obj;
         }
 
         public void Remove(Guid id)
         {
-            _convocacaoService.Delete(id);
+            _convocacaoService.Remove(id);
         }
 
-        public IEnumerable<ConvocacaoViewModel> Search(Expression<Func<Convocacoes, bool>> predicate)
+        public IEnumerable<ConvocacaoViewModel> Search(Expression<Func<Convocacao, bool>> predicate)
         {
-            return _mapper.Map<IEnumerable<Convocacoes>, IEnumerable<ConvocacaoViewModel>>(
+            return _mapper.Map<IEnumerable<Convocacao>, IEnumerable<ConvocacaoViewModel>>(
                 _convocacaoService.Search(predicate));
         }
 
@@ -121,12 +120,12 @@ namespace SistemaDeConvocacoes.Application.Services
             return listaDeconvocados;
         }
 
-        public ConvocacaoViewModel GetOne(Expression<Func<Convocacoes, bool>> predicate)
+        public ConvocacaoViewModel GetOne(Expression<Func<Convocacao, bool>> predicate)
         {
-            return _mapper.Map<Convocacoes, ConvocacaoViewModel>(_convocacaoService.GetOne(predicate));
+            return _mapper.Map<Convocacao, ConvocacaoViewModel>(_convocacaoService.GetOne(predicate));
         }
 
-        public IEnumerable<ConvocacaoViewModel> Search(Expression<Func<Convocacao, bool>> predicate)
+        public IEnumerable<ConvocacaoViewModel> Search(Expression<Func<ConvocacaoViewModel, bool>> predicate)
         {
             throw new NotImplementedException();
         }

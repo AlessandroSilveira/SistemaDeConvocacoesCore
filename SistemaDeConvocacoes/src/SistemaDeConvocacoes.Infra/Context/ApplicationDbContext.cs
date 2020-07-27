@@ -21,20 +21,20 @@ namespace SistemaDeConvocacoes.Infra.Context
             //public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
             //public virtual DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
             //public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
-            public virtual DbSet<Cargos> Cargos { get; set; }
-            public virtual DbSet<Clientes> Clientes { get; set; }
-            public virtual DbSet<Convocacoes> Convocacoes { get; set; }
-            public virtual DbSet<Convocados> Convocados { get; set; }
+            public virtual DbSet<Cargo> Cargos { get; set; }
+            public virtual DbSet<Cliente> Clientes { get; set; }
+            public virtual DbSet<Convocacao> Convocacoes { get; set; }
+            public virtual DbSet<Convocado> Convocados { get; set; }
             public virtual DbSet<DadosContato> DadosContato { get; set; }
             public virtual DbSet<DadosPessoais> DadosPessoais { get; set; }
             public virtual DbSet<DocumentoCandidato> DocumentoCandidato { get; set; }
-            public virtual DbSet<Documentos> Documentos { get; set; }
+            public virtual DbSet<Documento> Documentos { get; set; }
             public virtual DbSet<MigrationHistory> MigrationHistory { get; set; }
             public virtual DbSet<Pessoa> Pessoa { get; set; }
             public virtual DbSet<PrimeiroAcesso> PrimeiroAcesso { get; set; }
-            public virtual DbSet<Processos> Processos { get; set; }
+            public virtual DbSet<Processo> Processos { get; set; }
             public virtual DbSet<Telefone> Telefone { get; set; }
-            public virtual DbSet<Telefones> Telefones { get; set; }
+            public virtual DbSet<Telefone> Telefones { get; set; }
             public virtual DbSet<TipoDocumento> TipoDocumento { get; set; }
             public virtual DbSet<Usuario> Usuario { get; set; }
 
@@ -158,7 +158,7 @@ namespace SistemaDeConvocacoes.Infra.Context
                 //        .HasMaxLength(256);
                 //});
 
-                builder.Entity<Cargos>(entity =>
+                builder.Entity<Cargo>(entity =>
                 {
                     entity.HasKey(e => e.CargoId)
                         .HasName("PK_dbo.Cargos");
@@ -182,7 +182,7 @@ namespace SistemaDeConvocacoes.Infra.Context
                         .HasConstraintName("FK_dbo.Cargos_dbo.Processos_ProcessoId");
                 });
 
-                builder.Entity<Clientes>(entity =>
+                builder.Entity<Cliente>(entity =>
                 {
                     entity.HasKey(e => e.ClienteId)
                         .HasName("PK_dbo.Clientes");
@@ -224,7 +224,7 @@ namespace SistemaDeConvocacoes.Infra.Context
                         .IsUnicode(false);
                 });
 
-                builder.Entity<Convocacoes>(entity =>
+                builder.Entity<Convocacao>(entity =>
                 {
                     entity.HasKey(e => e.ConvocacaoId)
                         .HasName("PK_dbo.Convocacoes");
@@ -256,7 +256,7 @@ namespace SistemaDeConvocacoes.Infra.Context
                         .IsUnicode(false);
                 });
 
-                builder.Entity<Convocados>(entity =>
+                builder.Entity<Convocado>(entity =>
                 {
                     entity.HasKey(e => e.ConvocadoId)
                         .HasName("PK_dbo.Convocados");
@@ -651,7 +651,7 @@ namespace SistemaDeConvocacoes.Infra.Context
                         .HasDefaultValueSql("('')");
                 });
 
-                builder.Entity<Documentos>(entity =>
+                builder.Entity<Documento>(entity =>
                 {
                     entity.HasKey(e => e.DocumentoId)
                         .HasName("PK_dbo.Documentos");
@@ -793,7 +793,7 @@ namespace SistemaDeConvocacoes.Infra.Context
                         .IsUnicode(false);
                 });
 
-                builder.Entity<Processos>(entity =>
+                builder.Entity<Processo>(entity =>
                 {
                     entity.HasKey(e => e.ProcessoId)
                         .HasName("PK_dbo.Processos");
@@ -831,60 +831,20 @@ namespace SistemaDeConvocacoes.Infra.Context
 
                 builder.Entity<Telefone>(entity =>
                 {
-                    entity.Property(e => e.TelefoneId).HasDefaultValueSql("(newsequentialid())");
+                    entity.HasKey(c => c.IdTelefone);
 
-                    entity.Property(e => e.Ddd)
+                    entity.Property(c => c.IdTelefone)
+                        .HasColumnName("IdTelefone");
+
+                    entity.Property(c => c.Ddd)
                         .IsRequired()
-                        .HasMaxLength(2)
-                        .IsUnicode(false);
+                        .HasMaxLength(2);
 
-                    entity.Property(e => e.Numero)
+                    entity.Property(c => c.Numero)
                         .IsRequired()
-                        .HasMaxLength(11)
-                        .IsUnicode(false);
+                        .HasMaxLength(11);
 
-                    entity.Property(e => e.PessoaIdPessoaId).HasColumnName("PessoaId_PessoaId");
-
-                    entity.HasOne(d => d.PessoaIdPessoa)
-                        .WithMany(p => p.TelefoneNavigation)
-                        .HasForeignKey(d => d.PessoaIdPessoaId)
-                        .HasConstraintName("FK_dbo.Telefone_dbo.Pessoa_PessoaId_PessoaId");
-                });
-
-                builder.Entity<Telefones>(entity =>
-                {
-                    entity.HasKey(e => e.IdTelefone);
-
-                    entity.ToTable("TELEFONES");
-
-                    entity.Property(e => e.IdTelefone)
-                        .HasColumnName("ID_TELEFONE")
-                        .ValueGeneratedNever();
-
-                    entity.Property(e => e.AceitaSms)
-                        .HasColumnName("ACEITA_SMS")
-                        .HasMaxLength(1)
-                        .IsUnicode(false);
-
-                    entity.Property(e => e.CodTipoTelefone)
-                        .HasColumnName("COD_TIPO_TELEFONE")
-                        .HasMaxLength(4)
-                        .IsUnicode(false);
-
-                    entity.Property(e => e.CodigoPessoa)
-                        .HasColumnName("CODIGO_PESSOA")
-                        .HasMaxLength(15)
-                        .IsUnicode(false);
-
-                    entity.Property(e => e.Ddd)
-                        .HasColumnName("DDD")
-                        .HasMaxLength(2)
-                        .IsUnicode(false);
-
-                    entity.Property(e => e.Telefone)
-                        .HasColumnName("TELEFONE")
-                        .HasMaxLength(15)
-                        .IsUnicode(false);
+                    entity.ToTable("Telefone");
                 });
 
                 builder.Entity<TipoDocumento>(entity =>

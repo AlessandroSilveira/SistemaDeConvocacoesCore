@@ -1,19 +1,19 @@
-﻿using SistemaDeConvocacoes.Domain.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using SistemaDeConvocacoes.Domain.Entities;
 
 namespace SistemaDeConvocacoes.Domain.Interfaces.Services
 {
     public interface IDadosConvocadosService : IDisposable
     {
-        Convocados Add(Convocados obj);
-        Convocados GetById(Guid id);
-        IEnumerable<Convocados> GetAll();
-        Convocados Update(Convocados obj);
+        Convocado Add(Convocado obj);
+        Convocado GetById(Guid id);
+        IEnumerable<Convocado> GetAll();
+        Convocado Update(Convocado obj);
         void Remove(Guid id);
-        IEnumerable<Convocados> Search(Expression<Func<Convocados, bool>> predicate);
-        Convocados GetOne(Expression<Func<Convocados, bool>> predicate);
+        IEnumerable<Convocado> Search(Expression<Func<Convocado, bool>> predicate);
+        Convocado GetOne(Expression<Func<Convocado, bool>> predicate);
         void SalvarCandidatos(Guid id, string file);
         void SalvarCargos(Guid id, string file);
     }

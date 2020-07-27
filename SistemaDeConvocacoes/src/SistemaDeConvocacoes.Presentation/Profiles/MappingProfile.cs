@@ -13,16 +13,16 @@ namespace SistemaDeConvocacoes.Presentation.Profiles
         public MappingProfile()
         {
             CreateMap<Admin, Admin2ViewModel>();
-            CreateMap<Cargos, CargoViewModel>();
-            CreateMap<Clientes, ClienteViewModel>();
-            CreateMap<Convocacoes, ConvocacoesViewModel>();
-            CreateMap<Convocados, ConvocadoViewModel>();
-            CreateMap<Convocados, DadosConvocadosViewModel>();
+            CreateMap<Cargo, CargoViewModel>();
+            CreateMap<Cliente, ClienteViewModel>();
+            CreateMap<Convocacao, ConvocacoesViewModel>();
+            CreateMap<Convocado, ConvocadoViewModel>();
+            CreateMap<Convocado, DadosConvocadosViewModel>();
             CreateMap<Documentacao, DocumentacaoViewModel>();
             CreateMap<DocumentoCandidato, DocumentoCandidatoViewModel>();
             CreateMap<Pessoa, PessoaViewModel>();
             CreateMap<PrimeiroAcesso, PrimeiroAcessoViewModel>();
-            CreateMap<Processos, ProcessoViewModel>();
+            CreateMap<Processo, ProcessoViewModel>();
             CreateMap<Telefone, TelefoneViewModel>();
             CreateMap<TipoDocumento, TipoDocumentoViewModel>();
             CreateMap<Usuario, UsuarioViewModel>();

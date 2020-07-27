@@ -11,10 +11,10 @@ namespace SistemaDeConvocacoes.Application.Services
 {
     public class ProcessoAppService : IProcessoAppService
     {
-        private readonly IProcessosService _processoService;
+        private readonly IProcessoService _processoService;
         private readonly IMapper _mapper;
 
-        public ProcessoAppService(IProcessosService processoService, IMapper mapper)
+        public ProcessoAppService(IProcessoService processoService, IMapper mapper)
         {
             _processoService = processoService;
             _mapper = mapper;
@@ -27,41 +27,41 @@ namespace SistemaDeConvocacoes.Application.Services
 
         public ProcessoViewModel Add(ProcessoViewModel obj)
         {
-            var admin = _mapper.Map<ProcessoViewModel, Processos>(obj);           
+            var admin = _mapper.Map<ProcessoViewModel, Processo>(obj);           
             _processoService.Add(admin);            
             return obj;
         }
 
         public ProcessoViewModel GetById(Guid id)
         {
-            return _mapper.Map<Processos, ProcessoViewModel>(_processoService.GetById(id));
+            return _mapper.Map<Processo, ProcessoViewModel>(_processoService.GetById(id));
         }
 
         public IEnumerable<ProcessoViewModel> GetAll()
         {
-            return _mapper.Map<IEnumerable<Processos>, IEnumerable<ProcessoViewModel>>(_processoService.GetAll());
+            return _mapper.Map<IEnumerable<Processo>, IEnumerable<ProcessoViewModel>>(_processoService.GetAll());
         }
 
         public ProcessoViewModel Update(ProcessoViewModel obj)
         {           
-            _processoService.Update(_mapper.Map<ProcessoViewModel, Processos>(obj));            
+            _processoService.Update(_mapper.Map<ProcessoViewModel, Processo>(obj));            
             return obj;
         }
 
         public void Remove(Guid id)
         {           
-            _processoService.Delete(id);            
+            _processoService.Remove(id);            
         }
 
-        public IEnumerable<ProcessoViewModel> Search(Expression<Func<Processos, bool>> predicate)
+        public IEnumerable<ProcessoViewModel> Search(Expression<Func<Processo, bool>> predicate)
         {
-            return _mapper.Map<IEnumerable<Processos>, IEnumerable<ProcessoViewModel>>(
+            return _mapper.Map<IEnumerable<Processo>, IEnumerable<ProcessoViewModel>>(
                 _processoService.Search(predicate));
         }
 
-        public ProcessoViewModel GetOne(Expression<Func<Processos, bool>> predicate)
+        public ProcessoViewModel GetOne(Expression<Func<Processo, bool>> predicate)
         {
-            return _mapper.Map<Processos, ProcessoViewModel>(_processoService.GetOne(predicate));
+            return _mapper.Map<Processo, ProcessoViewModel>(_processoService.GetOne(predicate));
         }
     }
 }

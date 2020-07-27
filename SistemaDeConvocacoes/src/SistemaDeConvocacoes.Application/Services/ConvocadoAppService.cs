@@ -11,10 +11,10 @@ namespace SistemaDeConvocacoes.Application.Services
 {
     public class ConvocadoAppService : IConvocadoAppService
     {
-        private readonly IConvocadosService _convocadoService;
+        private readonly IConvocadoService _convocadoService;
         private readonly IMapper _mapper;
 
-        public ConvocadoAppService(IConvocadosService convocadoService, IMapper mapper)
+        public ConvocadoAppService(IConvocadoService convocadoService, IMapper mapper)
         {
             _convocadoService = convocadoService;
             _mapper = mapper;
@@ -27,35 +27,35 @@ namespace SistemaDeConvocacoes.Application.Services
 
         public ConvocadoViewModel Add(ConvocadoViewModel obj)
         {
-            var convocado = _mapper.Map<ConvocadoViewModel, Convocados>(obj);
+            var convocado = _mapper.Map<ConvocadoViewModel, Convocado>(obj);
             _convocadoService.Add(convocado);
             return obj;
         }
 
         public ConvocadoViewModel GetById(Guid id)
         {
-            return _mapper.Map<Convocados, ConvocadoViewModel>(_convocadoService.GetById(id));
+            return _mapper.Map<Convocado, ConvocadoViewModel>(_convocadoService.GetById(id));
         }
 
         public IEnumerable<ConvocadoViewModel> GetAll()
         {
-            return _mapper.Map<IEnumerable<Convocados>, IEnumerable<ConvocadoViewModel>>(_convocadoService.GetAll());
+            return _mapper.Map<IEnumerable<Convocado>, IEnumerable<ConvocadoViewModel>>(_convocadoService.GetAll());
         }
 
         public ConvocadoViewModel Update(ConvocadoViewModel obj)
         {
-            _convocadoService.Update(_mapper.Map<ConvocadoViewModel, Convocados>(obj));
+            _convocadoService.Update(_mapper.Map<ConvocadoViewModel, Convocado>(obj));
             return obj;
         }
 
         public void Remove(Guid id)
         {
-            _convocadoService.Delete(id);
+            _convocadoService.Remove(id);
         }
 
-        public IEnumerable<ConvocadoViewModel> Search(Expression<Func<Convocados, bool>> predicate)
+        public IEnumerable<ConvocadoViewModel> Search(Expression<Func<Convocado, bool>> predicate)
         {
-            return _mapper.Map<IEnumerable<Convocados>, IEnumerable<ConvocadoViewModel>>(
+            return _mapper.Map<IEnumerable<Convocado>, IEnumerable<ConvocadoViewModel>>(
                 _convocadoService.Search(predicate));
         }
 
@@ -64,9 +64,9 @@ namespace SistemaDeConvocacoes.Application.Services
             return _convocadoService.VerificaSeHaSobrenome(nome);
         }
 
-        public ConvocadoViewModel GetOne(Expression<Func<Convocados, bool>> predicate)
+        public ConvocadoViewModel GetOne(Expression<Func<Convocado, bool>> predicate)
         {
-            return _mapper.Map<Convocados, ConvocadoViewModel>(_convocadoService.GetOne(predicate));
+            return _mapper.Map<Convocado, ConvocadoViewModel>(_convocadoService.GetOne(predicate));
         }
     }
 }

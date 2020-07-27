@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace SisConv.Application.ViewModels
+namespace SistemaDeConvocacoes.Application.ViewModels
 {
     public class ConvocacaoViewModel
     {

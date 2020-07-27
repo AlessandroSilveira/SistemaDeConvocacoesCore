@@ -1,8 +1,8 @@
 ﻿using SistemaDeConvocacoes.Domain.Entities;
 
-namespace SistemaDeConvocacoes.Domain.Interfaces
+namespace SistemaDeConvocacoes.Domain.Interfaces.Repositories
 {
-    public interface IDocumentoCandidatoRepository : IRepository<DocumentoCandidato>
+    public interface IDocumentoCandidatoRepository : IRepositoryBase<DocumentoCandidato>
     {
         
     }

@@ -18,8 +18,8 @@ namespace SistemaDeConvocacoes.Application.Interfaces.Services
 
         void Remove(Guid id);
 
-        IEnumerable<ProcessoViewModel> Search(Expression<Func<Processos, bool>> predicate);
+        IEnumerable<ProcessoViewModel> Search(Expression<Func<Processo, bool>> predicate);
 
-        ProcessoViewModel GetOne(Expression<Func<Processos, bool>> predicate);
+        ProcessoViewModel GetOne(Expression<Func<Processo, bool>> predicate);
     }
 }

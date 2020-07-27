@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using AutoMapper;
-using SisConv.Application.Services;
 using SistemaDeConvocacoes.Application.Interfaces.Services;
 using SistemaDeConvocacoes.Application.ViewModels;
 using SistemaDeConvocacoes.Domain.Entities;
@@ -53,7 +52,7 @@ namespace SistemaDeConvocacoes.Application.Services
 
         public void Remove(Guid id)
         {            
-            _primeiroAcessoService.Delete(id);            
+            _primeiroAcessoService.Remove(id);            
         }
 
         public IEnumerable<PrimeiroAcessoViewModel> Search(Expression<Func<PrimeiroAcesso, bool>> predicate)

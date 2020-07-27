@@ -1,14 +1,14 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using AutoMapper;
 using SistemaDeConvocacoes.Application.Interfaces.Services;
 using SistemaDeConvocacoes.Application.ViewModels;
 using SistemaDeConvocacoes.Domain.Entities;
 using SistemaDeConvocacoes.Domain.Interfaces.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
 
-namespace SisConv.Application.Services
+namespace SistemaDeConvocacoes.Application.Services
 {
     public class DocumentoCandidatoAppService : IDocumentoCandidatoAppService
     {
@@ -59,7 +59,7 @@ namespace SisConv.Application.Services
 
         public void Remove(Guid id)
         {
-            _documentoCandidatoService.Delete(id);
+            _documentoCandidatoService.Remove(id);
         }
 
         public IEnumerable<DocumentoCandidatoViewModel> Search(Expression<Func<DocumentoCandidato, bool>> predicate)

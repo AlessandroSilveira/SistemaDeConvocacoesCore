@@ -11,10 +11,10 @@ namespace SistemaDeConvocacoes.Application.Services
 {
     public class CargoAppService : ICargoAppService
     {
-        private readonly ICargosService _cargoService;
+        private readonly ICargoService _cargoService;
         private readonly IMapper _mapper;
 
-        public CargoAppService(ICargosService cargoService, IMapper mapper)
+        public CargoAppService(ICargoService cargoService, IMapper mapper)
         {
             _cargoService = cargoService;
             _mapper = mapper;
@@ -27,42 +27,42 @@ namespace SistemaDeConvocacoes.Application.Services
 
         public CargoViewModel Add(CargoViewModel obj)
         {
-            var cargo = _mapper.Map<CargoViewModel, Cargos>(obj);
+            var cargo = _mapper.Map<CargoViewModel, Cargo>(obj);
             _cargoService.Add(cargo);
             return obj;
         }
 
         public CargoViewModel GetById(Guid id)
         {
-            return _mapper.Map<Cargos, CargoViewModel>(_cargoService.GetById(id));
+            return _mapper.Map<Cargo, CargoViewModel>(_cargoService.GetById(id));
         }
 
         public IEnumerable<CargoViewModel> GetAll()
         {
-            return _mapper.Map<IEnumerable<Cargos>, IEnumerable<CargoViewModel>>(_cargoService.GetAll());
+            return _mapper.Map<IEnumerable<Cargo>, IEnumerable<CargoViewModel>>(_cargoService.GetAll());
         }
 
         public CargoViewModel Update(CargoViewModel obj)
         {
 
-            _cargoService.Update(_mapper.Map<CargoViewModel, Cargos>(obj));
+            _cargoService.Update(_mapper.Map<CargoViewModel, Cargo>(obj));
 
             return obj;
         }
 
         public void Remove(Guid id)
         {
-            _cargoService.Delete(id);
+            _cargoService.Remove(id);
         }
 
-        public IEnumerable<CargoViewModel> Search(Expression<Func<Cargos, bool>> predicate)
+        public IEnumerable<CargoViewModel> Search(Expression<Func<Cargo, bool>> predicate)
         {
-            return _mapper.Map<IEnumerable<Cargos>, IEnumerable<CargoViewModel>>(_cargoService.Search(predicate));
+            return _mapper.Map<IEnumerable<Cargo>, IEnumerable<CargoViewModel>>(_cargoService.Search(predicate));
         }
 
-        public CargoViewModel GetOne(Expression<Func<Cargos, bool>> predicate)
+        public CargoViewModel GetOne(Expression<Func<Cargo, bool>> predicate)
         {
-            return _mapper.Map<Cargos, CargoViewModel>(_cargoService.GetOne(predicate));
+            return _mapper.Map<Cargo, CargoViewModel>(_cargoService.GetOne(predicate));
         }
     }
 }

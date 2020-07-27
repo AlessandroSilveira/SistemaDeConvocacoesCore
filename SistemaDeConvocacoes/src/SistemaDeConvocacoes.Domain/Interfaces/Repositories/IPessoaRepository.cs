@@ -1,9 +1,8 @@
 ﻿using SistemaDeConvocacoes.Domain.Entities;
 
-namespace SistemaDeConvocacoes.Domain.Interfaces
+namespace SistemaDeConvocacoes.Domain.Interfaces.Repositories
 {
-    public interface IPessoaRepository :IRepository<Pessoa>
+    public interface IPessoaRepository : IRepositoryBase<Pessoa>
     {
-        
     }
 }

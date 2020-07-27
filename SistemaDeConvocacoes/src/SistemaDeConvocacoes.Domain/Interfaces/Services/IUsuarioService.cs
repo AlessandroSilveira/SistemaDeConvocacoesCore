@@ -1,22 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 using SistemaDeConvocacoes.Domain.Entities;
 
 namespace SistemaDeConvocacoes.Domain.Interfaces.Services
 {
-    public interface IUsuarioService : IRepository<Usuario>
+    public interface IUsuarioService : IDisposable
     {
-        IQueryable<Usuario> GetAll();
-        Task Add(Usuario entity);
-        Task Update(Usuario entity);
-        Task Delete(Guid id);
+        Usuario Add(Usuario obj);
+        Usuario GetById(Guid id);
+        IEnumerable<Usuario> GetAll();
+        Usuario Update(Usuario obj);
+        void Remove(Guid id);
         IEnumerable<Usuario> Search(Expression<Func<Usuario, bool>> predicate);
         Usuario GetOne(Expression<Func<Usuario, bool>> predicate);
-        int SaveChanges();
-        void Dispose();
-        Usuario GetById(Guid id);
     }
 }

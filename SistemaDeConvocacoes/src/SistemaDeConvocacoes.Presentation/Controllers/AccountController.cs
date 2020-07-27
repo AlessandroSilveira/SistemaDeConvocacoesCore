@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -6,13 +9,9 @@ using Microsoft.Extensions.Logging;
 using SistemaDeConvocacoes.Application.Interfaces.Services;
 using SistemaDeConvocacoes.Application.ViewModels;
 using SistemaDeConvocacoes.Domain.Models;
-using SistemaDeConvocacoes.Presentation.Controllers;
 using SistemaDeConvocacoes.Presentation.ViewModels.AccountViewModels;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace SisConv.Mvc.Controllers
+namespace SistemaDeConvocacoes.Presentation.Controllers
 {
     public class AccountController : Controller
     {

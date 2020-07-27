@@ -1,8 +1,9 @@
 ﻿@using System.Collections.Generic
 @using System.Linq
 @using Microsoft.AspNetCore.Http
-@model SistemaDeConvocacoes.Presentation.ViewModels.AccountViewModels.LoginViewModel
+@using SistemaDeConvocacoes.Application.ViewModels
 @using SistemaDeConvocacoes.Domain.Models
+@model SistemaDeConvocacoes.Presentation.ViewModels.AccountViewModels.LoginViewModel
 @inject SignInManager<ApplicationUser> SignInManager
 @{
     ViewData["Title"] = "Log in";

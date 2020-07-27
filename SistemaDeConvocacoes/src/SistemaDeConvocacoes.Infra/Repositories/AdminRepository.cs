@@ -1,13 +1,13 @@
 ﻿using SistemaDeConvocacoes.Domain.Entities;
-using SistemaDeConvocacoes.Domain.Interfaces;
-using SistemaDeConvocacoes.Infra.Context;
+using SistemaDeConvocacoes.Domain.Interfaces.Repositories;
 using SistemaDeConvocacoes.Infra.Context.ASPNetCoreIdentity.Data;
+using SistemaDeConvocacoes.Infra.Repositories.Base;
 
 namespace SistemaDeConvocacoes.Infra.Repositories
 {
-    public class AdminRepository : Repository<Admin>, IAdminRepository
+    public class AdminRepository : RepositoryBase<Admin>, IAdminRepository
     {
-        public AdminRepository(ApplicationDbContext dbContext) : base(dbContext)
+        public AdminRepository(ApplicationDbContext sisConvContext) : base(sisConvContext)
         {
         }
     }

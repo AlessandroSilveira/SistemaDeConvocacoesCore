@@ -1,14 +1,17 @@
+using System;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SistemaDeConvocacoes.Infra.Context.ASPNetCoreIdentity.Data;
-using SistemaDeConvocacoes.Domain.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Hosting;
-using SistemaDeConvocacoes.Infra.DependencyInjection;
 using AutoMapper;
+using SistemaDeConvocacoes.Application.ViewModels;
+using SistemaDeConvocacoes.Domain.Models;
+using SistemaDeConvocacoes.Infra.Context.ASPNetCoreIdentity.Data;
+using SistemaDeConvocacoes.Presentation.DependencyInjection;
 using SistemaDeConvocacoes.Presentation.Profiles;
 
 namespace SistemaDeConvocacoes.Presentation
@@ -44,6 +47,7 @@ namespace SistemaDeConvocacoes.Presentation
             services.AddInfrastructure();
         }
 
+       
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
