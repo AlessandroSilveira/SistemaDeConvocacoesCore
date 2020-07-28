@@ -13,6 +13,7 @@ using SistemaDeConvocacoes.Domain.Models;
 using SistemaDeConvocacoes.Infra.Context.ASPNetCoreIdentity.Data;
 using SistemaDeConvocacoes.Presentation.DependencyInjection;
 using SistemaDeConvocacoes.Presentation.Profiles;
+using SistemaDeConvocacoes.Presentation.Helpers;
 
 namespace SistemaDeConvocacoes.Presentation
 {
@@ -45,11 +46,13 @@ namespace SistemaDeConvocacoes.Presentation
 
             services.AddControllersWithViews();
             services.AddInfrastructure();
+
+            
         }
 
        
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, SeedHelpers seed)
         {
             if (env.IsDevelopment())
             {
@@ -73,6 +76,8 @@ namespace SistemaDeConvocacoes.Presentation
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            seed.Seed().Wait();
         }
     }
 }

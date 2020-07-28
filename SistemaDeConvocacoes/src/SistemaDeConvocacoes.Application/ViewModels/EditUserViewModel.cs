@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -13,6 +14,6 @@ namespace SistemaDeConvocacoes.Application.ViewModels
         [EmailAddress]
         public string Email { get; set; }
 
-        public IEnumerable RolesList { get; set; }
+        public IEnumerable<SelectListItem> RolesList { get; set; }
     }
 }

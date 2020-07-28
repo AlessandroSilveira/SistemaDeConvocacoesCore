@@ -10,7 +10,8 @@ namespace SistemaDeConvocacoes.Application.ViewModels
             ConvocadoId = Guid.NewGuid();
         }
 
-        [Key] public Guid ConvocadoId { get; set; }
+        [Key] 
+        public Guid ConvocadoId { get; set; }
 
         public Guid ProcessoId { get; set; }
         public string Inscricao { get; set; }

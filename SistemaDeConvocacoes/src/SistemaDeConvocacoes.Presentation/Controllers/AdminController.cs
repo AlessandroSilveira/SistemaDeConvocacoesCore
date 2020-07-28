@@ -6,7 +6,7 @@ using SistemaDeConvocacoes.Application.ViewModels;
 
 namespace SistemaDeConvocacoes.Presentation.Controllers
 {
-    [Authorize(Roles = "Administrador")]
+    [Authorize(Roles = "Administrator")]
     public class AdminController : Controller
     {
         private readonly IAdminAppService _adminAppService;

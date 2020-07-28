@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using SistemaDeConvocacoes.Application.Interfaces.Services;
 using SistemaDeConvocacoes.Application.Services;
 using SistemaDeConvocacoes.Domain.Helpers;
@@ -11,6 +12,7 @@ using SistemaDeConvocacoes.Domain.Interfaces.Services.Base;
 using SistemaDeConvocacoes.Domain.Services;
 using SistemaDeConvocacoes.Infra.Repositories;
 using SistemaDeConvocacoes.Infra.Repositories.Base;
+using SistemaDeConvocacoes.Presentation.Helpers;
 
 namespace SistemaDeConvocacoes.Presentation.DependencyInjection
 {
@@ -75,10 +77,9 @@ namespace SistemaDeConvocacoes.Presentation.DependencyInjection
                 .AddScoped<IMontaListaComEnum, MontaListaComEnum>()
                 .AddScoped<IPasswordGeneratorService, PasswordGeneratorService>()
                 .AddScoped<IDocumentoCandidatoRepository, DocumentoCandidatoRepository>()
-                .AddScoped<ITipoDocumentoRepository, TipoDocumentoRepository>();
+                .AddScoped<ITipoDocumentoRepository, TipoDocumentoRepository>()
 
-        }
-
-       
+                .AddScoped<SeedHelpers>();
+        }      
     }
 }

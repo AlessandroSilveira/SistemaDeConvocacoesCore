@@ -118,11 +118,11 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Logout()
+        public async Task<IActionResult> LogOff()
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
-            return RedirectToAction(nameof(HomeController.Index), "Home");
+            return RedirectToAction(nameof(HomeController.IndexAsync), "Home");
         }
 
         private void VerificaPrimeiroAcesso(LoginViewModel model)
@@ -288,7 +288,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             }
             else
             {
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return RedirectToAction(nameof(HomeController.IndexAsync), "Home");
             }
         }
 

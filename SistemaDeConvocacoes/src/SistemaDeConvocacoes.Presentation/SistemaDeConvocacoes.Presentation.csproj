@@ -5,7 +5,52 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="Views\Shared\Admin\_LayoutAdmin.cshtml" />
+    <None Include="Views\Shared\Admin\_NavBarAdmin.cshtml" />
+    <None Include="Views\Shared\Admin\_SidebarAdmin.cshtml" />
+    <None Include="Views\Shared\Convocacao\DocumentacaoConvocado\_LayoutConvocacaoDocumentacaoConvocado.cshtml" />
+    <None Include="Views\Shared\Convocacao\DocumentacaoConvocado\_NavBarConvocacaoDocumentacaoConvocado.cshtml" />
+    <None Include="Views\Shared\Convocacao\DocumentacaoConvocado\_SidebarConvocacaoDocumentacaoConvocado.cshtml" />
+    <None Include="Views\Shared\Processos\Configuracoes\_LayoutProcessosConfiguracoes.cshtml" />
+    <None Include="Views\Shared\Processos\Configuracoes\_NavBarProcessosConfiguracoes.cshtml" />
+    <None Include="Views\Shared\Processos\Configuracoes\_SidebarProcessosConfiguracoes.cshtml" />
+    <None Include="Views\Shared\Processos\LayoutPainelIndex.cshtml" />
+    <None Include="Views\Shared\Processos\LayoutProcessosPainel.cshtml" />
+    <None Include="Views\Shared\Processos\_NavBarPainelIndex.cshtml" />
+    <None Include="Views\Shared\Processos\_NavBarProcessosPainel.cshtml" />
+    <None Include="Views\Shared\Processos\_SideBarPainelIndex.cshtml" />
+    <None Include="Views\Shared\Processos\_SidebarProcessosPainel.cshtml" />
+    <None Include="wwwroot\js\site.js" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.min.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.js" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.js.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js.map" />
+    <None Include="wwwroot\lib\bootstrap\LICENSE" />
+    <None Include="wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js" />
+    <None Include="wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js" />
+    <None Include="wwwroot\lib\jquery-validation\dist\additional-methods.js" />
+    <None Include="wwwroot\lib\jquery-validation\dist\additional-methods.min.js" />
+    <None Include="wwwroot\lib\jquery-validation\dist\jquery.validate.js" />
+    <None Include="wwwroot\lib\jquery-validation\dist\jquery.validate.min.js" />
+    <None Include="wwwroot\lib\jquery-validation\LICENSE.md" />
+    <None Include="wwwroot\lib\jquery\dist\jquery.js" />
+    <None Include="wwwroot\lib\jquery\dist\jquery.min.js" />
+    <None Include="wwwroot\lib\jquery\dist\jquery.min.map" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.0.1" />
+    <PackageReference Include="Microsoft.AspNet.Identity.Core" Version="2.2.3" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.6" />
