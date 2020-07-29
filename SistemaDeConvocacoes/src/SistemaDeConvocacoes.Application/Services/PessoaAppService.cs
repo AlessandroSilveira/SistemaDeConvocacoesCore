@@ -29,7 +29,9 @@ namespace SistemaDeConvocacoes.Application.Services
         public async Task<PessoaViewModel> AddAsync(PessoaViewModel obj)
         {
             var pessoa = _mapper.Map<PessoaViewModel, Pessoa>(obj);
+
             await _pessoaService.AddAsync(pessoa);
+
             return obj;
         }
 
@@ -45,15 +47,14 @@ namespace SistemaDeConvocacoes.Application.Services
 
         public async Task<PessoaViewModel> UpdateAsync(PessoaViewModel obj)
         {
-
             await _pessoaService.UpdateAsync(_mapper.Map<PessoaViewModel, Pessoa>(obj));
 
             return obj;
         }
 
-        public Task RemoveAsync(Guid id)
+        public async Task RemoveAsync(Guid id)
         {
-            _pessoaService.RemoveAsync(id);
+            await _pessoaService.RemoveAsync(id);
         }
 
         public async Task<IEnumerable<PessoaViewModel>> SearchAsync(Expression<Func<Pessoa, bool>> predicate)
@@ -61,9 +62,9 @@ namespace SistemaDeConvocacoes.Application.Services
             return _mapper.Map<IEnumerable<Pessoa>, IEnumerable<PessoaViewModel>>(await _pessoaService.SearchAsync(predicate));
         }
 
-        public PessoaViewModel GetOneAsync(Expression<Func<Pessoa, bool>> predicate)
+        public async Task<PessoaViewModel> GetOneAsync(Expression<Func<Pessoa, bool>> predicate)
         {
-            return _mapper.Map<Pessoa, PessoaViewModel>(_pessoaService.GetOneAsync(predicate));
+            return _mapper.Map<Pessoa, PessoaViewModel>(await _pessoaService.GetOneAsync(predicate));
         }
 
         Task<PessoaViewModel> IPessoaAppService.GetOneAsync(Expression<Func<Pessoa, bool>> predicate)

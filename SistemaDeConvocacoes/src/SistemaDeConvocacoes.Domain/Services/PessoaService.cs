@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using SistemaDeConvocacoes.Domain.Entities;
 using SistemaDeConvocacoes.Domain.Interfaces.Repositories;
 using SistemaDeConvocacoes.Domain.Interfaces.Services;
@@ -16,15 +17,15 @@ namespace SistemaDeConvocacoes.Domain.Services
             _pessoaRepository = pessoaRepository;
         }
 
-        public void DisposeAsync()
+        public void Dispose()
         {
             _pessoaRepository.Dispose();
             GC.SuppressFinalize(this);
         }
 
-        public Pessoa Add(Pessoa obj)
+        public async Task<Pessoa> AddAsync(Pessoa obj)
         {
-            return _pessoaRepository.Add(obj);
+            return await _pessoaRepository.AddAsync(obj);
         }
 
         public Pessoa GetByIdAsync(Guid id)
