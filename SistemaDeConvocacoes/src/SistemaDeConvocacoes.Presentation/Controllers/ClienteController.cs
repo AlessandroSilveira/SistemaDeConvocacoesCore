@@ -29,17 +29,17 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
-        public ActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
-            return View(_clienteAppService.GetAll());
+            return View(await _clienteAppService.GetAllAsync());
         }
 
-        public ActionResult Details(Guid? id)
+        public async Task<IActionResult> DetailsAsync(Guid? id)
         {
             if (id.Equals(null))
                 return new StatusCodeResult((int)HttpStatusCode.BadRequest);
 
-            var clienteViewModel = _clienteAppService.GetById(Guid.Parse(id.ToString()));
+            var clienteViewModel = await _clienteAppService.GetByIdAsync(Guid.Parse(id.ToString()));
             if (clienteViewModel.Equals(null))
                 return NotFound();
 
@@ -53,13 +53,17 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateAsync(ClienteViewModel clienteViewModel, IFormFile Imagem)
+        public async Task<IActionResult> CreateAsync(ClienteViewModel clienteViewModel, IFormFile Imagem)
         {
             if (!ModelState.IsValid) 
                 return View(clienteViewModel);
 
             clienteViewModel.ClienteId = Guid.NewGuid();
-            var cliente = await _clienteAppService.Add(clienteViewModel);
+            clienteViewModel.Imagem = Imagem.FileName;
+            clienteViewModel.Ativo = true;
+
+            var cliente = await _clienteAppService.AddAsync(clienteViewModel);
+           
            
             if(cliente != null)
             {
@@ -73,15 +77,11 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             {
                return RedirectToAction("Index");
             }
-
-           
-
-            
         }
 
         private bool RegistarClienteParaFazerLoginAsync(ClienteViewModel clienteViewModel, out ActionResult actionResult)
         {
-            var cliente = _clienteAppService.Search(a => a.Email.Equals(clienteViewModel.Email)).FirstOrDefault();
+            var cliente = _clienteAppService.SearchAsync(a => a.Email.Equals(clienteViewModel.Email)).Result.FirstOrDefault();
             var user = new ApplicationUser
             {
                 Id = cliente.ClienteId.ToString(),
@@ -99,11 +99,8 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             user = _userManager.FindByEmailAsync(clienteViewModel.Email).Result;
             var addrole = _userManager.AddToRoleAsync(user, RolesNames.ROLE_CLIENTE).Result;
 
-
             actionResult = null;
             return true;
-
-
         }
 
         private void SalvarImagemCliente(IFormFile file, ClienteViewModel cliente)
@@ -125,12 +122,13 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             file.CopyToAsync(fileStream);
         }
 
-        public ActionResult Edit(Guid? id)
+        public async Task<IActionResult> EditAsync(Guid? id)
         {
             if (id.Equals(null))
                 return new StatusCodeResult((int)HttpStatusCode.BadRequest);
 
-            var clienteViewModel = _clienteAppService.GetById(Guid.Parse(id.ToString()));
+            var clienteViewModel = await _clienteAppService.GetByIdAsync(Guid.Parse(id.ToString()));
+
             if (clienteViewModel.Equals(null))
                 return NotFound();
 
@@ -139,19 +137,23 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(ClienteViewModel clienteViewModel)
+        public async Task<IActionResult> EditAsync(ClienteViewModel clienteViewModel)
         {
-            if (!ModelState.IsValid) return View(clienteViewModel);
-            _clienteAppService.Update(clienteViewModel);
+            if (!ModelState.IsValid) 
+                return View(clienteViewModel);
+
+            await _clienteAppService.UpdateAsync(clienteViewModel);
+
             return RedirectToAction("Index");
         }
 
-        public ActionResult Delete(Guid? id)
+        public async Task<IActionResult> DeleteAsync(Guid? id)
         {
             if (id.Equals(null))
                 return new StatusCodeResult((int)HttpStatusCode.BadRequest);
 
-            var clienteViewModel = _clienteAppService.GetById(Guid.Parse(id.ToString()));
+            var clienteViewModel = await _clienteAppService.GetByIdAsync(Guid.Parse(id.ToString()));
+
             if (clienteViewModel.Equals(null))
                 return NotFound();
 
@@ -161,9 +163,10 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmedAsync(Guid id)
         {
-            _clienteAppService.Remove(id);
+            await _clienteAppService.RemoveAsync(id);
+
             return RedirectToAction("Index");
         }
 

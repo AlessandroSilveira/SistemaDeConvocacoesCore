@@ -17,7 +17,7 @@ namespace SistemaDeConvocacoes.Application.Interfaces.Services
 
         Task<CargoViewModel> UpdateAsync(CargoViewModel obj);
 
-        Task Remove(Guid id);
+        Task RemoveAsync(Guid id);
 
         Task<IEnumerable<CargoViewModel>> SearchAsync(Expression<Func<Cargo, bool>> predicate);
 

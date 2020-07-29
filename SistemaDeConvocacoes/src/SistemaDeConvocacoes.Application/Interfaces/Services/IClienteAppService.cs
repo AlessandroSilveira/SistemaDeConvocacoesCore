@@ -9,18 +9,18 @@ namespace SistemaDeConvocacoes.Application.Interfaces.Services
 {
     public interface IClienteAppService : IDisposable
     {
-        Task<ClienteViewModel> Add(ClienteViewModel obj);
+        Task<ClienteViewModel> AddAsync(ClienteViewModel obj);
 
-        Task<ClienteViewModel> GetById(Guid id);
+        Task<ClienteViewModel> GetByIdAsync(Guid id);
 
-        Task<IEnumerable<ClienteViewModel>> GetAll();
+        Task<IEnumerable<ClienteViewModel>> GetAllAsync();
 
-        Task<ClienteViewModel> Update(ClienteViewModel obj);
+        Task<ClienteViewModel> UpdateAsync(ClienteViewModel obj);
 
-        Task Remove(Guid id);
+        Task RemoveAsync(Guid id);
 
-        Task<IEnumerable<ClienteViewModel>> Search(Expression<Func<Cliente, bool>> predicate);
+        Task<IEnumerable<ClienteViewModel>> SearchAsync(Expression<Func<Cliente, bool>> predicate);
 
-        Task<ClienteViewModel> GetOne(Expression<Func<Cliente, bool>> predicate);
+        Task<ClienteViewModel> GetOneAsync(Expression<Func<Cliente, bool>> predicate);
     }
 }

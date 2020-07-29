@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AutoMapper;
 using SistemaDeConvocacoes.Application.Interfaces.Services;
 using SistemaDeConvocacoes.Application.ViewModels;
@@ -21,49 +22,49 @@ namespace SistemaDeConvocacoes.Application.Services
             _mapper = mapper;
         }
 
-        public void DisposeAsync()
+        public void Dispose()
         {
-            _primeiroAcessoService.DisposeAsync();
+            _primeiroAcessoService.Dispose();
         }
 
-        public PrimeiroAcessoViewModel Add(PrimeiroAcessoViewModel obj)
+        public async Task<PrimeiroAcessoViewModel> AddAsync(PrimeiroAcessoViewModel obj)
         {
             var primeiroAcesso = _mapper.Map<PrimeiroAcessoViewModel, PrimeiroAcesso>(obj);           
-            _primeiroAcessoService.Add(primeiroAcesso);            
+            await _primeiroAcessoService.AddAsync(primeiroAcesso);            
             return obj;
         }
 
-        public PrimeiroAcessoViewModel GetById(Guid id)
+        public async Task<PrimeiroAcessoViewModel> GetByIdAsync(Guid id)
         {
-            return _mapper.Map<PrimeiroAcesso, PrimeiroAcessoViewModel>(_primeiroAcessoService.GetById(id));
+            return _mapper.Map<PrimeiroAcesso, PrimeiroAcessoViewModel>(await _primeiroAcessoService.GetByIdAsync(id));
         }
 
-        public IEnumerable<PrimeiroAcessoViewModel> GetAll()
+        public async Task<IEnumerable<PrimeiroAcessoViewModel>> GetAllAsync()
         {
-            return _mapper.Map<IEnumerable<PrimeiroAcesso>, IEnumerable<PrimeiroAcessoViewModel>>(_primeiroAcessoService
-                .GetAll());
+            return _mapper.Map<IEnumerable<PrimeiroAcesso>, IEnumerable<PrimeiroAcessoViewModel>>(await _primeiroAcessoService
+                .GetAllAsync());
         }
 
-        public PrimeiroAcessoViewModel Update(PrimeiroAcessoViewModel obj)
+        public async Task<PrimeiroAcessoViewModel> UpdateAsync(PrimeiroAcessoViewModel obj)
         {            
-            _primeiroAcessoService.Update(_mapper.Map<PrimeiroAcessoViewModel, PrimeiroAcesso>(obj));            
+           await  _primeiroAcessoService.UpdateAsync(_mapper.Map<PrimeiroAcessoViewModel, PrimeiroAcesso>(obj));            
             return obj;
         }
 
-        public void Remove(Guid id)
+        public async Task RemoveAsync(Guid id)
         {            
-            _primeiroAcessoService.Remove(id);            
+            await _primeiroAcessoService.RemoveAsync(id);            
         }
 
-        public IEnumerable<PrimeiroAcessoViewModel> Search(Expression<Func<PrimeiroAcesso, bool>> predicate)
+        public async Task<IEnumerable<PrimeiroAcessoViewModel>> SearchAsync(Expression<Func<PrimeiroAcesso, bool>> predicate)
         {
             return _mapper.Map<IEnumerable<PrimeiroAcesso>, IEnumerable<PrimeiroAcessoViewModel>>(
-                _primeiroAcessoService.Search(predicate));
+                await _primeiroAcessoService.SearchAsync(predicate));
         }
 
-        public PrimeiroAcessoViewModel GetOne(Expression<Func<PrimeiroAcesso, bool>> predicate)
+        public async Task<PrimeiroAcessoViewModel> GetOneAsync(Expression<Func<PrimeiroAcesso, bool>> predicate)
         {
-            return _mapper.Map<PrimeiroAcesso, PrimeiroAcessoViewModel>(_primeiroAcessoService.GetOne(predicate));
+            return _mapper.Map<PrimeiroAcesso, PrimeiroAcessoViewModel>(await _primeiroAcessoService.GetOneAsync(predicate));
         }
     }
 }

@@ -8,12 +8,12 @@ namespace SistemaDeConvocacoes.Domain.Interfaces.Services
 {
     public interface IClienteService : IDisposable
     {
-        Task<Cliente> Add(Cliente obj);
-        Task<Cliente> GetById(Guid id);
-        Task<IEnumerable<Cliente>> GetAll();
-        Task<Cliente> Update(Cliente obj);
-        Task Remove(Guid id);
-        Task<IEnumerable<Cliente>> Search(Expression<Func<Cliente, bool>> predicate);
-        Task<Cliente> GetOne(Expression<Func<Cliente, bool>> predicate);
+        Task<Cliente> AddAsync(Cliente obj);
+        Task<Cliente> GetByIdAsync(Guid id);
+        Task<IEnumerable<Cliente>> GetAllAsync();
+        Task<Cliente> UpdateAsync(Cliente obj);
+        Task RemoveAsync(Guid id);
+        Task<IEnumerable<Cliente>> SearchAsync(Expression<Func<Cliente, bool>> predicate);
+        Task<Cliente> GetOneAsync(Expression<Func<Cliente, bool>> predicate);
     }
 }

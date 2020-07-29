@@ -47,17 +47,21 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(DocumentacaoViewModel documentacaoViewModel)
+        public async Task<ActionResult> Create(DocumentacaoViewModel documentacaoViewModel)
         {
-            ViewBag.dadosProcesso = _processoAppService.GetByIdAsync(documentacaoViewModel.ProcessoId);
+            ViewBag.dadosProcesso = await _processoAppService.GetByIdAsync(documentacaoViewModel.ProcessoId);
             documentacaoViewModel.DataCriacao = DateTime.Now;
-            if (!ModelState.IsValid) return View(documentacaoViewModel);
+
+            if (!ModelState.IsValid) 
+                return View(documentacaoViewModel);
 
             var path = SalvarArquivoConvocados(documentacaoViewModel);
 
-            if (string.IsNullOrEmpty(path)) return RedirectToAction("Index");
+            if (string.IsNullOrEmpty(path)) 
+                return RedirectToAction("Index");
+
             documentacaoViewModel.Path = path;
-            _documentacaoAppService.Add(documentacaoViewModel);
+            await _documentacaoAppService.AddAsync(documentacaoViewModel);
 
             return RedirectToAction("Index", new {Id = documentacaoViewModel.ProcessoId});
         }
@@ -94,7 +98,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(DocumentacaoViewModel documentacaoViewModel)
+        public async Task<ActionResult> Edit(DocumentacaoViewModel documentacaoViewModel)
         {
             if (!ModelState.IsValid) 
                 return View(documentacaoViewModel);

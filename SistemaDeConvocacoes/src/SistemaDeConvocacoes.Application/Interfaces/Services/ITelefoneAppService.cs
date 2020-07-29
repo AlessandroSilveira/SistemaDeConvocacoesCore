@@ -3,23 +3,24 @@ using SistemaDeConvocacoes.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace SistemaDeConvocacoes.Application.Interfaces.Services
 {
     public interface ITelefoneAppService : IDisposable
     {
-        TelefoneViewModel Add(TelefoneViewModel obj);
+        Task<TelefoneViewModel> AddAsync(TelefoneViewModel obj);
 
-        TelefoneViewModel GetById(Guid id);
+        Task<TelefoneViewModel> GetByIdAsync(Guid id);
 
-        IEnumerable<TelefoneViewModel> GetAll();
+        Task<IEnumerable<TelefoneViewModel>> GetAllAsync();
 
-        TelefoneViewModel Update(TelefoneViewModel obj);
+        Task<TelefoneViewModel> UpdateAsync(TelefoneViewModel obj);
 
-        void Remove(Guid id);
+        Task RemoveAsync(Guid id);
 
-        IEnumerable<TelefoneViewModel> Search(Expression<Func<Telefone, bool>> predicate);
+        Task<IEnumerable<TelefoneViewModel>> SearchAsync(Expression<Func<Telefone, bool>> predicate);
 
-        TelefoneViewModel GetOne(Expression<Func<Telefone, bool>> predicate);
+        Task<TelefoneViewModel> GetOneAsync(Expression<Func<Telefone, bool>> predicate);
     }
 }

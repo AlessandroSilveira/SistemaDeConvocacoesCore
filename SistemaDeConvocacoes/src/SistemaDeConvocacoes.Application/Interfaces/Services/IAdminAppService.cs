@@ -3,23 +3,24 @@ using SistemaDeConvocacoes.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace SistemaDeConvocacoes.Application.Interfaces.Services
 {
     public interface IAdminAppService : IDisposable
     {
-        Admin2ViewModel Add(Admin2ViewModel obj);
+        Task<Admin2ViewModel> AddAsync(Admin2ViewModel obj);
 
-        Admin2ViewModel GetById(Guid id);
+        Task<Admin2ViewModel> GetByIdAsync(Guid id);
 
-        IEnumerable<Admin2ViewModel> GetAll();
+        Task<IEnumerable<Admin2ViewModel>> GetAllAsync();
 
-        Admin2ViewModel Update(Admin2ViewModel obj);
+        Task<Admin2ViewModel> UpdateAsync(Admin2ViewModel obj);
 
-        void Remove(Guid id);
+        Task RemoveAsync(Guid id);
 
-        IEnumerable<Admin2ViewModel> Search(Expression<Func<Admin, bool>> predicate);
+        Task<IEnumerable<Admin2ViewModel>> SearchAsync(Expression<Func<Admin, bool>> predicate);
 
-        Admin2ViewModel GetOne(Expression<Func<Admin, bool>> predicate);
+        Task<Admin2ViewModel> GetOneAsync(Expression<Func<Admin, bool>> predicate);
     }
 }

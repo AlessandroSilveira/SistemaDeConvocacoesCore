@@ -19,29 +19,30 @@ namespace SistemaDeConvocacoes.Infra.Repositories.Base
             Context = context;           
         }
 
-        public async Task<TEntity> Add(TEntity obj)
+        public async Task<TEntity> AddAsync(TEntity obj)
         {
-            Context.Set<TEntity>().Add(obj);            
+            await Context.Set<TEntity>().AddAsync(obj);
+            await Context.SaveChangesAsync();
             return obj;
         }
 
-        public async Task<TEntity> GetById(Guid id)
+        public async Task<TEntity> GetByIdAsync(Guid id)
         {
-            return Context.Set<TEntity>().Find(id);
+            return await Context.Set<TEntity>().FindAsync(id);
         }
 
-        public async Task<IEnumerable<TEntity>> GetAll()
+        public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
             return Context.Set<TEntity>().ToList();
         }
 
-        public async Task<TEntity> Update(TEntity obj)
+        public async Task<TEntity> UpdateAsync(TEntity obj)
         {
             Context.Entry(obj).State = EntityState.Modified;            
             return obj;
         }
 
-        public async Task Remove(Guid id)
+        public async Task RemoveAsync(Guid id)
         {
             var entity = Context.Set<TEntity>().FindAsync(id).Result;
 
@@ -49,7 +50,7 @@ namespace SistemaDeConvocacoes.Infra.Repositories.Base
            
         }
 
-        public async Task<IEnumerable<TEntity>> Search(Expression<Func<TEntity, bool>> predicate)
+        public async Task<IEnumerable<TEntity>> SearchAsync(Expression<Func<TEntity, bool>> predicate)
         {
             return Context.Set<TEntity>().Where(predicate);
         }
@@ -61,7 +62,7 @@ namespace SistemaDeConvocacoes.Infra.Repositories.Base
             GC.SuppressFinalize(this);
         }
 
-        public async Task<TEntity> GetOne(Expression<Func<TEntity, bool>> predicate)
+        public async Task<TEntity> GetOneAsync(Expression<Func<TEntity, bool>> predicate)
         {
             return Context.Set<TEntity>().Where(predicate).FirstOrDefault();
         }

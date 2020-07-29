@@ -106,7 +106,7 @@ namespace SistemaDeConvocacoes.Application.Services
                     Posicao = lista.Posicao,
                     Inscricao = lista.Inscricao,
                     Desistente = itemDesistente,
-                    EntrouNoSistema = _primeiroAcessoService.Search(a => a.Email.Equals(lista.Email)) == null
+                    EntrouNoSistema = _primeiroAcessoService.SearchAsync(a => a.Email.Equals(lista.Email)).Result == null
                         ? @"Não"
                         : "Sim",
                     DataEntregaDocumentos = itemDataEntregaDocumentos,
@@ -125,12 +125,6 @@ namespace SistemaDeConvocacoes.Application.Services
         {
             return _mapper.Map<Convocacao, ConvocacaoViewModel>(await _convocacaoService.GetOneAsync(predicate));
         }
-
-        public async Task<IEnumerable<ConvocacaoViewModel>> SearchAsync(Expression<Func<Convocacao, bool>> predicate)
-        {
-            return _mapper.Map<IEnumerable<Convocacao>, IEnumerable<ConvocacaoViewModel>>(await _convocacaoService.SearchAsync(predicate));
-        }
-
 
     }
 }

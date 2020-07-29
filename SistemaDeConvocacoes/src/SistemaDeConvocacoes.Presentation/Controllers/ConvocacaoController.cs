@@ -3,9 +3,9 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SistemaDeConvocacoes.Application.Interfaces.Services;
 using SistemaDeConvocacoes.Application.ViewModels;
@@ -29,12 +29,11 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         private readonly IPasswordGeneratorService _passwordGenerator;
         private readonly IProcessoAppService _processoAppService;
         private readonly ISysConfig _sysConfig;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> _userManager;
         private readonly IConfiguration _configuration;
 
         public ConvocacaoController(IConvocacaoAppService convocacaoAppService,
-            IConvocadoAppService convocadoAppService,
-            UserManager<ApplicationUser> userManager,
+            IConvocadoAppService convocadoAppService, Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager,
             IDocumentacaoAppService documentacaoAppService,
             IProcessoAppService processoAppService,
             IEnumDescription enumDescription,
@@ -107,7 +106,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         //    _userManager.ema /*SendEmailAsync(user.Id, ObterAssuntoEmail(dadosConvocado), ObterBodyParaEnvioEmail(dadosConvocado));*/
         //}
 
-        private string ObterAssuntoEmail(ConvocadoViewModel convocacao)
+        private async Task<string> ObterAssuntoEmail(ConvocadoViewModel convocacao)
         {
             var dadosProcesso = await _processoAppService.GetByIdAsync(convocacao.ProcessoId);
             return string.Format("Prezado candidato {0} você está convocado para o {1}", convocacao.Nome,
@@ -157,9 +156,9 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             return posStart >= 0 && posEnd > posStart ? fullcontent.Substring(posStart, posEnd - posStart) : "";
         }
 
-        private string GerarSenha()
+        private async Task<string> GerarSenha()
         {
-            return _convocacaoAppService.GerarSenhaUsuarioAsync();
+            return await _convocacaoAppService.GerarSenhaUsuarioAsync();
         }
 
         public ActionResult Edit(Guid? id)
@@ -215,14 +214,14 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
 
             var dados = _userManager.FindByEmailAsync(user.Email);
             if (dados != null) return;
-            await _userManager.CreateAsync(user, GerarSenha());
+            await _userManager.CreateAsync(user, await GerarSenha());
             var user2 = await _userManager.FindByNameAsync(dadosConvocado.Email);
             await _userManager.AddToRoleAsync(user2, RolesNames.ROLE_CONVOCADO);
         }
 
         private bool ObterDadosConvocado(ConvocadoViewModel convocadoViewModel, out ConvocadoViewModel dadosConvocado)
         {
-            dadosConvocado = _convocadoAppService.SearchAsync(a => a.ConvocadoId.Equals(convocadoViewModel.ConvocadoId))
+            dadosConvocado = _convocadoAppService.SearchAsync(a => a.ConvocadoId.Equals(convocadoViewModel.ConvocadoId)).Result
                 .FirstOrDefault();
             return dadosConvocado == null;
         }
@@ -231,7 +230,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         public ActionResult ConfirmaConvocacao(Guid processoId, Guid convocadoId, Guid convocacaoId, string decisao)
         {
             var dadosConvocacao =
-                _convocacaoAppService.GetByIdAsync(convocacaoId);
+                _convocacaoAppService.GetByIdAsync(convocacaoId).Result;
 
             dadosConvocacao.Desistente = decisao;
 
@@ -242,12 +241,12 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
                 "Convocacao", new {ProcessoId = processoId, ConvocadoId = convocadoId, ConvocacaoId = convocacaoId});
         }
 
-        public ActionResult DocumentacaoConvocado(Guid processoId, Guid convocadoId, Guid convocacaoId)
+        public async Task<ActionResult> DocumentacaoConvocado(Guid processoId, Guid convocadoId, Guid convocacaoId)
         {
-            //ViewBag.dadosProcesso = _processoAppService.GetById(processoId);
-            //var dadosConvocado = _convocadoAppService.GetById(Guid.Parse(_userManager.User));
-            //ViewBag.dadosConvocado = dadosConvocado;
-            //ViewBag.listaDocumentacao = _documentacaoAppService.Search(a => a.ProcessoId.Equals(processoId));
+            ViewBag.dadosProcesso = await  _processoAppService.GetByIdAsync(processoId);
+            var dadosConvocado = _convocadoAppService.GetByIdAsync(Guid.Parse(IdentityExtensions.GetUserId(User.Identity)));
+            ViewBag.dadosConvocado = dadosConvocado;
+            ViewBag.listaDocumentacao = await _documentacaoAppService.SearchAsync(a => a.ProcessoId.Equals(processoId));
             return View();
         }
 

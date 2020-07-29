@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SistemaDeConvocacoes.Application.Interfaces.Services;
@@ -17,20 +18,21 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         }
 
         // GET: Admin2ViewModel
-        public ActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
-            return View(_adminAppService.GetAll());
+            return View(await _adminAppService.GetAllAsync());
         }
 
         // GET: Admin2ViewModel/Details/5
-        public ActionResult Details(Guid id)
+        public async Task<IActionResult> DetailsAsync(Guid id)
         {
-            var admin2ViewModel = _adminAppService.GetById(id);
-            return admin2ViewModel == null ? (ActionResult) NotFound() : View(admin2ViewModel);
+            var admin2ViewModel = await _adminAppService.GetByIdAsync(id);
+
+            return admin2ViewModel == null ? (IActionResult) NotFound() : View(admin2ViewModel);
         }
 
         // GET: Admin2ViewModel/Create
-        public ActionResult Create()
+        public IActionResult Create()
         {
             return View();
         }
@@ -40,12 +42,13 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Admin2ViewModel admin2ViewModel)
+        public async Task<IActionResult> CreateAsync(Admin2ViewModel admin2ViewModel)
         {
             if (ModelState.IsValid)
             {
                 admin2ViewModel.AdminId = Guid.NewGuid();
-                _adminAppService.Add(admin2ViewModel);
+                await _adminAppService.AddAsync(admin2ViewModel);
+
                 return RedirectToAction("Index");
             }
 
@@ -53,10 +56,11 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         }
 
         // GET: Admin2ViewModel/Edit/5
-        public ActionResult Edit(Guid id)
+        public async Task<IActionResult> EditAsync(Guid id)
         {
-            var admin2ViewModel = _adminAppService.GetById(id);
-            return admin2ViewModel == null ? (ActionResult) NotFound() : View(admin2ViewModel);
+            var admin2ViewModel = await _adminAppService.GetByIdAsync(id);
+
+            return admin2ViewModel == null ? (IActionResult) NotFound() : View(admin2ViewModel);
         }
 
         // POST: Admin2ViewModel/Edit/5
@@ -64,11 +68,12 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Admin2ViewModel admin2ViewModel)
+        public async Task<IActionResult> EditAsync(Admin2ViewModel admin2ViewModel)
         {
             if (ModelState.IsValid)
             {
-                _adminAppService.Update(admin2ViewModel);
+                await _adminAppService.UpdateAsync(admin2ViewModel);
+
                 return RedirectToAction("Index");
             }
 
@@ -76,10 +81,13 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         }
 
         // GET: Admin2ViewModel/Delete/5
-        public ActionResult Delete(Guid id)
+        public async Task<IActionResult> DeleteAsync(Guid id)
         {
-            var admin2ViewModel = _adminAppService.GetById(id);
-            if (admin2ViewModel == null) return NotFound();
+            var admin2ViewModel = await _adminAppService.GetByIdAsync(id);
+
+            if (admin2ViewModel == null) 
+                return NotFound();
+
             return View(admin2ViewModel);
         }
 
@@ -87,15 +95,17 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmedAsync(Guid id)
         {
-            _adminAppService.Remove(id);
+            await _adminAppService.RemoveAsync(id);
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing) _adminAppService.Dispose();
+            if (disposing)
+                _adminAppService.Dispose();
+
             base.Dispose(disposing);
         }
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using SistemaDeConvocacoes.Domain.Entities;
 using SistemaDeConvocacoes.Domain.Interfaces.Repositories;
 using SistemaDeConvocacoes.Domain.Interfaces.Services;
@@ -15,44 +16,44 @@ namespace SistemaDeConvocacoes.Domain.Services
         {
             _tipoDocumentoRepository = tipoDocumentoRepository;
         }
-        public void DisposeAsync()
+        public void Dispose()
         {
             _tipoDocumentoRepository.Dispose();
         }
 
-        public TipoDocumento Add(TipoDocumento obj)
+        public async Task<TipoDocumento> AddAsync(TipoDocumento obj)
         {
-          return  _tipoDocumentoRepository.Add(obj);
+          return await  _tipoDocumentoRepository.AddAsync(obj);
         }
 
-        public TipoDocumento GetByIdAsync(Guid id)
+        public async Task<TipoDocumento> GetByIdAsync(Guid id)
         {
-            return _tipoDocumentoRepository.GetById(id);
+            return await _tipoDocumentoRepository.GetByIdAsync(id);
         }
 
-        public IEnumerable<TipoDocumento> GetAll()
+        public async Task<IEnumerable<TipoDocumento>> GetAllAsync()
         {
-            return _tipoDocumentoRepository.GetAll();
+            return await _tipoDocumentoRepository.GetAllAsync();
         }
 
-        public TipoDocumento Update(TipoDocumento obj)
+        public async Task<TipoDocumento> UpdateAsync(TipoDocumento obj)
         {
-            return _tipoDocumentoRepository.Update(obj);
+            return await _tipoDocumentoRepository.UpdateAsync(obj);
         }
 
-        public void Remove(Guid id)
+        public async Task RemoveAsync(Guid id)
         {
-            _tipoDocumentoRepository.Remove(id);
+            await _tipoDocumentoRepository.RemoveAsync(id);
         }
 
-        public IEnumerable<TipoDocumento> Search(Expression<Func<TipoDocumento, bool>> predicate)
+        public Task<IEnumerable<TipoDocumento>> SearchAsync(Expression<Func<TipoDocumento, bool>> predicate)
         {
-            return _tipoDocumentoRepository.Search(predicate);
+            return _tipoDocumentoRepository.SearchAsync(predicate);
         }
 
-        public TipoDocumento GetOne(Expression<Func<TipoDocumento, bool>> predicate)
+        public async Task<TipoDocumento> GetOneAsync(Expression<Func<TipoDocumento, bool>> predicate)
         {
-            return _tipoDocumentoRepository.GetOne(predicate);
+            return await _tipoDocumentoRepository.GetOneAsync(predicate);
         }
     }
 }

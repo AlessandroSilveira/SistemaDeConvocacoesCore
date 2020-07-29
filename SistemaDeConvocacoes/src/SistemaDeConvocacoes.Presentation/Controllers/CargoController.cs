@@ -26,7 +26,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         {
             ViewBag.id = id;
             ViewBag.ProcessoId = id;
-            return View(_cargoAppService.GetAllAsync().OrderBy(a => a.CodigoCargo));
+            return View(_cargoAppService.GetAllAsync().Result.OrderBy(a => a.CodigoCargo));
         }
 
         // GET: Cargo/Details/5
@@ -99,9 +99,9 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmedAsync(Guid id)
         {
-            _cargoAppService.Remove(id);
+           await _cargoAppService.RemoveAsync(id);
             return RedirectToAction("Index");
         }
 

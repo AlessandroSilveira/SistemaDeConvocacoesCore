@@ -3,23 +3,24 @@ using SistemaDeConvocacoes.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace SistemaDeConvocacoes.Application.Interfaces.Services
 {
     public interface IPrimeiroAcessoAppService : IDisposable
     {
-        PrimeiroAcessoViewModel Add(PrimeiroAcessoViewModel obj);
+        Task<PrimeiroAcessoViewModel> AddAsync(PrimeiroAcessoViewModel obj);
 
-        PrimeiroAcessoViewModel GetById(Guid id);
+        Task<PrimeiroAcessoViewModel> GetByIdAsync(Guid id);
 
-        IEnumerable<PrimeiroAcessoViewModel> GetAll();
+        Task<IEnumerable<PrimeiroAcessoViewModel>> GetAllAsync();
 
-        PrimeiroAcessoViewModel Update(PrimeiroAcessoViewModel obj);
+        Task<PrimeiroAcessoViewModel> UpdateAsync(PrimeiroAcessoViewModel obj);
 
-        void Remove(Guid id);
+        Task RemoveAsync(Guid id);
 
-        IEnumerable<PrimeiroAcessoViewModel> Search(Expression<Func<PrimeiroAcesso, bool>> predicate);
+        Task<IEnumerable<PrimeiroAcessoViewModel>> SearchAsync(Expression<Func<PrimeiroAcesso, bool>> predicate);
 
-        PrimeiroAcessoViewModel GetOne(Expression<Func<PrimeiroAcesso, bool>> predicate);
+        Task<PrimeiroAcessoViewModel> GetOneAsync(Expression<Func<PrimeiroAcesso, bool>> predicate);
     }
 }

@@ -63,7 +63,7 @@ namespace SistemaDeConvocacoes.Domain.Services
 
             try
             {
-                ObtemDadosDaPlanilhaExcel(id, conexao, adapter, ds, command);
+                ObtemDadosDaPlanilhaExcelAsync(id, conexao, adapter, ds, command);
             }
             catch (Exception e)
             {
@@ -77,20 +77,20 @@ namespace SistemaDeConvocacoes.Domain.Services
 
         public async Task SalvarCargosAsync(Guid id, string file)
         {
-            //var conexao = ConexaoComAPlanilhaExcel(file, out var command, out var adapter, out var ds);
+            var conexao = ConexaoComAPlanilhaExcel(file, out var command, out var adapter, out var ds);
 
-            //try
-            //{
-            //    ObterListaCargos(id, conexao, adapter, ds, command);
-            //}
-            //catch (Exception)
-            //{
-            //    // return RedirectToAction("EmailCandidatosViaExcel", "EnvioEmails", new { @msg = ex.Message });
-            //}
-            //finally
-            //{
-            //    conexao.Close();
-            //}
+            try
+            {
+               // await ObterListaCargosAsync(id, conexao, adapter, ds, command);
+            }
+            catch (Exception)
+            {
+                //return RedirectToAction("EmailCandidatosViaExcel", "EnvioEmails", new { @msg = ex.Message });
+            }
+            finally
+            {
+                conexao.Close();
+            }
         }
 
         public void Dispose()
@@ -103,7 +103,7 @@ namespace SistemaDeConvocacoes.Domain.Services
             return await _dadosConvocadosRepository.GetOneAsync(predicate);
         }
 
-        private void ObterListaCargos(Guid id, OLEDBConnection conexao, OleDbDataAdapter adapter, DataSet ds,
+        private async Task ObterListaCargosAsync(Guid id, OLEDBConnection conexao, OleDbDataAdapter adapter, DataSet ds,
             OleDbCommand command)
         {
             
@@ -111,9 +111,9 @@ namespace SistemaDeConvocacoes.Domain.Services
             using (command.ExecuteReader())
             {
                 var listaCargos = ObterTodosOsCargosDoExcel(ds, out var listaCargo);
-                PreencheAListaDeCargosParaSalvarNoBancoAsync(id, listaCargos, listaCargo);
+                await PreencheAListaDeCargosParaSalvarNoBanco(id, listaCargos, listaCargo);
 
-                SalvarCargosAsync(listaCargo);
+                await SalvarCargos(listaCargo);
             }
         }
 
@@ -158,7 +158,7 @@ namespace SistemaDeConvocacoes.Domain.Services
             return listaCargos;
         }
 
-        private void ObtemDadosDaPlanilhaExcel(Guid id, IDbConnection conexao, IDataAdapter adapter, DataSet ds,
+        private async Task ObtemDadosDaPlanilhaExcelAsync(Guid id, IDbConnection conexao, IDataAdapter adapter, DataSet ds,
             OleDbCommand command)
         {
             conexao.Open();
@@ -200,7 +200,7 @@ namespace SistemaDeConvocacoes.Domain.Services
                             Pai = string.Empty
                         }).ToList();
 
-                    InsereDadosExcelNoBancoAsync(listaCandidatos);
+                    await InsereDadosExcelNoBanco(listaCandidatos);
                 }
                 catch (Exception e)
                 {
@@ -245,7 +245,7 @@ namespace SistemaDeConvocacoes.Domain.Services
                         a.Nome.Equals(dados.Nome) && a.Inscricao.Equals(dados.Inscricao) && a.Cpf.Equals(dados.Cpf));
 
                     if (!dadosConvocado.Any())
-                        AddAsync(dados).Result;
+                       await  AddAsync(dados);
                 }
                 catch (Exception e)
                 {

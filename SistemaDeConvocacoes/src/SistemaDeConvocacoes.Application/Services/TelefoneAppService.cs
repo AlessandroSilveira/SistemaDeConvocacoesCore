@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AutoMapper;
 using SistemaDeConvocacoes.Application.Interfaces.Services;
 using SistemaDeConvocacoes.Application.ViewModels;
@@ -20,48 +21,48 @@ namespace SistemaDeConvocacoes.Application.Services
             _mapper = mapper;
         }
 
-        public void DisposeAsync()
+        public void Dispose()
         {
-            _telefoneService.DisposeAsync();
+            _telefoneService.Dispose();
         }
 
-        public TelefoneViewModel Add(TelefoneViewModel obj)
+        public async Task<TelefoneViewModel> AddAsync(TelefoneViewModel obj)
         {
             var telefone = _mapper.Map<TelefoneViewModel, Telefone>(obj);            
-            _telefoneService.Add(telefone);            
+            await _telefoneService.AddAsync(telefone);            
             return obj;
         }
 
-        public TelefoneViewModel GetById(Guid id)
+        public async Task<TelefoneViewModel> GetByIdAsync(Guid id)
         {
-            return _mapper.Map<Telefone, TelefoneViewModel>(_telefoneService.GetById(id));
+            return _mapper.Map<Telefone, TelefoneViewModel>(await _telefoneService.GetByIdAsync(id));
         }
 
-        public IEnumerable<TelefoneViewModel> GetAll()
+        public async Task<IEnumerable<TelefoneViewModel>> GetAllAsync()
         {
-            return _mapper.Map<IEnumerable<Telefone>, IEnumerable<TelefoneViewModel>>(_telefoneService.GetAll());
+            return _mapper.Map<IEnumerable<Telefone>, IEnumerable<TelefoneViewModel>>(await _telefoneService.GetAllAsync());
         }
 
-        public TelefoneViewModel Update(TelefoneViewModel obj)
+        public async Task<TelefoneViewModel> UpdateAsync(TelefoneViewModel obj)
         {           
-            _telefoneService.Update(_mapper.Map<TelefoneViewModel, Telefone>(obj));           
+            await _telefoneService.UpdateAsync(_mapper.Map<TelefoneViewModel, Telefone>(obj));           
             return obj;
         }
 
-        public void Remove(Guid id)
+        public async Task RemoveAsync(Guid id)
         {           
-            _telefoneService.Remove(id);            
+            await _telefoneService.RemoveAsync(id);            
         }
 
-        public IEnumerable<TelefoneViewModel> Search(Expression<Func<Telefone, bool>> predicate)
+        public async Task<IEnumerable<TelefoneViewModel>> SearchAsync(Expression<Func<Telefone, bool>> predicate)
         {
             return _mapper.Map<IEnumerable<Telefone>, IEnumerable<TelefoneViewModel>>(
-                _telefoneService.Search(predicate));
+                await _telefoneService.SearchAsync(predicate));
         }
 
-        public TelefoneViewModel GetOne(Expression<Func<Telefone, bool>> predicate)
+        public async Task<TelefoneViewModel> GetOneAsync(Expression<Func<Telefone, bool>> predicate)
         {
-            return _mapper.Map<Telefone, TelefoneViewModel>(_telefoneService.GetOne(predicate));
+            return _mapper.Map<Telefone, TelefoneViewModel>(await _telefoneService.GetOneAsync(predicate));
         }
     }
 }

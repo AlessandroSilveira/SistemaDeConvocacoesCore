@@ -52,7 +52,7 @@ namespace SistemaDeConvocacoes.Application.Services
 
         public async Task RemoveAsync(Guid id)
         {            
-           await _documentacaoService.Remove(id);           
+           await _documentacaoService.RemoveAsync(id);           
         }
 
         public async Task<IEnumerable<DocumentacaoViewModel>> SearchAsync(Expression<Func<Documentacao, bool>> predicate)

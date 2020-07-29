@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using SistemaDeConvocacoes.Domain.Entities;
 using SistemaDeConvocacoes.Domain.Interfaces.Repositories;
 using SistemaDeConvocacoes.Domain.Interfaces.Services;
@@ -16,45 +17,45 @@ namespace SistemaDeConvocacoes.Domain.Services
             _usuarioRepository = usuarioRepository;
         }
 
-        public void DisposeAsync()
+        public void Dispose()
         {
             _usuarioRepository.Dispose();
             GC.SuppressFinalize(this);
         }
 
-        public Usuario Add(Usuario obj)
+        public async Task<Usuario> AddAsync(Usuario obj)
         {
-            return _usuarioRepository.Add(obj);
+            return await _usuarioRepository.AddAsync(obj);
         }
 
-        public Usuario GetById(Guid id)
+        public async Task<Usuario> GetByIdAsync(Guid id)
         {
-            return _usuarioRepository.GetById(id);
+            return await _usuarioRepository.GetByIdAsync(id);
         }
 
-        public IEnumerable<Usuario> GetAll()
+        public async Task<IEnumerable<Usuario>> GetAllAsync()
         {
-            return _usuarioRepository.GetAll();
+            return await _usuarioRepository.GetAllAsync();
         }
 
-        public Usuario Update(Usuario obj)
+        public async Task<Usuario> UpdateAsync(Usuario obj)
         {
-            return _usuarioRepository.Update(obj);
+            return await _usuarioRepository.UpdateAsync(obj);
         }
 
-        public void Remove(Guid id)
+        public async Task RemoveAsync(Guid id)
         {
-            _usuarioRepository.Remove(id);
+            await _usuarioRepository.RemoveAsync(id);
         }
 
-        public IEnumerable<Usuario> Search(Expression<Func<Usuario, bool>> predicate)
+        public async Task<IEnumerable<Usuario>> SearchAsync(Expression<Func<Usuario, bool>> predicate)
         {
-            return _usuarioRepository.Search(predicate);
+            return await _usuarioRepository.SearchAsync(predicate);
         }
 
-        public Usuario GetOne(Expression<Func<Usuario, bool>> predicate)
+        public async Task<Usuario> GetOneAsync(Expression<Func<Usuario, bool>> predicate)
         {
-            return _usuarioRepository.GetOne(predicate);
+            return await _usuarioRepository.GetOneAsync(predicate);
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using SistemaDeConvocacoes.Domain.Entities;
 
 namespace SistemaDeConvocacoes.Domain.Interfaces.Base
 {

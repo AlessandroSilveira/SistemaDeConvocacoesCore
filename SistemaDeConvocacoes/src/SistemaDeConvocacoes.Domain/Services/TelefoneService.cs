@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using SistemaDeConvocacoes.Domain.Entities;
 using SistemaDeConvocacoes.Domain.Interfaces.Repositories;
 using SistemaDeConvocacoes.Domain.Interfaces.Services;
@@ -16,45 +17,45 @@ namespace SistemaDeConvocacoes.Domain.Services
             _telefoneRepository = telefoneRepository;
         }
 
-        public void DisposeAsync()
+        public void Dispose()
         {
             _telefoneRepository.Dispose();
             GC.SuppressFinalize(this);
         }
 
-        public Telefone Add(Telefone obj)
+        public async Task<Telefone> AddAsync(Telefone obj)
         {
-            return _telefoneRepository.Add(obj);
+            return await _telefoneRepository.AddAsync(obj);
         }
 
-        public Telefone GetById(Guid id)
+        public async Task<Telefone> GetByIdAsync(Guid id)
         {
-            return _telefoneRepository.GetById(id);
+            return await _telefoneRepository.GetByIdAsync(id);
         }
 
-        public IEnumerable<Telefone> GetAll()
+        public async Task<IEnumerable<Telefone>> GetAllAsync()
         {
-            return _telefoneRepository.GetAll();
+            return await _telefoneRepository.GetAllAsync();
         }
 
-        public Telefone Update(Telefone obj)
+        public async Task<Telefone> UpdateAsync(Telefone obj)
         {
-            return _telefoneRepository.Update(obj);
+            return await _telefoneRepository.UpdateAsync(obj);
         }
 
-        public void Remove(Guid id)
+        public async Task RemoveAsync(Guid id)
         {
-            _telefoneRepository.Remove(id);
+            await _telefoneRepository.RemoveAsync(id);
         }
 
-        public IEnumerable<Telefone> Search(Expression<Func<Telefone, bool>> predicate)
+        public async Task<IEnumerable<Telefone>> SearchAsync(Expression<Func<Telefone, bool>> predicate)
         {
-            return _telefoneRepository.Search(predicate);
+            return await  _telefoneRepository.SearchAsync(predicate);
         }
 
-        public Telefone GetOne(Expression<Func<Telefone, bool>> predicate)
+        public async Task<Telefone> GetOneAsync(Expression<Func<Telefone, bool>> predicate)
         {
-            return _telefoneRepository.GetOne(predicate);
+            return await _telefoneRepository.GetOneAsync(predicate);
         }
     }
 }

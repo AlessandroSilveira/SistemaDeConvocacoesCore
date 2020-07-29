@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AutoMapper;
 using SistemaDeConvocacoes.Application.Interfaces.Services;
 using SistemaDeConvocacoes.Application.ViewModels;
@@ -25,42 +26,42 @@ namespace SistemaDeConvocacoes.Application.Services
             _adminService.Dispose();
         }
 
-        public Admin2ViewModel Add(Admin2ViewModel obj)
+        public async Task<Admin2ViewModel> AddAsync(Admin2ViewModel obj)
         {
             var admin = _mapper.Map<Admin2ViewModel, Admin>(obj);            
-            _adminService.AddAsync(admin);            
+            await _adminService.AddAsync(admin);            
             return obj;
         }
 
-        public Admin2ViewModel GetById(Guid id)
+        public async Task<Admin2ViewModel> GetByIdAsync(Guid id)
         {
-            return _mapper.Map<Admin, Admin2ViewModel>(_adminService.GetByIdAsync(id));
+            return _mapper.Map<Admin, Admin2ViewModel>(await _adminService.GetByIdAsync(id));
         }
 
-        public IEnumerable<Admin2ViewModel> GetAll()
+        public async Task<IEnumerable<Admin2ViewModel>> GetAllAsync()
         {
-            return _mapper.Map<IEnumerable<Admin>, IEnumerable<Admin2ViewModel>>(_adminService.GetAllAsync());
+            return _mapper.Map<IEnumerable<Admin>, IEnumerable<Admin2ViewModel>>(await _adminService.GetAllAsync());
         }
 
-        public Admin2ViewModel Update(Admin2ViewModel obj)
+        public async Task<Admin2ViewModel> UpdateAsync(Admin2ViewModel obj)
         {           
-            _adminService.UpdateAsync(_mapper.Map<Admin2ViewModel, Admin>(obj));           
+            await _adminService.UpdateAsync(_mapper.Map<Admin2ViewModel, Admin>(obj));           
             return obj;
         }
 
-        public void Remove(Guid id)
-        {           
-            _adminService.Remove(id);            
+        public async Task RemoveAsync(Guid id)
+        {
+            await _adminService.RemoveAsync(id);            
         }
 
-        public IEnumerable<Admin2ViewModel> Search(Expression<Func<Admin, bool>> predicate)
+        public async Task<IEnumerable<Admin2ViewModel>> SearchAsync(Expression<Func<Admin, bool>> predicate)
         {
-            return _mapper.Map<IEnumerable<Admin>, IEnumerable<Admin2ViewModel>>(_adminService.SearchAsync(predicate));
+            return _mapper.Map<IEnumerable<Admin>, IEnumerable<Admin2ViewModel>>(await _adminService.SearchAsync(predicate));
         }
 
-        public Admin2ViewModel GetOne(Expression<Func<Admin, bool>> predicate)
+        public async Task<Admin2ViewModel> GetOneAsync(Expression<Func<Admin, bool>> predicate)
         {
-            return _mapper.Map<Admin, Admin2ViewModel>(_adminService.GetOneAsync(predicate));
+            return _mapper.Map<Admin, Admin2ViewModel>(await _adminService.GetOneAsync(predicate));
         }
     }
 }

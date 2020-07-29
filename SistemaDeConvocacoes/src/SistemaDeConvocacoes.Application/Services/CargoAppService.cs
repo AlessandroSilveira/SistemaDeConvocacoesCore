@@ -29,7 +29,7 @@ namespace SistemaDeConvocacoes.Application.Services
         public async Task<CargoViewModel> AddAsync(CargoViewModel obj)
         {
             var cargo = _mapper.Map<CargoViewModel, Cargo>(obj);
-            await _cargoService.Add(cargo);
+            await _cargoService.AddAsync(cargo);
             return obj;
         }
 
@@ -45,13 +45,12 @@ namespace SistemaDeConvocacoes.Application.Services
 
         public async Task<CargoViewModel> UpdateAsync(CargoViewModel obj)
         {
-
             await _cargoService.UpdateAsync(_mapper.Map<CargoViewModel, Cargo>(obj));
 
             return obj;
         }
 
-        public async Task Remove(Guid id)
+        public async Task RemoveAsync(Guid id)
         {
             await _cargoService.RemoveAsync(id);
         }

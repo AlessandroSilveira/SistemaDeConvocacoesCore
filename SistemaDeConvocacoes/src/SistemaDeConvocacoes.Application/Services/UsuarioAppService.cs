@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AutoMapper;
 using SistemaDeConvocacoes.Application.Interfaces.Services;
 using SistemaDeConvocacoes.Application.ViewModels;
@@ -20,48 +21,48 @@ namespace SistemaDeConvocacoes.Application.Services
             _mapper = mapper;
         }
 
-        public void DisposeAsync()
+        public void Dispose()
         {
-            _usuarioService.DisposeAsync();
+            _usuarioService.Dispose();
         }
 
-        public UsuarioViewModel Add(UsuarioViewModel obj)
+        public async Task<UsuarioViewModel> AddAsync(UsuarioViewModel obj)
         {
             var telefone = _mapper.Map<UsuarioViewModel, Usuario>(obj);
-            _usuarioService.Add(telefone);
+            await _usuarioService.AddAsync(telefone);
             return obj;
         }
 
-        public UsuarioViewModel GetById(Guid id)
+        public async Task<UsuarioViewModel> GetByIdAsync(Guid id)
         {
-            return _mapper.Map<Usuario, UsuarioViewModel>(_usuarioService.GetById(id));
+            return _mapper.Map<Usuario, UsuarioViewModel>(await _usuarioService.GetByIdAsync(id));
         }
 
-        public IEnumerable<UsuarioViewModel> GetAll()
+        public async Task<IEnumerable<UsuarioViewModel>> GetAllAsync()
         {
-            return _mapper.Map<IEnumerable<Usuario>, IEnumerable<UsuarioViewModel>>(_usuarioService.GetAll());
+            return _mapper.Map<IEnumerable<Usuario>, IEnumerable<UsuarioViewModel>>(await _usuarioService.GetAllAsync());
         }
 
-        public UsuarioViewModel Update(UsuarioViewModel obj)
+        public async Task<UsuarioViewModel> UpdateAsync(UsuarioViewModel obj)
         {
-            _usuarioService.Update(_mapper.Map<UsuarioViewModel, Usuario>(obj));
+            await _usuarioService.UpdateAsync(_mapper.Map<UsuarioViewModel, Usuario>(obj));
 
             return obj;
         }
 
-        public void Remove(Guid id)
+        public async Task RemoveAsync(Guid id)
         {
-            _usuarioService.Remove(id);
+            await _usuarioService.RemoveAsync(id);
         }
 
-        public IEnumerable<UsuarioViewModel> Search(Expression<Func<Usuario, bool>> predicate)
+        public async Task<IEnumerable<UsuarioViewModel>> SearchAsync(Expression<Func<Usuario, bool>> predicate)
         {
-            return _mapper.Map<IEnumerable<Usuario>, IEnumerable<UsuarioViewModel>>(_usuarioService.Search(predicate));
+            return _mapper.Map<IEnumerable<Usuario>, IEnumerable<UsuarioViewModel>>(await _usuarioService.SearchAsync(predicate));
         }
 
-        public UsuarioViewModel GetOne(Expression<Func<Usuario, bool>> predicate)
+        public async Task<UsuarioViewModel> GetOneAsync(Expression<Func<Usuario, bool>> predicate)
         {
-            return _mapper.Map<Usuario, UsuarioViewModel>(_usuarioService.GetOne(predicate));
+            return _mapper.Map<Usuario, UsuarioViewModel>(await _usuarioService.GetOneAsync(predicate));
         }
     }
 }

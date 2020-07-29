@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using SistemaDeConvocacoes.Domain.Entities;
 using SistemaDeConvocacoes.Domain.Interfaces.Repositories;
 using SistemaDeConvocacoes.Domain.Interfaces.Services;
@@ -16,44 +17,44 @@ namespace SistemaDeConvocacoes.Domain.Services
             _processoRepository = processoRepository;
         }
 
-        public void DisposeAsync()
+        public void Dispose()
         {
             _processoRepository.Dispose();
         }
 
-        public Processo Add(Processo obj)
+        public async Task<Processo> AddAsync(Processo obj)
         {
-            return _processoRepository.Add(obj);
+            return await _processoRepository.AddAsync(obj);
         }
 
-        public Processo GetById(Guid id)
+        public async Task<Processo> GetByIdAsync(Guid id)
         {
-            return _processoRepository.GetById(id);
+            return await _processoRepository.GetByIdAsync(id);
         }
 
-        public IEnumerable<Processo> GetAll()
+        public async Task<IEnumerable<Processo>> GetAllAsync()
         {
-            return _processoRepository.GetAll();
+            return await _processoRepository.GetAllAsync();
         }
 
-        public Processo Update(Processo obj)
+        public async Task<Processo> UpdateAsync(Processo obj)
         {
-            return _processoRepository.Update(obj);
+            return await _processoRepository.UpdateAsync(obj);
         }
 
-        public void Remove(Guid id)
+        public async Task RemoveAsync(Guid id)
         {
-            _processoRepository.Remove(id);
+           await _processoRepository.RemoveAsync(id);
         }
 
-        public IEnumerable<Processo> Search(Expression<Func<Processo, bool>> predicate)
+        public async Task<IEnumerable<Processo>> SearchAsync(Expression<Func<Processo, bool>> predicate)
         {
-            return _processoRepository.Search(predicate);
+            return await _processoRepository.SearchAsync(predicate);
         }
 
-        public Processo GetOne(Expression<Func<Processo, bool>> predicate)
+        public async Task<Processo> GetOneAsync(Expression<Func<Processo, bool>> predicate)
         {
-            return _processoRepository.GetOne(predicate);
+            return await _processoRepository.GetOneAsync(predicate);
         }
     }
 }

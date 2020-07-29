@@ -51,7 +51,7 @@ namespace SistemaDeConvocacoes.Application.Services
 
         public async Task RemoveAsync(Guid id)
         {
-           await  _convocadoService.Remove(id);
+           await  _convocadoService.RemoveAsync(id);
         }
 
         public async Task<IEnumerable<ConvocadoViewModel>> SearchAsync(Expression<Func<Convocado, bool>> predicate)

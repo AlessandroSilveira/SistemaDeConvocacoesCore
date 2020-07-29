@@ -96,7 +96,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
                 var roles = await _userManager.GetRolesAsync(user);
                 if (roles[0] == "Convocado")
                 {
-                    VerificaPrimeiroAcesso(model);
+                    VerificaPrimeiroAcessoAsync(model);
                 }
 
                 return RedirectToLocal(returnUrl);
@@ -125,11 +125,11 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
-        private void VerificaPrimeiroAcesso(LoginViewModel model)
+        private async Task VerificaPrimeiroAcessoAsync(LoginViewModel model)
         {
-            var primeiroAcesso = _primeiroAcessoAppService.Search(a => a.Email.Equals(model.Email));
+            var primeiroAcesso = await _primeiroAcessoAppService.SearchAsync(a => a.Email.Equals(model.Email));
 
-            var dadosConvocado = _convocadoAppService.SearchAsync(a => a.Email.Equals(model.Email)).FirstOrDefault();
+            var dadosConvocado = _convocadoAppService.SearchAsync(a => a.Email.Equals(model.Email)).Result.FirstOrDefault();
 
             var primeiroAcessoViewModel = new PrimeiroAcessoViewModel
             {
@@ -140,7 +140,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             };
 
             if (!primeiroAcesso.Any())
-                _primeiroAcessoAppService.Add(primeiroAcessoViewModel);
+                await _primeiroAcessoAppService.AddAsync(primeiroAcessoViewModel);
         }
 
         ////

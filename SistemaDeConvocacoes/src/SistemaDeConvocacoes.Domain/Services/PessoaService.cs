@@ -28,34 +28,34 @@ namespace SistemaDeConvocacoes.Domain.Services
             return await _pessoaRepository.AddAsync(obj);
         }
 
-        public Pessoa GetByIdAsync(Guid id)
+        public async Task<Pessoa> GetByIdAsync(Guid id)
         {
-            return _pessoaRepository.GetById(id);
+            return await _pessoaRepository.GetByIdAsync(id);
         }
 
-        public IEnumerable<Pessoa> GetAll()
+        public async Task<IEnumerable<Pessoa>> GetAllAsync()
         {
-            return _pessoaRepository.GetAll();
+            return await _pessoaRepository.GetAllAsync();
         }
 
-        public Pessoa Update(Pessoa obj)
+        public async Task<Pessoa> UpdateAsync(Pessoa obj)
         {
-            return _pessoaRepository.Update(obj);
+            return await _pessoaRepository.UpdateAsync(obj);
         }
 
-        public void Remove(Guid id)
+        public async Task RemoveAsync(Guid id)
         {
-            _pessoaRepository.Remove(id);
+            await _pessoaRepository.RemoveAsync(id);
         }
 
-        public IEnumerable<Pessoa> Search(Expression<Func<Pessoa, bool>> predicate)
+        public async Task<IEnumerable<Pessoa>> SearchAsync(Expression<Func<Pessoa, bool>> predicate)
         {
-            return _pessoaRepository.Search(predicate);
+            return await _pessoaRepository.SearchAsync(predicate);
         }
 
-        public Pessoa GetOne(Expression<Func<Pessoa, bool>> predicate)
+        public async Task<Pessoa> GetOneAsync(Expression<Func<Pessoa, bool>> predicate)
         {
-            return _pessoaRepository.GetOne(predicate);
+            return await _pessoaRepository.GetOneAsync(predicate);
         }
     }
 }
