@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SistemaDeConvocacoes.Application.Interfaces.Services;
 using SistemaDeConvocacoes.Application.ViewModels;
@@ -23,13 +24,13 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         // GET: Convocado
         public ActionResult Index()
         {
-            return View(_convocadoAppService.GetAll());
+            return View(_convocadoAppService.GetAllAsync());
         }
 
         // GET: Convocado/Details/5
         public ActionResult Details(Guid id)
         {
-            var convocadoViewModel = _convocadoAppService.GetById(id);
+            var convocadoViewModel = _convocadoAppService.GetByIdAsync(id);
             return convocadoViewModel.Equals(null) ? (ActionResult) NotFound() : View(convocadoViewModel);
         }
 
@@ -44,21 +45,27 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(ConvocadoViewModel convocadoViewModel)
+        public async Task<IActionResult> CreateAsync(ConvocadoViewModel convocadoViewModel)
         {
-            if (!ModelState.IsValid) return View(convocadoViewModel);
-            _convocadoAppService.Add(convocadoViewModel);
+            if (!ModelState.IsValid) 
+                return View(convocadoViewModel);
+
+            await _convocadoAppService.AddAsync(convocadoViewModel);
+
             return RedirectToAction("Index");
         }
 
         // GET: Convocado/Edit/5
-        public ActionResult Edit(Guid id, bool modal = false)
+        public async Task<IActionResult> EditAsync(Guid id, bool modal = false)
         {
-            var pessoaViewModel = _convocadoAppService.GetById(id);
+            var pessoaViewModel = await _convocadoAppService.GetByIdAsync(id);
+
             RetornaViewBagsDasSelectList();
+
             ViewBag.modal = modal.ToString();
-            ViewBag.dadosConvocado =  _convocadoAppService.GetById(id);
-            ViewBag.dadosProcesso = _processoAppService.GetById(pessoaViewModel.ProcessoId);
+            ViewBag.dadosConvocado = await _convocadoAppService.GetByIdAsync(id);
+            ViewBag.dadosProcesso = await _processoAppService.GetByIdAsync(pessoaViewModel.ProcessoId);
+
             return pessoaViewModel.Equals(null) ? (ActionResult) NotFound() : View(pessoaViewModel);
         }
 
@@ -67,7 +74,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(ConvocadoViewModel convocadoViewModel)
+        public async Task<IActionResult> EditAsync(ConvocadoViewModel convocadoViewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -75,28 +82,28 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
                 return View(convocadoViewModel);
             }
 
-            if (!_convocadoAppService.VerificaSeHaSobrenome(convocadoViewModel.Nome))
+            if (! await _convocadoAppService.VerificaSeHaSobrenome(convocadoViewModel.Nome))
             {
                 ModelState.AddModelError("Nome", "O campo nome deve ter um sobrenome");
                 RetornaViewBagsDasSelectList();
                 return View(convocadoViewModel);
             }
 
-            if (!_convocadoAppService.VerificaSeHaSobrenome(convocadoViewModel.Mae))
+            if (!await _convocadoAppService.VerificaSeHaSobrenome(convocadoViewModel.Mae))
             {
                 ModelState.AddModelError("Mae", "O campo nome deve ter um sobrenome");
                 RetornaViewBagsDasSelectList();
                 return View(convocadoViewModel);
             }
 
-            if (!_convocadoAppService.VerificaSeHaSobrenome(convocadoViewModel.Pai))
+            if (!await _convocadoAppService.VerificaSeHaSobrenome(convocadoViewModel.Pai))
             {
                 ModelState.AddModelError("Pai", "O campo nome deve ter um sobrenome");
                 RetornaViewBagsDasSelectList();
                 return View(convocadoViewModel);
             }
 
-            _convocadoAppService.Update(convocadoViewModel);
+            await _convocadoAppService.UpdateAsync(convocadoViewModel);
 
             return RedirectToAction("Edit", new {id = convocadoViewModel.ConvocadoId, modal = true});
         }
@@ -113,9 +120,9 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         }
 
         // GET: Convocado/Delete/5
-        public ActionResult Delete(Guid id)
+        public async Task<IActionResult> DeleteAsync(Guid id)
         {
-            var convocadoViewModel = _convocadoAppService.GetById(id);
+            var convocadoViewModel = await _convocadoAppService.GetByIdAsync(id);
             return _convocadoAppService.Equals(null) ? (ActionResult) NotFound() : View(convocadoViewModel);
         }
 
@@ -125,7 +132,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            _convocadoAppService.Remove(id);
+            _convocadoAppService.RemoveAsync(id);
             return RedirectToAction("Index");
         }
 

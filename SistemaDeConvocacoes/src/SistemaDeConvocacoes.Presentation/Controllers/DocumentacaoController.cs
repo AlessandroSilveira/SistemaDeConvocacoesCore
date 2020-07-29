@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -27,20 +28,20 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         public ActionResult Index(Guid Id)
         {
             ViewBag.ProcessoId = Id;
-            ViewBag.dadosProcesso = _processoAppService.GetById(Id);
-            return View(_documentacaoAppService.GetAll());
+            ViewBag.dadosProcesso = _processoAppService.GetByIdAsync(Id);
+            return View(_documentacaoAppService.GetAllAsync());
         }
 
         public ActionResult Details(Guid id)
         {
-            var documentacaoViewModel = _documentacaoAppService.GetById(id);
+            var documentacaoViewModel = _documentacaoAppService.GetByIdAsync(id);
             return documentacaoViewModel == null ? (ActionResult) NotFound() : View(documentacaoViewModel);
         }
 
         public ActionResult Create(Guid Id)
         {
             ViewBag.ProcessoId = Id;
-            ViewBag.dadosProcesso = _processoAppService.GetById(Id);
+            ViewBag.dadosProcesso = _processoAppService.GetByIdAsync(Id);
             return View();
         }
 
@@ -48,7 +49,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(DocumentacaoViewModel documentacaoViewModel)
         {
-            ViewBag.dadosProcesso = _processoAppService.GetById(documentacaoViewModel.ProcessoId);
+            ViewBag.dadosProcesso = _processoAppService.GetByIdAsync(documentacaoViewModel.ProcessoId);
             documentacaoViewModel.DataCriacao = DateTime.Now;
             if (!ModelState.IsValid) return View(documentacaoViewModel);
 
@@ -87,7 +88,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
 
         public ActionResult Edit(Guid id)
         {
-            var documentacaoViewModel = _documentacaoAppService.GetById(id);
+            var documentacaoViewModel = _documentacaoAppService.GetByIdAsync(id);
             return documentacaoViewModel == null ? (ActionResult) NotFound() : View(documentacaoViewModel);
         }
 
@@ -98,24 +99,24 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             if (!ModelState.IsValid) 
                 return View(documentacaoViewModel);
 
-            _documentacaoAppService.Update(documentacaoViewModel);
+            await _documentacaoAppService.UpdateAsync(documentacaoViewModel);
 
             return RedirectToAction("Index");
         }
 
-        public ActionResult Delete(Guid id)
+        public async Task<IActionResult> DeleteAsync(Guid id)
         {
-            var documentacaoViewModel = _documentacaoAppService.GetById(id);
-            return documentacaoViewModel == null ? (ActionResult) NotFound() : View(documentacaoViewModel);
+            var documentacaoViewModel = await _documentacaoAppService.GetByIdAsync(id);
+            return documentacaoViewModel == null ? (IActionResult) NotFound() : View(documentacaoViewModel);
         }
 
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmedAsync(Guid id)
         {
-            var documento = _documentacaoAppService.GetById(id);
-            _documentacaoAppService.Remove(id);
+            var documento = await _documentacaoAppService.GetByIdAsync(id);
+            await _documentacaoAppService.RemoveAsync(id);
             return RedirectToAction("Index", new {id = documento.ProcessoId});
         }
 

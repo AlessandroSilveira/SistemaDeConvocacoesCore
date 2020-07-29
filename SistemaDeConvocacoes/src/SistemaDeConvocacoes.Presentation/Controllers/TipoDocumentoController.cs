@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SistemaDeConvocacoes.Application.Interfaces.Services;
 using SistemaDeConvocacoes.Application.ViewModels;
@@ -21,29 +22,30 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         }
 
         // GET: TipoDocumento
-        public ActionResult Index(Guid Id)
+        public async Task<IActionResult> IndexAsync(Guid Id)
         {
-            ViewBag.dadosProcesso = _processoAppService.GetById(Id);
+            ViewBag.dadosProcesso = await _processoAppService.GetByIdAsync(Id);
             ViewBag.ProcessoId = Id;
-            return View(_tipoDocumentoAppService.GetAll());
+
+            return View(await _tipoDocumentoAppService.GetAllAsync());
         }
 
         // GET: TipoDocumento/Details/5
-        public ActionResult Details(Guid? id)
+        public async Task<IActionResult> DetailsAsync(Guid? id)
         {
             if (id.Equals(null))
                 return new StatusCodeResult((int)HttpStatusCode.BadRequest);
 
-            if (_tipoDocumentoAppService.GetById(Guid.Parse(id.ToString())).Equals(null))
+            if (_tipoDocumentoAppService.GetByIdAsync(Guid.Parse(id.ToString())).Result.Equals(null))
                 return NotFound();
 
-            return View(_tipoDocumentoAppService.GetById(Guid.Parse(id.ToString())));
+            return View(await _tipoDocumentoAppService.GetByIdAsync(Guid.Parse(id.ToString())));
         }
 
         // GET: TipoDocumento/Create
-        public ActionResult Create(Guid Id)
+        public async Task<IActionResult> CreateAsync(Guid Id)
         {
-            ViewBag.dadosProcesso = _processoAppService.GetById(Id);
+            ViewBag.dadosProcesso = await _processoAppService.GetByIdAsync(Id);
             ViewBag.ProcessoId = Id;
             return View();
         }
@@ -53,28 +55,31 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(TipoDocumentoViewModel tipoDocumentoViewModel)
+        public async Task<IActionResult> CreateAsync(TipoDocumentoViewModel tipoDocumentoViewModel)
         {
             if (!ModelState.IsValid)
                 return View(tipoDocumentoViewModel);
 
-            ViewBag.dadosProcesso = _processoAppService.GetById(tipoDocumentoViewModel.ProcessoId);
+            ViewBag.dadosProcesso = await _processoAppService.GetByIdAsync(tipoDocumentoViewModel.ProcessoId);
             ViewBag.ProcessoId = tipoDocumentoViewModel.ProcessoId;
 
             tipoDocumentoViewModel.TipoDocumentoId = Guid.NewGuid();
-            _tipoDocumentoAppService.Add(tipoDocumentoViewModel);
+            await _tipoDocumentoAppService.AddAsync(tipoDocumentoViewModel);
+
+             
             return RedirectToAction("Index", new { Id = tipoDocumentoViewModel.TipoDocumentoId });
         }
 
         // GET: TipoDocumento/Edit/5
-        public ActionResult Edit(Guid? id)
+        public async Task<IActionResult> EditAsync(Guid? id)
         {
             if (id.Equals(null))
                 return new StatusCodeResult((int)HttpStatusCode.BadRequest);
 
-            var docCandidatoViewModel = _tipoDocumentoAppService.GetById(Guid.Parse(id.ToString()));
-            ViewBag.dadosProcesso = _processoAppService.GetById(docCandidatoViewModel.ProcessoId);
+            var docCandidatoViewModel = await _tipoDocumentoAppService.GetByIdAsync(Guid.Parse(id.ToString()));
+            ViewBag.dadosProcesso = _processoAppService.GetByIdAsync(docCandidatoViewModel.ProcessoId);
             ViewBag.ProcessoId = docCandidatoViewModel.ProcessoId;
+
             return docCandidatoViewModel.Equals(null) ? (ActionResult) NotFound() : View(docCandidatoViewModel);
         }
 
@@ -83,42 +88,47 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(TipoDocumentoViewModel tipoDocumentoViewModel)
+        public async Task<IActionResult> EditAsync(TipoDocumentoViewModel tipoDocumentoViewModel)
         {
             if (!ModelState.IsValid)
                 return View(tipoDocumentoViewModel);
 
-            ViewBag.dadosProcesso = _processoAppService.GetById(tipoDocumentoViewModel.ProcessoId);
+            ViewBag.dadosProcesso = await _processoAppService.GetByIdAsync(tipoDocumentoViewModel.ProcessoId);
             ViewBag.ProcessoId = tipoDocumentoViewModel.ProcessoId;
 
-            _tipoDocumentoAppService.Update(tipoDocumentoViewModel);
+            await _tipoDocumentoAppService.UpdateAsync(tipoDocumentoViewModel);
+
             return RedirectToAction("Index", new { Id = tipoDocumentoViewModel.TipoDocumentoId });
         }
 
         // GET: TipoDocumento/Delete/5
-        public ActionResult Delete(Guid? id)
+        public async Task<IActionResult> DeleteAsync(Guid? id)
         {
             if (id.Equals(null))
                 return new StatusCodeResult((int)HttpStatusCode.BadRequest);
 
-            var docCandidatoViewModel = _tipoDocumentoAppService.GetById(Guid.Parse(id.ToString()));
-            ViewBag.dadosProcesso = _processoAppService.GetById(docCandidatoViewModel.ProcessoId);
+            var docCandidatoViewModel = await _tipoDocumentoAppService.GetByIdAsync(Guid.Parse(id.ToString()));
+
+            ViewBag.dadosProcesso = await _processoAppService.GetByIdAsync(docCandidatoViewModel.ProcessoId);
             ViewBag.ProcessoId = docCandidatoViewModel.ProcessoId;
 
-            return _tipoDocumentoAppService.GetById(Guid.Parse(id.ToString())).Equals(null)
+            return _tipoDocumentoAppService.GetByIdAsync(Guid.Parse(id.ToString())).Result.Equals(null)
                 ? (ActionResult) NotFound()
-                : View(_tipoDocumentoAppService.GetById(Guid.Parse(id.ToString())));
+                : View(await _tipoDocumentoAppService.GetByIdAsync(Guid.Parse(id.ToString())));
         }
 
         // POST: TipoDocumento/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmedAsync(Guid id)
         {
-            var docCandidatoViewModel = _tipoDocumentoAppService.GetById(Guid.Parse(id.ToString()));
-            ViewBag.dadosProcesso = _processoAppService.GetById(docCandidatoViewModel.ProcessoId);
+            var docCandidatoViewModel = await _tipoDocumentoAppService.GetByIdAsync(Guid.Parse(id.ToString()));
+
+            ViewBag.dadosProcesso = await _processoAppService.GetByIdAsync(docCandidatoViewModel.ProcessoId);
             ViewBag.ProcessoId = docCandidatoViewModel.ProcessoId;
-            _tipoDocumentoAppService.Remove(id);
+
+            await _tipoDocumentoAppService.RemoveAsync(id);
+
             return RedirectToAction("Index");
         }
 

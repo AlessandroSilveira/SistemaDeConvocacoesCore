@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using SistemaDeConvocacoes.Domain.Entities;
 
 namespace SistemaDeConvocacoes.Domain.Interfaces.Services
 {
     public interface IProcessoService : IDisposable
     {
-        Processo Add(Processo obj);
-        Processo GetById(Guid id);
-        IEnumerable<Processo> GetAll();
-        Processo Update(Processo obj);
-        void Remove(Guid id);
-        IEnumerable<Processo> Search(Expression<Func<Processo, bool>> predicate);
-        Processo GetOne(Expression<Func<Processo, bool>> predicate);
+        Task<Processo> AddAsync(Processo obj);
+        Task<Processo> GetByIdAsync(Guid id);
+        Task<IEnumerable<Processo>> GetAllAsync();
+        Task<Processo> UpdateAsync(Processo obj);
+        Task RemoveAsync(Guid id);
+        Task<IEnumerable<Processo>> SearchAsync(Expression<Func<Processo, bool>> predicate);
+        Task<Processo> GetOneAsync(Expression<Func<Processo, bool>> predicate);
     }
 }

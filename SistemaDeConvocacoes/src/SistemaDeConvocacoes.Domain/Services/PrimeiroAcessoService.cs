@@ -16,7 +16,7 @@ namespace SistemaDeConvocacoes.Domain.Services
             _primeiroAcessoRepository = primeiroAcessoRepository;
         }
 
-        public void Dispose()
+        public void DisposeAsync()
         {
             _primeiroAcessoRepository.Dispose();
             GC.SuppressFinalize(this);

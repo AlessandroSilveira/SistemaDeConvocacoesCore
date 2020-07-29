@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SistemaDeConvocacoes.Application.Interfaces.Services;
@@ -25,7 +26,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         {
             ViewBag.id = id;
             ViewBag.ProcessoId = id;
-            return View(_cargoAppService.GetAll().OrderBy(a => a.CodigoCargo));
+            return View(_cargoAppService.GetAllAsync().OrderBy(a => a.CodigoCargo));
         }
 
         // GET: Cargo/Details/5
@@ -34,7 +35,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             ViewBag.Id = ProcessoId;
             ViewBag.ProcessoId = ProcessoId;
             if (id.Equals(null)) return new StatusCodeResult((int)HttpStatusCode.BadRequest);
-            var cargoViewModel = _cargoAppService.GetById(Guid.Parse(id.ToString()));
+            var cargoViewModel = _cargoAppService.GetByIdAsync(Guid.Parse(id.ToString()));
             return cargoViewModel.Equals(null) ? (ActionResult) NotFound() : View(cargoViewModel);
         }
 
@@ -43,7 +44,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         {
             ViewBag.id = Id;
             ViewBag.ProcessoId = Id;
-            ViewBag.dadosProcesso = _processoAppService.GetById(Id);
+            ViewBag.dadosProcesso = _processoAppService.GetByIdAsync(Id);
             return View();
         }
 
@@ -57,16 +58,16 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             ViewBag.ProcessoId = cargoViewModel.ProcessoId;
             if (!ModelState.IsValid) return View(cargoViewModel);
             cargoViewModel.CargoId = Guid.NewGuid();
-            _cargoAppService.Add(cargoViewModel);
+            _cargoAppService.AddAsync(cargoViewModel);
             return RedirectToAction("Index", new {Id = cargoViewModel.ProcessoId});
         }
 
         // GET: Cargo/Edit/5
-        public ActionResult Edit(Guid? id)
+        public async Task<ActionResult> EditAsync(Guid? id)
         {
            
             if (id.Equals(null)) return new StatusCodeResult((int)HttpStatusCode.BadRequest);
-            var cargoViewModel = _cargoAppService.GetById(Guid.Parse(id.ToString()));
+            var cargoViewModel = await _cargoAppService.GetByIdAsync(Guid.Parse(id.ToString()));
             ViewBag.ProcessoId = cargoViewModel.ProcessoId;
             return cargoViewModel.Equals(null) ? (ActionResult) NotFound() : View(cargoViewModel);
         }
@@ -80,7 +81,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         {
             ViewBag.ProcessoId = cargoViewModel.ProcessoId;
             if (!ModelState.IsValid) return View(cargoViewModel);
-            _cargoAppService.Update(cargoViewModel);
+            _cargoAppService.UpdateAsync(cargoViewModel);
             return RedirectToAction("Index", new {Id = cargoViewModel.ProcessoId});
         }
 
@@ -90,7 +91,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             ViewBag.Id = ProcessoId;
             ViewBag.ProcessoId = ProcessoId;
             if (id.Equals(null)) return new StatusCodeResult((int)HttpStatusCode.BadRequest);
-            var cargoViewModel = _cargoAppService.GetById(Guid.Parse(id.ToString()));
+            var cargoViewModel = _cargoAppService.GetByIdAsync(Guid.Parse(id.ToString()));
             return cargoViewModel.Equals(null) ? (ActionResult) NotFound() : View(cargoViewModel);
         }
 

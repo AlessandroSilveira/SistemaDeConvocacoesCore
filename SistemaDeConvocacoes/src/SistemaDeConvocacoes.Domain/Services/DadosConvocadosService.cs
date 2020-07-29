@@ -5,6 +5,7 @@ using System.Data.OleDb;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Microsoft.Office.Interop.Excel;
 using SistemaDeConvocacoes.Domain.Entities;
 using SistemaDeConvocacoes.Domain.Interfaces.Repositories;
@@ -25,37 +26,37 @@ namespace SistemaDeConvocacoes.Domain.Services
             _cargoRepository = cargoRepository;
         }
 
-        public Convocado Add(Convocado obj)
+        public async Task<Convocado> AddAsync(Convocado obj)
         {
-            return _dadosConvocadosRepository.Add(obj);
+            return await _dadosConvocadosRepository.AddAsync(obj);
         }
 
-        public Convocado GetById(Guid id)
+        public async Task<Convocado> GetByIdAsync(Guid id)
         {
-            return _dadosConvocadosRepository.GetById(id);
+            return await _dadosConvocadosRepository.GetByIdAsync(id);
         }
 
-        public IEnumerable<Convocado> GetAll()
+        public async Task<IEnumerable<Convocado>> GetAllAsync()
         {
-            return _dadosConvocadosRepository.GetAll();
+            return await _dadosConvocadosRepository.GetAllAsync();
         }
 
-        public Convocado Update(Convocado obj)
+        public async Task<Convocado> UpdateAsync(Convocado obj)
         {
-            return _dadosConvocadosRepository.Update(obj);
+            return await _dadosConvocadosRepository.UpdateAsync(obj);
         }
 
-        public void Remove(Guid id)
+        public async Task RemoveAsync(Guid id)
         {
-            _dadosConvocadosRepository.Remove(id);
+            await _dadosConvocadosRepository.RemoveAsync(id);
         }
 
-        public IEnumerable<Convocado> Search(Expression<Func<Convocado, bool>> predicate)
+        public async Task<IEnumerable<Convocado>> SearchAsync(Expression<Func<Convocado, bool>> predicate)
         {
-            return _dadosConvocadosRepository.Search(predicate);
+            return await _dadosConvocadosRepository.SearchAsync(predicate);
         }
 
-        public void SalvarCandidatos(Guid id, string file)
+        public async Task SalvarCandidatosAsync(Guid id, string file)
         {
             DataSet ds;
             var conexao = ConexaoComAPlanilhaExcel(file, out var command, out var adapter, out ds);
@@ -74,7 +75,7 @@ namespace SistemaDeConvocacoes.Domain.Services
             }
         }
 
-        public void SalvarCargos(Guid id, string file)
+        public async Task SalvarCargosAsync(Guid id, string file)
         {
             //var conexao = ConexaoComAPlanilhaExcel(file, out var command, out var adapter, out var ds);
 
@@ -97,9 +98,9 @@ namespace SistemaDeConvocacoes.Domain.Services
             _dadosConvocadosRepository.Dispose();
         }
 
-        public Convocado GetOne(Expression<Func<Convocado, bool>> predicate)
+        public async Task<Convocado> GetOneAsync(Expression<Func<Convocado, bool>> predicate)
         {
-            return _dadosConvocadosRepository.GetOne(predicate);
+            return await _dadosConvocadosRepository.GetOneAsync(predicate);
         }
 
         private void ObterListaCargos(Guid id, OLEDBConnection conexao, OleDbDataAdapter adapter, DataSet ds,
@@ -110,19 +111,19 @@ namespace SistemaDeConvocacoes.Domain.Services
             using (command.ExecuteReader())
             {
                 var listaCargos = ObterTodosOsCargosDoExcel(ds, out var listaCargo);
-                PreencheAListaDeCargosParaSalvarNoBanco(id, listaCargos, listaCargo);
+                PreencheAListaDeCargosParaSalvarNoBancoAsync(id, listaCargos, listaCargo);
 
-                SalvarCargos(listaCargo);
+                SalvarCargosAsync(listaCargo);
             }
         }
 
-        private void SalvarCargos(IEnumerable<Cargo> listaCargo)
+        private async Task SalvarCargos(IEnumerable<Cargo> listaCargo)
         {
             foreach (var itens in listaCargo)
-                _cargoRepository.Add(itens);
+                await _cargoRepository.AddAsync(itens);
         }
 
-        private void PreencheAListaDeCargosParaSalvarNoBanco(Guid id, List<Cargo> listaCargos, List<Cargo> listaCargo)
+        private async Task PreencheAListaDeCargosParaSalvarNoBanco(Guid id, List<Cargo> listaCargos, List<Cargo> listaCargo)
         {
             foreach (var itens in listaCargos)
             {
@@ -130,7 +131,7 @@ namespace SistemaDeConvocacoes.Domain.Services
                 var codigo = itemcargo[0].Trim();
                 var nome = itemcargo[1].Trim();
 
-                var dadosCargo = _cargoRepository.Search(a =>
+                var dadosCargo = await _cargoRepository.SearchAsync(a =>
                     a.ProcessoId.Equals(id) && a.CodigoCargo.Equals(codigo) && a.Nome.Equals(nome));
 
                 if (!dadosCargo.Any())
@@ -199,7 +200,7 @@ namespace SistemaDeConvocacoes.Domain.Services
                             Pai = string.Empty
                         }).ToList();
 
-                    InsereDadosExcelNoBanco(listaCandidatos);
+                    InsereDadosExcelNoBancoAsync(listaCandidatos);
                 }
                 catch (Exception e)
                 {
@@ -215,7 +216,7 @@ namespace SistemaDeConvocacoes.Domain.Services
         }
 
 
-        private void InsereDadosExcelNoBanco(List<Convocado> listaCandidatos)
+        private async Task InsereDadosExcelNoBanco(List<Convocado> listaCandidatos)
         {
             foreach (var dados in listaCandidatos)
             {
@@ -229,7 +230,7 @@ namespace SistemaDeConvocacoes.Domain.Services
 
                 var Codigo = itemCargo[0].Trim();
 
-                var dadosCargo = _cargoRepository.Search(a =>
+                var dadosCargo = await _cargoRepository.SearchAsync(a =>
                     a.ProcessoId.Equals(dados.ProcessoId) && a.CodigoCargo.Equals(Codigo));
 
                 foreach (var cargo in dadosCargo)
@@ -240,11 +241,11 @@ namespace SistemaDeConvocacoes.Domain.Services
 
                 try
                 {
-                    var dadosConvocado = _dadosConvocadosRepository.Search(a =>
+                    var dadosConvocado = await _dadosConvocadosRepository.SearchAsync(a =>
                         a.Nome.Equals(dados.Nome) && a.Inscricao.Equals(dados.Inscricao) && a.Cpf.Equals(dados.Cpf));
 
                     if (!dadosConvocado.Any())
-                        Add(dados);
+                        AddAsync(dados).Result;
                 }
                 catch (Exception e)
                 {
@@ -281,11 +282,6 @@ namespace SistemaDeConvocacoes.Domain.Services
         {
             if (dados.Cpf.Length < 11)
                 dados.Cpf = dados.Cpf.PadLeft(11, '0');
-        }
-
-        public int SaveChanges()
-        {
-            return _dadosConvocadosRepository.SaveChanges();
-        }
+        }        
     }
 }

@@ -3,23 +3,24 @@ using SistemaDeConvocacoes.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace SistemaDeConvocacoes.Application.Interfaces.Services
 {
     public interface ICargoAppService : IDisposable
     {
-        CargoViewModel Add(CargoViewModel obj);
+        Task<CargoViewModel> AddAsync(CargoViewModel obj);
 
-        CargoViewModel GetById(Guid id);
+        Task<CargoViewModel> GetByIdAsync(Guid id);
 
-        IEnumerable<CargoViewModel> GetAll();
+        Task<IEnumerable<CargoViewModel>> GetAllAsync();
 
-        CargoViewModel Update(CargoViewModel obj);
+        Task<CargoViewModel> UpdateAsync(CargoViewModel obj);
 
-        void Remove(Guid id);
+        Task Remove(Guid id);
 
-        IEnumerable<CargoViewModel> Search(Expression<Func<Cargo, bool>> predicate);
+        Task<IEnumerable<CargoViewModel>> SearchAsync(Expression<Func<Cargo, bool>> predicate);
 
-        CargoViewModel GetOne(Expression<Func<Cargo, bool>> predicate);
+        Task<CargoViewModel> GetOneAsync(Expression<Func<Cargo, bool>> predicate);
     }
 }

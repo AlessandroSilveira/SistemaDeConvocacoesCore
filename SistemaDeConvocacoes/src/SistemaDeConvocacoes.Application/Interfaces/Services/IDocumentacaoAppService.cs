@@ -3,23 +3,24 @@ using SistemaDeConvocacoes.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace SistemaDeConvocacoes.Application.Interfaces.Services
 {
     public interface IDocumentacaoAppService : IDisposable
     {
-        DocumentacaoViewModel Add(DocumentacaoViewModel obj);
+        Task<DocumentacaoViewModel> AddAsync(DocumentacaoViewModel obj);
 
-        DocumentacaoViewModel GetById(Guid id);
+        Task<DocumentacaoViewModel> GetByIdAsync(Guid id);
 
-        IEnumerable<DocumentacaoViewModel> GetAll();
+        Task<IEnumerable<DocumentacaoViewModel>> GetAllAsync();
 
-        DocumentacaoViewModel Update(DocumentacaoViewModel obj);
+        Task<DocumentacaoViewModel> UpdateAsync(DocumentacaoViewModel obj);
 
-        void Remove(Guid id);
-       
+        Task RemoveAsync(Guid id);
 
-        IEnumerable<DocumentacaoViewModel> Search(Expression<Func<Documentacao, bool>> predicate);
+
+        Task<IEnumerable<DocumentacaoViewModel>> SearchAsync(Expression<Func<Documentacao, bool>> predicate);
 
        
     }

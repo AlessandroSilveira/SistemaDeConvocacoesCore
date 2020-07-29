@@ -59,13 +59,24 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
                 return View(clienteViewModel);
 
             clienteViewModel.ClienteId = Guid.NewGuid();
-            var cliente = _clienteAppService.Add(clienteViewModel);
+            var cliente = await _clienteAppService.Add(clienteViewModel);
+           
+            if(cliente != null)
+            {
+                SalvarImagemCliente(Imagem, cliente);
 
-            SalvarImagemCliente(Imagem, cliente);
+                return RegistarClienteParaFazerLoginAsync(cliente, out ActionResult actionResult)
+                    ? actionResult
+                    : RedirectToAction("Index");
+            }
+            else
+            {
+               return RedirectToAction("Index");
+            }
 
-            return RegistarClienteParaFazerLoginAsync(cliente, out ActionResult actionResult)
-                ? actionResult
-                : RedirectToAction("Index");
+           
+
+            
         }
 
         private bool RegistarClienteParaFazerLoginAsync(ClienteViewModel clienteViewModel, out ActionResult actionResult)

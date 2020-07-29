@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AutoMapper;
 using SistemaDeConvocacoes.Application.Interfaces.Services;
 using SistemaDeConvocacoes.Application.ViewModels;
@@ -25,44 +26,44 @@ namespace SistemaDeConvocacoes.Application.Services
             _documentacaoService.Dispose();
         }
 
-        public DocumentacaoViewModel Add(DocumentacaoViewModel obj)
+        public async Task<DocumentacaoViewModel> AddAsync(DocumentacaoViewModel obj)
         {
             var documento = _mapper.Map<DocumentacaoViewModel, Documentacao>(obj);           
-            _documentacaoService.Add(documento);           
+            await _documentacaoService.AddAsync(documento);           
             return obj;
         }
 
-        public DocumentacaoViewModel GetById(Guid id)
+        public async Task<DocumentacaoViewModel> GetByIdAsync(Guid id)
         {
-            return _mapper.Map<Documentacao, DocumentacaoViewModel>(_documentacaoService.GetById(id));
+            return _mapper.Map<Documentacao, DocumentacaoViewModel>(await _documentacaoService.GetByIdAsync(id));
         }
 
-        public IEnumerable<DocumentacaoViewModel> GetAll()
+        public async Task<IEnumerable<DocumentacaoViewModel>> GetAllAsync()
         {
             return _mapper.Map<IEnumerable<Documentacao>, IEnumerable<DocumentacaoViewModel>>(
-                _documentacaoService.GetAll());
+                await _documentacaoService.GetAllAsync());
         }
 
-        public DocumentacaoViewModel Update(DocumentacaoViewModel obj)
+        public async Task<DocumentacaoViewModel> UpdateAsync(DocumentacaoViewModel obj)
         {            
-            _documentacaoService.Update(_mapper.Map<DocumentacaoViewModel, Documentacao>(obj));           
+            await _documentacaoService.UpdateAsync(_mapper.Map<DocumentacaoViewModel, Documentacao>(obj));           
             return obj;
         }
 
-        public void Remove(Guid id)
+        public async Task RemoveAsync(Guid id)
         {            
-            _documentacaoService.Remove(id);           
+           await _documentacaoService.Remove(id);           
         }
 
-        public IEnumerable<DocumentacaoViewModel> Search(Expression<Func<Documentacao, bool>> predicate)
+        public async Task<IEnumerable<DocumentacaoViewModel>> SearchAsync(Expression<Func<Documentacao, bool>> predicate)
         {
             return _mapper.Map<IEnumerable<Documentacao>, IEnumerable<DocumentacaoViewModel>>(
-                _documentacaoService.Search(predicate));
+                await _documentacaoService.SearchAsync(predicate));
         }
 
-        public DocumentacaoViewModel GetOne(Expression<Func<Documentacao, bool>> predicate)
+        public async Task<DocumentacaoViewModel> GetOneAsync(Expression<Func<Documentacao, bool>> predicate)
         {
-            return _mapper.Map<Documentacao, DocumentacaoViewModel>(_documentacaoService.GetOne(predicate));
+            return _mapper.Map<Documentacao, DocumentacaoViewModel>(await _documentacaoService.GetOneAsync(predicate));
         }
     }
 }

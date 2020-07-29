@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using SistemaDeConvocacoes.Domain.Entities;
 using SistemaDeConvocacoes.Domain.Interfaces.Repositories;
 using SistemaDeConvocacoes.Domain.Interfaces.Services;
@@ -23,44 +24,44 @@ namespace SistemaDeConvocacoes.Domain.Services
             _convocacaoRepository.Dispose();
         }
 
-        public Convocacao Add(Convocacao obj)
+        public async Task<Convocacao> AddAsync(Convocacao obj)
         {
-            return _convocacaoRepository.Add(obj);
+            return await _convocacaoRepository.AddAsync(obj);
         }
 
-        public Convocacao GetById(Guid id)
+        public async Task<Convocacao> GetByIdAsync(Guid id)
         {
-            return _convocacaoRepository.GetById(id);
+            return await _convocacaoRepository.GetByIdAsync(id);
         }
 
-        public IEnumerable<Convocacao> GetAll()
+        public async Task<IEnumerable<Convocacao>> GetAllAsync()
         {
-            return _convocacaoRepository.GetAll();
+            return await _convocacaoRepository.GetAllAsync();
         }
 
-        public Convocacao Update(Convocacao obj)
+        public async Task<Convocacao> UpdateAsync(Convocacao obj)
         {
-            return _convocacaoRepository.Update(obj);
+            return await _convocacaoRepository.UpdateAsync(obj);
         }
 
-        public void Remove(Guid id)
+        public async Task RemoveAsync(Guid id)
         {
-            _convocacaoRepository.Remove(id);
+            await _convocacaoRepository.RemoveAsync(id);
         }
 
-        public IEnumerable<Convocacao> Search(Expression<Func<Convocacao, bool>> predicate)
+        public async Task<IEnumerable<Convocacao>> SearchAsync(Expression<Func<Convocacao, bool>> predicate)
         {
-            return _convocacaoRepository.Search(predicate);
+            return await _convocacaoRepository.SearchAsync(predicate);
         }
 
-        public string GeneratePassword()
+        public async Task<string> GeneratePasswordAsync()
         {
-            return _passwordGenerator.GetPassword();
+            return await _passwordGenerator.GetPassword();
         }
 
-        public Convocacao GetOne(Expression<Func<Convocacao, bool>> predicate)
+        public async Task<Convocacao> GetOneAsync(Expression<Func<Convocacao, bool>> predicate)
         {
-            return _convocacaoRepository.GetOne(predicate);
+            return await _convocacaoRepository.GetOneAsync(predicate);
         }
 
         public IEnumerable<Convocacao> MontarListaDeConvocados(IEnumerable<Convocacao> dadosConfirmados, IEnumerable<Convocacao> convocados)

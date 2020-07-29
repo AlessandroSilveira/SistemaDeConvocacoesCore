@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AutoMapper;
 using SistemaDeConvocacoes.Application.Interfaces.Services;
 using SistemaDeConvocacoes.Application.ViewModels;
@@ -25,44 +26,49 @@ namespace SistemaDeConvocacoes.Application.Services
             _pessoaService.Dispose();
         }
 
-        public PessoaViewModel Add(PessoaViewModel obj)
+        public async Task<PessoaViewModel> AddAsync(PessoaViewModel obj)
         {
             var pessoa = _mapper.Map<PessoaViewModel, Pessoa>(obj);
-            _pessoaService.Add(pessoa);
+            await _pessoaService.AddAsync(pessoa);
             return obj;
         }
 
-        public PessoaViewModel GetById(Guid id)
+        public async Task<PessoaViewModel> GetByIdAsync(Guid id)
         {
-            return _mapper.Map<Pessoa, PessoaViewModel>(_pessoaService.GetById(id));
+            return _mapper.Map<Pessoa, PessoaViewModel>(await _pessoaService.GetByIdAsync(id));
         }
 
-        public IEnumerable<PessoaViewModel> GetAll()
+        public async Task<IEnumerable<PessoaViewModel>> GetAllAsync()
         {
-            return _mapper.Map<IEnumerable<Pessoa>, IEnumerable<PessoaViewModel>>(_pessoaService.GetAll());
+            return _mapper.Map<IEnumerable<Pessoa>, IEnumerable<PessoaViewModel>>(await _pessoaService.GetAllAsync());
         }
 
-        public PessoaViewModel Update(PessoaViewModel obj)
+        public async Task<PessoaViewModel> UpdateAsync(PessoaViewModel obj)
         {
 
-            _pessoaService.Update(_mapper.Map<PessoaViewModel, Pessoa>(obj));
+            await _pessoaService.UpdateAsync(_mapper.Map<PessoaViewModel, Pessoa>(obj));
 
             return obj;
         }
 
-        public void Remove(Guid id)
+        public Task RemoveAsync(Guid id)
         {
-            _pessoaService.Remove(id);
+            _pessoaService.RemoveAsync(id);
         }
 
-        public IEnumerable<PessoaViewModel> Search(Expression<Func<Pessoa, bool>> predicate)
+        public async Task<IEnumerable<PessoaViewModel>> SearchAsync(Expression<Func<Pessoa, bool>> predicate)
         {
-            return _mapper.Map<IEnumerable<Pessoa>, IEnumerable<PessoaViewModel>>(_pessoaService.Search(predicate));
+            return _mapper.Map<IEnumerable<Pessoa>, IEnumerable<PessoaViewModel>>(await _pessoaService.SearchAsync(predicate));
         }
 
-        public PessoaViewModel GetOne(Expression<Func<Pessoa, bool>> predicate)
+        public PessoaViewModel GetOneAsync(Expression<Func<Pessoa, bool>> predicate)
         {
-            return _mapper.Map<Pessoa, PessoaViewModel>(_pessoaService.GetOne(predicate));
+            return _mapper.Map<Pessoa, PessoaViewModel>(_pessoaService.GetOneAsync(predicate));
+        }
+
+        Task<PessoaViewModel> IPessoaAppService.GetOneAsync(Expression<Func<Pessoa, bool>> predicate)
+        {
+            throw new NotImplementedException();
         }
     }
 }

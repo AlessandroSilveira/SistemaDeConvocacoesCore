@@ -21,9 +21,9 @@ namespace SistemaDeConvocacoes.Application.Services
             _mapper = mapper;
         }
 
-        public void Dispose()
+        public void DisposeAsync()
         {
-            _primeiroAcessoService.Dispose();
+            _primeiroAcessoService.DisposeAsync();
         }
 
         public PrimeiroAcessoViewModel Add(PrimeiroAcessoViewModel obj)

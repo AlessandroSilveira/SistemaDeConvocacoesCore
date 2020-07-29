@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -55,13 +56,13 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
 
         public ActionResult Index()
         {
-            return View(_convocacaoAppService.GetAll());
+            return View(_convocacaoAppService.GetAllAsync());
         }
 
         public ActionResult Details(Guid? id)
         {
             if (id.Equals(null)) return new StatusCodeResult((int)HttpStatusCode.BadRequest);
-            var convocacaoViewModel = _convocacaoAppService.GetById(Guid.Parse(id.ToString()));
+            var convocacaoViewModel = _convocacaoAppService.GetByIdAsync(Guid.Parse(id.ToString()));
             return convocacaoViewModel.Equals(null) ? (ActionResult) NotFound() : View(convocacaoViewModel);
         }
 
@@ -72,7 +73,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(ConvocacaoViewModel convocacaoViewModel, string cargo)
+        public async Task<IActionResult> CreateAsync(ConvocacaoViewModel convocacaoViewModel, string cargo)
         {
             if (!ModelState.IsValid) return View(convocacaoViewModel);
 
@@ -83,10 +84,10 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
 
             foreach (var t in selecionado)
             {
-                var dadosConvocado = _convocadoAppService.GetById(Guid.Parse(t));
+                var dadosConvocado = await _convocadoAppService.GetByIdAsync(Guid.Parse(t));
                 RegistarCandidatoParaFazerLogin(dadosConvocado);
                 convocacaoViewModel.ConvocadoId = Guid.Parse(t);
-                var gravaConvocacao = _convocacaoAppService.Add(convocacaoViewModel);
+                var gravaConvocacao = await _convocacaoAppService.AddAsync(convocacaoViewModel);
 
                 if (gravaConvocacao == null)
                     break;
@@ -108,7 +109,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
 
         private string ObterAssuntoEmail(ConvocadoViewModel convocacao)
         {
-            var dadosProcesso = _processoAppService.GetById(convocacao.ProcessoId);
+            var dadosProcesso = await _processoAppService.GetByIdAsync(convocacao.ProcessoId);
             return string.Format("Prezado candidato {0} você está convocado para o {1}", convocacao.Nome,
                 dadosProcesso.Nome);
         }
@@ -158,13 +159,13 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
 
         private string GerarSenha()
         {
-            return _convocacaoAppService.GerarSenhaUsuario();
+            return _convocacaoAppService.GerarSenhaUsuarioAsync();
         }
 
         public ActionResult Edit(Guid? id)
         {
             if (id.Equals(null)) return new StatusCodeResult((int)HttpStatusCode.BadRequest);
-            var convocacaoViewModel = _convocacaoAppService.GetById(Guid.Parse(id.ToString()));
+            var convocacaoViewModel = _convocacaoAppService.GetByIdAsync(Guid.Parse(id.ToString()));
             return convocacaoViewModel.Equals(null) ? (ActionResult) NotFound() : View(convocacaoViewModel);
         }
 
@@ -173,14 +174,14 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         public ActionResult Edit(ConvocacaoViewModel convocacaoViewModel)
         {
             if (!ModelState.IsValid) return View(convocacaoViewModel);
-            _convocacaoAppService.Update(convocacaoViewModel);
+            _convocacaoAppService.UpdateAsync(convocacaoViewModel);
             return RedirectToAction("Index");
         }
 
         public ActionResult Delete(Guid? id)
         {
             if (id.Equals(null)) return new StatusCodeResult((int)HttpStatusCode.BadRequest);
-            var convocacaoViewModel = _convocacaoAppService.GetById(Guid.Parse(id.ToString()));
+            var convocacaoViewModel = _convocacaoAppService.GetByIdAsync(Guid.Parse(id.ToString()));
             return convocacaoViewModel.Equals(null) ? (ActionResult) NotFound() : View(convocacaoViewModel);
         }
 
@@ -189,7 +190,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            _convocacaoAppService.Remove(id);
+            _convocacaoAppService.RemoveAsync(id);
             return RedirectToAction("Index");
         }
 
@@ -221,7 +222,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
 
         private bool ObterDadosConvocado(ConvocadoViewModel convocadoViewModel, out ConvocadoViewModel dadosConvocado)
         {
-            dadosConvocado = _convocadoAppService.Search(a => a.ConvocadoId.Equals(convocadoViewModel.ConvocadoId))
+            dadosConvocado = _convocadoAppService.SearchAsync(a => a.ConvocadoId.Equals(convocadoViewModel.ConvocadoId))
                 .FirstOrDefault();
             return dadosConvocado == null;
         }
@@ -230,13 +231,13 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         public ActionResult ConfirmaConvocacao(Guid processoId, Guid convocadoId, Guid convocacaoId, string decisao)
         {
             var dadosConvocacao =
-                _convocacaoAppService.GetById(convocacaoId);
+                _convocacaoAppService.GetByIdAsync(convocacaoId);
 
             dadosConvocacao.Desistente = decisao;
 
             dadosConvocacao.StatusConvocacao = decisao.Equals("S") ? StatusConvocacao.Desistente.ToString() : StatusConvocacao.EmConvocacao.ToString();
 
-            _convocacaoAppService.Update(dadosConvocacao);
+            _convocacaoAppService.UpdateAsync(dadosConvocacao);
             return RedirectToAction(decisao.Equals("S") ? "DesistenciaCandidato" : "DocumentacaoConvocado",
                 "Convocacao", new {ProcessoId = processoId, ConvocadoId = convocadoId, ConvocacaoId = convocacaoId});
         }
@@ -266,10 +267,10 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
 
         public ActionResult DesistenciaCandidato(Guid processoId, Guid convocadoId, Guid convocacaoId)
         {
-            ViewBag.dadosConvocacao = _convocacaoAppService.GetById(convocacaoId);
-            var dadosConvocado = _convocadoAppService.GetById(convocadoId);
+            ViewBag.dadosConvocacao = _convocacaoAppService.GetByIdAsync(convocacaoId);
+            var dadosConvocado = _convocadoAppService.GetByIdAsync(convocadoId);
             ViewBag.dadosConvocado = dadosConvocado;
-            ViewBag.dadosProcesso = _processoAppService.GetById(processoId);
+            ViewBag.dadosProcesso = _processoAppService.GetByIdAsync(processoId);
             return View();
         }
     }

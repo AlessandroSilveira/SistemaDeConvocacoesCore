@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SistemaDeConvocacoes.Application.Interfaces.Services;
@@ -32,84 +33,96 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             _listaOpcoes = listaOpcoes;
         }
 
-        public ActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
-            return View(_processoAppService.GetAll());
+            return View(await _processoAppService.GetAllAsync());
         }
 
-        public ActionResult Details(Guid? id)
+        public async Task<IActionResult> DetailsAsync(Guid? id)
         {
             if (id.Equals(null)) return new StatusCodeResult((int)HttpStatusCode.BadRequest);
-            var processoViewModel = _processoAppService.GetById(Guid.Parse(id.ToString()));
-            ViewBag.dadosProcesso = _processoAppService.GetById(Guid.Parse(id.ToString()));
+            var processoViewModel = await _processoAppService.GetByIdAsync(Guid.Parse(id.ToString()));
+            ViewBag.dadosProcesso = await _processoAppService.GetByIdAsync(Guid.Parse(id.ToString()));
             ViewBag.ProcessoId = id;
             return processoViewModel.Equals(null) ? (ActionResult) NotFound() : View(processoViewModel);
         }
 
-        public ActionResult Create()
+        public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(ProcessoViewModel processoViewModel)
+        public async Task<IActionResult> CreateAsync(ProcessoViewModel processoViewModel)
         {
             if (!ModelState.IsValid) return View(processoViewModel);
-            _processoAppService.Add(processoViewModel);
+            await _processoAppService.AddAsync(processoViewModel);
             return RedirectToAction("Index");
         }
 
-        public ActionResult Edit(Guid? id)
+        public async Task<IActionResult> EditAsync(Guid? id)
         {
             ViewBag.ProcessoId = id;
-            if (id.Equals(null)) return new StatusCodeResult((int)HttpStatusCode.BadRequest);
-            var processoViewModel = _processoAppService.GetById(Guid.Parse(id.ToString()));
+
+            if (id.Equals(null)) 
+                return new StatusCodeResult((int)HttpStatusCode.BadRequest);
+
+            var processoViewModel = await _processoAppService.GetByIdAsync(Guid.Parse(id.ToString()));
+
             return processoViewModel.Equals(null) ? (ActionResult) NotFound() : View(processoViewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(ProcessoViewModel processoViewModel)
+        public async Task<IActionResult> EditAsync(ProcessoViewModel processoViewModel)
         {
-            if (!ModelState.IsValid) return View(processoViewModel);
-            _processoAppService.Update(processoViewModel);
+            if (!ModelState.IsValid)
+                return View(processoViewModel);
+
+            await _processoAppService.UpdateAsync(processoViewModel);
+
             return RedirectToAction("Index");
         }
 
-        public ActionResult Delete(Guid? id)
+        public async Task<IActionResult> DeleteAsync(Guid? id)
         {
-            if (id.Equals(null)) return new StatusCodeResult((int)HttpStatusCode.BadRequest);
-            var processoViewModel = _processoAppService.GetById(Guid.Parse(id.ToString()));
-            ViewBag.dadosProcesso = _processoAppService.GetById(Guid.Parse(id.ToString()));
+            if (id.Equals(null))
+                return new StatusCodeResult((int)HttpStatusCode.BadRequest);
+
+            var processoViewModel = await _processoAppService.GetByIdAsync(Guid.Parse(id.ToString()));
+            ViewBag.dadosProcesso = await _processoAppService.GetByIdAsync(Guid.Parse(id.ToString()));
             ViewBag.ProcessoId = id;
+
             return processoViewModel.Equals(null) ? (ActionResult) NotFound() : View(processoViewModel);
         }
 
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmedAsync(Guid id)
         {
-            ViewBag.dadosProcesso = _processoAppService.GetById(Guid.Parse(id.ToString()));
+            ViewBag.dadosProcesso = await  _processoAppService.GetByIdAsync(Guid.Parse(id.ToString()));
             ViewBag.ProcessoId = id;
-            _processoAppService.Remove(id);
+            await _processoAppService.RemoveAsync(id);
+
             return RedirectToAction("Index");
         }
 
-        public ActionResult EscolherCargo(Guid id)
+        public async Task<IActionResult> EscolherCargoAsync(Guid id)
         {
-            ViewBag.dadosProcesso = _processoAppService.GetById(Guid.Parse(id.ToString()));
+            ViewBag.dadosProcesso = await _processoAppService.GetByIdAsync(Guid.Parse(id.ToString()));
             ViewBag.ProcessoId = id;
-            ViewBag.DadosConvocacao = _processoAppService.GetById(id);
-            ViewBag.Cargos = _cargoAppService.Search(a => a.ProcessoId.Equals(id) && a.Ativo.Equals(true))
+            ViewBag.DadosConvocacao = await _processoAppService.GetByIdAsync(id);
+            ViewBag.Cargos = _cargoAppService.SearchAsync(a => a.ProcessoId.Equals(id) && a.Ativo.Equals(true)).Result
                 .OrderBy(a => a.CodigoCargo);
             ViewBag.Id = id;
+
             return View();
         }
 
         [HttpPost]
-        public ActionResult ListaConvocados(string ProcessoId, string cargo)
+        public async Task<IActionResult> ListaConvocadosAsync(string ProcessoId, string cargo)
         {
             var dadosConvocadoViewModel = new ConvocadoViewModel
             {
@@ -117,21 +130,21 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
                 ProcessoId = Guid.Parse(ProcessoId)
             };
 
-            var convocados = _convocacaoAppService.Search(a => a.ProcessoId.Equals(dadosConvocadoViewModel.ProcessoId));
+            var convocados = await _convocacaoAppService.SearchAsync(a => a.ProcessoId.Equals(dadosConvocadoViewModel.ProcessoId));
 
-            ViewBag.DadosConvocacao = _processoAppService.GetById(dadosConvocadoViewModel.ProcessoId);
+            ViewBag.DadosConvocacao = await _processoAppService.GetByIdAsync(dadosConvocadoViewModel.ProcessoId);
             ViewBag.ListaCandidatos = _convocadoAppService
-                .Search(a => a.CargoId.Equals(dadosConvocadoViewModel.CargoId)).OrderBy(a => a.Posicao)
+                .SearchAsync(a => a.CargoId.Equals(dadosConvocadoViewModel.CargoId)).Result.OrderBy(a => a.Posicao)
                 .Where(a => convocados.All(p2 => p2.ConvocadoId != a.ConvocadoId));
 
-            ViewBag.DadosCargo = _cargoAppService.GetById(dadosConvocadoViewModel.CargoId);
+            ViewBag.DadosCargo = await _cargoAppService.GetByIdAsync(dadosConvocadoViewModel.CargoId);
             ViewBag.ProcessoId = ProcessoId;
-            ViewBag.dadosProcesso = _processoAppService.GetById(Guid.Parse(ProcessoId));
+            ViewBag.dadosProcesso = await _processoAppService.GetByIdAsync(Guid.Parse(ProcessoId));
 
             return View();
         }
 
-        public ActionResult ListaConvocados(Guid ProcessoId, string cargo, bool confirmacao)
+        public async Task<IActionResult> ListaConvocadosAsync(Guid ProcessoId, string cargo, bool confirmacao)
         {
             var dadosConvocadoViewModel = new ConvocadoViewModel
             {
@@ -141,16 +154,16 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
 
             ViewBag.Confirmacao = confirmacao;
 
-            var convocados = _convocacaoAppService.Search(a => a.ProcessoId.Equals(dadosConvocadoViewModel.ProcessoId));
+            var convocados = await _convocacaoAppService.SearchAsync(a => a.ProcessoId.Equals(dadosConvocadoViewModel.ProcessoId));
 
-            ViewBag.DadosConvocacao = _processoAppService.GetById(dadosConvocadoViewModel.ProcessoId);
+            ViewBag.DadosConvocacao = await _processoAppService.GetByIdAsync(dadosConvocadoViewModel.ProcessoId);
             ViewBag.ListaCandidatos = _convocadoAppService
-                .Search(a => a.CargoId.Equals(dadosConvocadoViewModel.CargoId)).OrderBy(a => a.Posicao)
+                .SearchAsync(a => a.CargoId.Equals(dadosConvocadoViewModel.CargoId)).Result.OrderBy(a => a.Posicao)
                 .Where(a => convocados.All(p2 => p2.ConvocadoId != a.ConvocadoId));
 
-            ViewBag.DadosCargo = _cargoAppService.GetById(dadosConvocadoViewModel.CargoId);
+            ViewBag.DadosCargo = await _cargoAppService.GetByIdAsync(dadosConvocadoViewModel.CargoId);
             ViewBag.ProcessoId = ProcessoId;
-            ViewBag.dadosProcesso = _processoAppService.GetById(ProcessoId);
+            ViewBag.dadosProcesso = await _processoAppService.GetByIdAsync(ProcessoId);
             return View();
         }
 
@@ -161,23 +174,25 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             base.Dispose(disposing);
         }
 
-        public ActionResult Configuracoes(Guid id)
+        public async Task<IActionResult> ConfiguracoesAsync(Guid id)
         {
             ViewBag.ProcessoId = id;
-            ViewBag.dadosProcesso = _processoAppService.GetById(id);
+            ViewBag.dadosProcesso = await _processoAppService.GetByIdAsync(id);
+
             return View();
         }
 
-        public ActionResult Painel(Guid id)
+        public async Task<IActionResult> PainelAsync(Guid id)
         {
-            ViewBag.dadosProcesso = _processoAppService.GetById(id);
+            ViewBag.dadosProcesso = await _processoAppService.GetByIdAsync(id);
+
             return View();
         }
 
-        public ActionResult AtualizarCandidatosConfirmados(Guid id)
+        public async Task<IActionResult> AtualizarCandidatosConfirmadosAsync(Guid id)
         {
-            ViewBag.dadosProcesso = _processoAppService.GetById(id);
-            ViewBag.Cargos = _cargoAppService.Search(a => a.ProcessoId.Equals(id) && a.Ativo.Equals(true))
+            ViewBag.dadosProcesso =await  _processoAppService.GetByIdAsync(id);
+            ViewBag.Cargos = _cargoAppService.SearchAsync(a => a.ProcessoId.Equals(id) && a.Ativo.Equals(true)).Result
                 .OrderBy(a => a.CodigoCargo);
             ViewBag.ListaCandidatos = null;
 
@@ -189,21 +204,24 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         }
 
         [HttpPost]
-        public ActionResult AtualizarCandidatosConfirmados(Guid? id, Guid? cargo)
+        public async Task<IActionResult> AtualizarCandidatosConfirmadosAsync(Guid? id, Guid? cargo)
         {
             var novoid = Guid.Parse(id.ToString());
             var novocargo = Guid.Parse(cargo.ToString());
 
-            if (VerificarSerCargoEstaNulo(cargo, novoid, out var actionResult)) return actionResult;
-            if (VerificarSeProcessoIdEstaNulo(id, novoid, out var view)) return view;
+            if (VerificarSerCargoEstaNulo(cargo, novoid, out var actionResult)) 
+                return actionResult;
 
-            var dadosConfirmados = _convocacaoAppService.Search(a => a.ProcessoId.Equals(novoid));
+            if (VerificarSeProcessoIdEstaNulo(id, novoid, out var view)) 
+                return view;
+
+            var dadosConfirmados = await _convocacaoAppService.SearchAsync(a => a.ProcessoId.Equals(novoid));
             var convocados =
-                _convocadoAppService.Search(a => a.ProcessoId.Equals(novoid) && a.CargoId.Equals(novocargo));
+                await _convocadoAppService.SearchAsync(a => a.ProcessoId.Equals(novoid) && a.CargoId.Equals(novocargo));
 
             ViewBag.ListaDeCandidatos = _convocacaoAppService.MontaListaDeConvocados(dadosConfirmados, convocados);
-            ViewBag.dadosProcesso = _processoAppService.GetById(novoid);
-            ViewBag.Cargos = _cargoAppService.Search(a => a.ProcessoId.Equals(novoid) && a.Ativo.Equals(true))
+            ViewBag.dadosProcesso = await _processoAppService.GetByIdAsync(novoid);
+            ViewBag.Cargos = _cargoAppService.SearchAsync(a => a.ProcessoId.Equals(novoid) && a.Ativo.Equals(true)).Result
                 .OrderBy(a => a.CodigoCargo);
 
             var opcoesComp = _listaOpcoes.MontarListaOpcoes<StatusConvocacao>();
@@ -214,47 +232,51 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         }
 
         [HttpPost]
-        public IActionResult AtualizarConvocacao(string opcaoConvocacao, Guid ConvocacaoId)
+        public async Task<IActionResult> AtualizarConvocacaoAsync(string opcaoConvocacao, Guid ConvocacaoId)
         {
-            var dadosConvocacao = _convocacaoAppService.GetById(ConvocacaoId);
+            var dadosConvocacao = await _convocacaoAppService.GetByIdAsync(ConvocacaoId);
             dadosConvocacao.StatusConvocacao = opcaoConvocacao;
-            var dados = _convocacaoAppService.Update(dadosConvocacao);
+            var dados = await _convocacaoAppService.UpdateAsync(dadosConvocacao);
+
             return Ok(dados);
         }
 
-        public ActionResult AtualizarStatusEstudante(Guid id)
+        public async Task<IActionResult> AtualizarStatusEstudanteAsync(Guid id)
         {
-            ViewBag.dadosProcesso = _processoAppService.GetById(id);
-            ViewBag.Cargos = _cargoAppService.Search(a => a.ProcessoId.Equals(id) && a.Ativo.Equals(true))
+            ViewBag.dadosProcesso = await _processoAppService.GetByIdAsync(id);
+            ViewBag.Cargos = _cargoAppService.SearchAsync(a => a.ProcessoId.Equals(id) && a.Ativo.Equals(true)).Result
                 .OrderBy(a => a.CodigoCargo);
             ViewBag.ListaCandidatos = null;
-
             ViewBag.ProcessoId = id;
 
             var opcoesComp = _listaOpcoes.MontarListaOpcoes<StatusConvocacao>();
 
             ViewBag.ListaOpcoesComparecimento = opcoesComp;
+
             return View();
         }
 
         [HttpPost]
-        public ActionResult AtualizarStatusEstudante(Guid? id, Guid? cargo)
+        public async Task<IActionResult> AtualizarStatusEstudanteAsync(Guid? id, Guid? cargo)
         {
             var guidId = Guid.Parse(id.ToString());
             var guidCargo = Guid.Parse(cargo.ToString());
 
-            if (VerificarSerCargoEstaNulo(cargo, guidId, out var actionResult)) return actionResult;
-            if (VerificarSeProcessoIdEstaNulo(id, guidId, out var view)) return view;
+            if (VerificarSerCargoEstaNulo(cargo, guidId, out var actionResult)) 
+                return actionResult;
 
-            var dadosConfirmados = _convocacaoAppService.Search(a => a.ProcessoId.Equals(guidId))
+            if (VerificarSeProcessoIdEstaNulo(id, guidId, out var view)) 
+                return view;
+
+            var dadosConfirmados = _convocacaoAppService.SearchAsync(a => a.ProcessoId.Equals(guidId)).Result
                 .Where(b => b.StatusConvocacao != null);
             var convocados =
-                _convocadoAppService.Search(a => a.ProcessoId.Equals(guidId) && a.CargoId.Equals(guidCargo));
+                await _convocadoAppService.SearchAsync(a => a.ProcessoId.Equals(guidId) && a.CargoId.Equals(guidCargo));
             var listaDeconvocados = _convocacaoAppService.MontaListaDeConvocados(dadosConfirmados, convocados);
 
             ViewBag.ListaDeCandidatos = listaDeconvocados;
-            ViewBag.dadosProcesso = _processoAppService.GetById(guidId);
-            ViewBag.Cargos = _cargoAppService.Search(a => a.ProcessoId.Equals(guidId) && a.Ativo.Equals(true))
+            ViewBag.dadosProcesso = await _processoAppService.GetByIdAsync(guidId);
+            ViewBag.Cargos = _cargoAppService.SearchAsync(a => a.ProcessoId.Equals(guidId) && a.Ativo.Equals(true)).Result
                 .OrderBy(a => a.CodigoCargo);
 
             var opcoesContatacao = _listaOpcoes.MontarListaOpcoes<StatusConvocacao>();
@@ -270,9 +292,9 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             if (id.Equals(null))
             {
                 ModelState.AddModelError(id.ToString(), $"Algo deu errado,por favor tente novamente");
-                ViewBag.Cargos = _cargoAppService.Search(a => a.ProcessoId.Equals(guidId) && a.Ativo.Equals(true))
+                ViewBag.Cargos = _cargoAppService.SearchAsync(a => a.ProcessoId.Equals(guidId) && a.Ativo.Equals(true)).Result
                     .OrderBy(a => a.CodigoCargo);
-                ViewBag.dadosProcesso = _processoAppService.GetById(guidId);
+                ViewBag.dadosProcesso = _processoAppService.GetByIdAsync(guidId).Result;
                 {
                     view = View();
                     return true;
@@ -288,9 +310,11 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             if (cargo.Equals(null))
             {
                 ModelState.AddModelError(cargo.ToString(), $"Escolha um cargo");
-                ViewBag.Cargos = _cargoAppService.Search(a => a.ProcessoId.Equals(guidId) && a.Ativo.Equals(true))
+
+                ViewBag.Cargos = _cargoAppService.SearchAsync(a => a.ProcessoId.Equals(guidId) && a.Ativo.Equals(true)).Result
                     .OrderBy(a => a.CodigoCargo);
-                ViewBag.dadosProcesso = _processoAppService.GetById(guidId);
+
+                ViewBag.dadosProcesso = _processoAppService.GetByIdAsync(guidId).Result;
                 {
                     actionResult = View();
                     return true;
@@ -302,12 +326,14 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         }
 
         [HttpPost]
-        public ActionResult AtualizarStatusEstudanteParaContratacao(string opcaoStatus, Guid processoId,
+        public async Task<IActionResult> AtualizarStatusEstudanteParaContratacaoAsync(string opcaoStatus, Guid processoId,
             Guid convocacaoId)
         {
-            var dadosConvocacao = _convocacaoAppService.GetById(convocacaoId);
+            var dadosConvocacao = await _convocacaoAppService.GetByIdAsync(convocacaoId);
             dadosConvocacao.StatusContratacao = opcaoStatus;
-            var dados = _convocacaoAppService.Update(dadosConvocacao);
+
+            var dados = await _convocacaoAppService.UpdateAsync(dadosConvocacao);
+
             return Ok(dados);
         }
     }

@@ -16,7 +16,7 @@ namespace SistemaDeConvocacoes.Domain.Services
             _telefoneRepository = telefoneRepository;
         }
 
-        public void Dispose()
+        public void DisposeAsync()
         {
             _telefoneRepository.Dispose();
             GC.SuppressFinalize(this);

@@ -3,27 +3,28 @@ using SistemaDeConvocacoes.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace SistemaDeConvocacoes.Application.Interfaces.Services
 {
     public interface IDadosConvocacaoAppService : IDisposable
     {
-        DadosConvocadosViewModel Add(DadosConvocadosViewModel obj);
+        Task<DadosConvocadosViewModel> AddAsync(DadosConvocadosViewModel obj);
 
-        DadosConvocadosViewModel GetById(Guid id);
+        Task<DadosConvocadosViewModel> GetByIdAsync(Guid id);
 
-        IEnumerable<DadosConvocadosViewModel> GetAll();
+        Task<IEnumerable<DadosConvocadosViewModel>> GetAllAsync();
 
-        DadosConvocadosViewModel Update(DadosConvocadosViewModel obj);
+        Task<DadosConvocadosViewModel> UpdateAsync(DadosConvocadosViewModel obj);
 
-        void Remove(Guid id);
+        Task RemoveAsync(Guid id);
 
-        IEnumerable<DadosConvocadosViewModel> Search(Expression<Func<Convocado, bool>> predicate);
+        Task<IEnumerable<DadosConvocadosViewModel>> SearchAsync(Expression<Func<Convocado, bool>> predicate);
 
-        void SalvarCandidatos(Guid id, string file);
+        Task SalvarCandidatosAsync(Guid id, string file);
 
-        void SalvarCargos(Guid id, string format);
+        Task SalvarCargosAsync(Guid id, string format);
 
-        DadosConvocadosViewModel GetOne(Expression<Func<Convocado, bool>> predicate);
+        Task<DadosConvocadosViewModel> GetOneAsync(Expression<Func<Convocado, bool>> predicate);
     }
 }

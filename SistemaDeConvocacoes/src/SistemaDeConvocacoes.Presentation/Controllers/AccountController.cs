@@ -129,7 +129,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         {
             var primeiroAcesso = _primeiroAcessoAppService.Search(a => a.Email.Equals(model.Email));
 
-            var dadosConvocado = _convocadoAppService.Search(a => a.Email.Equals(model.Email)).FirstOrDefault();
+            var dadosConvocado = _convocadoAppService.SearchAsync(a => a.Email.Equals(model.Email)).FirstOrDefault();
 
             var primeiroAcessoViewModel = new PrimeiroAcessoViewModel
             {

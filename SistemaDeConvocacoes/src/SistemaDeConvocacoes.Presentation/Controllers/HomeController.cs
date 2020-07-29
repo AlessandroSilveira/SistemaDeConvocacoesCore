@@ -40,31 +40,32 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
 
             var user = await _userManager.FindByEmailAsync(User.Identity.Name);
 
-            var dadosConvocado = _convocadoAppService.GetById(Guid.Parse(user.Id));
+            var dadosConvocado = await _convocadoAppService.GetByIdAsync(Guid.Parse(user.Id));
             ViewBag.dadosConvocado = dadosConvocado;
 
-            var dadosProcesso = _processoAppService.GetById(dadosConvocado.ProcessoId);
+            var dadosProcesso = await _processoAppService.GetByIdAsync(dadosConvocado.ProcessoId);
             ViewBag.dadosProcesso = dadosProcesso;
 
-            var dadosConvocacao = _convocacaoAppService.Search(a =>
-                    a.ConvocadoId.Equals(dadosConvocado.ConvocadoId) && a.ProcessoId.Equals(dadosProcesso.ProcessoId))
-                .FirstOrDefault();
+            var dadosConvocacao = await _convocacaoAppService.SearchAsync(a =>
+                    a.ConvocadoId.Equals(dadosConvocado.ConvocadoId) && a.ProcessoId.Equals(dadosProcesso.ProcessoId));
+
+            dadosConvocacao.FirstOrDefault();
 
             ViewBag.dadosConvocacao = dadosConvocacao;
 
-            var listaDocumentacao = _documentacaoAppService.Search(a => a.ProcessoId.Equals(dadosProcesso.ProcessoId));
+            var listaDocumentacao = await _documentacaoAppService.SearchAsync(a => a.ProcessoId.Equals(dadosProcesso.ProcessoId));
             ViewBag.ListaDocumentacao = listaDocumentacao;
 
-            if (dadosConvocacao == null || string.IsNullOrEmpty(dadosConvocacao.Desistente))
+            if (dadosConvocacao == null || string.IsNullOrEmpty(dadosConvocacao.FirstOrDefault().Desistente))
                 return View();
 
-            if (dadosConvocacao.Desistente.Equals("N"))
+            if (dadosConvocacao.FirstOrDefault().Desistente.Equals("N"))
                 return RedirectToAction("DocumentacaoConvocado", "Convocacao",
-                    new { dadosProcesso.ProcessoId, dadosConvocacao.ConvocadoId, dadosConvocacao.ConvocacaoId });
+                    new { dadosProcesso.ProcessoId, dadosConvocacao.FirstOrDefault().ConvocadoId, dadosConvocacao.FirstOrDefault().ConvocacaoId });
 
-            if (dadosConvocacao.Desistente.Equals("S"))
+            if (dadosConvocacao.FirstOrDefault().Desistente.Equals("S"))
                 return RedirectToAction("DesistenciaCandidato", "Convocacao",
-                    new { dadosProcesso.ProcessoId, dadosConvocacao.ConvocadoId, dadosConvocacao.ConvocacaoId });
+                    new { dadosProcesso.ProcessoId, dadosConvocacao.FirstOrDefault().ConvocadoId, dadosConvocacao.FirstOrDefault().ConvocacaoId });
 
             return View();
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using System.Threading.Tasks;
 using SistemaDeConvocacoes.Domain.Interfaces.Services;
 
 namespace SistemaDeConvocacoes.Domain.Services
@@ -8,8 +9,7 @@ namespace SistemaDeConvocacoes.Domain.Services
     {
         private const string ValidCharacters = "abcdefghijklmnopqrstuvwxyz1234567890@#!?";
 
-
-        public string GetPassword()
+        public async Task<string> GetPassword()
         {
             const int
                 size = 8; //Convert.ToInt32(WebConfigurationManager.AppSettings["NumerosCaracteresSenha"]); TODO: ALterar essa linha para pegar esse valor no webconfig

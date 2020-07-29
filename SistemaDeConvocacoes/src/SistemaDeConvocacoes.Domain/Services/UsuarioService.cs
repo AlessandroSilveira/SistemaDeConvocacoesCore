@@ -16,7 +16,7 @@ namespace SistemaDeConvocacoes.Domain.Services
             _usuarioRepository = usuarioRepository;
         }
 
-        public void Dispose()
+        public void DisposeAsync()
         {
             _usuarioRepository.Dispose();
             GC.SuppressFinalize(this);

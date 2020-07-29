@@ -15,7 +15,7 @@ namespace SistemaDeConvocacoes.Domain.Services
         {
             _tipoDocumentoRepository = tipoDocumentoRepository;
         }
-        public void Dispose()
+        public void DisposeAsync()
         {
             _tipoDocumentoRepository.Dispose();
         }
@@ -25,7 +25,7 @@ namespace SistemaDeConvocacoes.Domain.Services
           return  _tipoDocumentoRepository.Add(obj);
         }
 
-        public TipoDocumento GetById(Guid id)
+        public TipoDocumento GetByIdAsync(Guid id)
         {
             return _tipoDocumentoRepository.GetById(id);
         }

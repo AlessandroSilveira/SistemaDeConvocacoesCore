@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using SistemaDeConvocacoes.Domain.Entities;
 using SistemaDeConvocacoes.Domain.Interfaces.Repositories;
 using SistemaDeConvocacoes.Domain.Interfaces.Services;
@@ -22,44 +23,44 @@ namespace SistemaDeConvocacoes.Domain.Services
             _convocadoRepository.Dispose();
         }
 
-        public Convocado Add(Convocado obj)
+        public async Task<Convocado> AddAsync(Convocado obj)
         {
-            return _convocadoRepository.Add(obj);
+            return await _convocadoRepository.AddAsync(obj);
         }
 
-        public Convocado GetById(Guid id)
+        public async Task<Convocado> GetByIdAsync(Guid id)
         {
-            return _convocadoRepository.GetById(id);
+            return await _convocadoRepository.GetByIdAsync(id);
         }
 
-        public IEnumerable<Convocado> GetAll()
+        public async Task<IEnumerable<Convocado>> GetAllAsync()
         {
-            return _convocadoRepository.GetAll();
+            return await _convocadoRepository.GetAllAsync();
         }
 
-        public Convocado Update(Convocado obj)
+        public async Task<Convocado> UpdateAsync(Convocado obj)
         {
-            return _convocadoRepository.Update(obj);
+            return await _convocadoRepository.UpdateAsync(obj);
         }
 
-        public void Remove(Guid id)
+        public async Task RemoveAsync(Guid id)
         {
-            _convocadoRepository.Remove(id);
+            await _convocadoRepository.RemoveAsync(id);
         }
 
-        public IEnumerable<Convocado> Search(Expression<Func<Convocado, bool>> predicate)
+        public async Task<IEnumerable<Convocado>> SearchAsync(Expression<Func<Convocado, bool>> predicate)
         {
-            return _convocadoRepository.Search(predicate);
+            return await _convocadoRepository.SearchAsync(predicate);
         }
 
-        public bool VerificaSeHaSobrenome(string nome)
+        public async Task<bool> VerificaSeHaSobrenome(string nome)
         {
             return nome.Trim().Split(' ').Length > 1;
         }
 
-        public Convocado GetOne(Expression<Func<Convocado, bool>> predicate)
+        public async Task<Convocado> GetOneAsync(Expression<Func<Convocado, bool>> predicate)
         {
-            return _convocadoRepository.GetOne(predicate);
+            return await _convocadoRepository.GetOneAsync(predicate);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using SistemaDeConvocacoes.Domain.Entities;
 using SistemaDeConvocacoes.Domain.Interfaces.Repositories;
 using SistemaDeConvocacoes.Domain.Interfaces.Services;
@@ -21,39 +22,39 @@ namespace SistemaDeConvocacoes.Domain.Services
             _documentoCandidatoRepository.Dispose();
         }
 
-        public DocumentoCandidato Add(DocumentoCandidato obj)
+        public async Task<DocumentoCandidato> AddAsync(DocumentoCandidato obj)
         {
-            return _documentoCandidatoRepository.Add(obj);
+            return await _documentoCandidatoRepository.AddAsync(obj);
         }
 
-        public DocumentoCandidato GetById(Guid id)
+        public async Task<DocumentoCandidato> GetByIdAsync(Guid id)
         {
-            return _documentoCandidatoRepository.GetById(id);
+            return await _documentoCandidatoRepository.GetByIdAsync(id);
         }
 
-        public IEnumerable<DocumentoCandidato> GetAll()
+        public async Task<IEnumerable<DocumentoCandidato>> GetAllAsync()
         {
-            return _documentoCandidatoRepository.GetAll();
+            return await _documentoCandidatoRepository.GetAllAsync();
         }
 
-        public DocumentoCandidato Update(DocumentoCandidato obj)
+        public async Task<DocumentoCandidato> UpdateAsync(DocumentoCandidato obj)
         {
-            return _documentoCandidatoRepository.Update(obj);
+            return await _documentoCandidatoRepository.UpdateAsync(obj);
         }
 
-        public void Remove(Guid id)
+        public async Task RemoveAsync(Guid id)
         {
-            _documentoCandidatoRepository.Remove(id);
+            await _documentoCandidatoRepository.RemoveAsync(id);
         }
 
-        public IEnumerable<DocumentoCandidato> Search(Expression<Func<DocumentoCandidato, bool>> predicate)
+        public async Task<IEnumerable<DocumentoCandidato>> SearchAsync(Expression<Func<DocumentoCandidato, bool>> predicate)
         {
-            return _documentoCandidatoRepository.Search(predicate);
+            return await _documentoCandidatoRepository.SearchAsync(predicate);
         }
 
-        public DocumentoCandidato GetOne(Expression<Func<DocumentoCandidato, bool>> predicate)
+        public async Task<DocumentoCandidato> GetOneAsync(Expression<Func<DocumentoCandidato, bool>> predicate)
         {
-            return _documentoCandidatoRepository.GetOne(predicate);
+            return await _documentoCandidatoRepository.GetOneAsync(predicate);
         }
     }
 }

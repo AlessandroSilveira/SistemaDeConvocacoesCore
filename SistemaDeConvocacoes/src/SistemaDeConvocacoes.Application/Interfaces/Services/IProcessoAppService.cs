@@ -3,23 +3,24 @@ using SistemaDeConvocacoes.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace SistemaDeConvocacoes.Application.Interfaces.Services
 {
     public interface IProcessoAppService : IDisposable
     {
-        ProcessoViewModel Add(ProcessoViewModel obj);
+        Task<ProcessoViewModel> AddAsync(ProcessoViewModel obj);
 
-        ProcessoViewModel GetById(Guid id);
+        Task<ProcessoViewModel> GetByIdAsync(Guid id);
 
-        IEnumerable<ProcessoViewModel> GetAll();
+        Task<IEnumerable<ProcessoViewModel>> GetAllAsync();
 
-        ProcessoViewModel Update(ProcessoViewModel obj);
+        Task<ProcessoViewModel> UpdateAsync(ProcessoViewModel obj);
 
-        void Remove(Guid id);
+        Task RemoveAsync(Guid id);
 
-        IEnumerable<ProcessoViewModel> Search(Expression<Func<Processo, bool>> predicate);
+        Task<IEnumerable<ProcessoViewModel>> SearchAsync(Expression<Func<Processo, bool>> predicate);
 
-        ProcessoViewModel GetOne(Expression<Func<Processo, bool>> predicate);
+        Task<ProcessoViewModel> GetOneAsync(Expression<Func<Processo, bool>> predicate);
     }
 }

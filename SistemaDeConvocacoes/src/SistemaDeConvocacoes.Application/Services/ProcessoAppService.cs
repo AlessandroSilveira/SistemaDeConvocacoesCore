@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AutoMapper;
 using SistemaDeConvocacoes.Application.Interfaces.Services;
 using SistemaDeConvocacoes.Application.ViewModels;
@@ -25,43 +26,43 @@ namespace SistemaDeConvocacoes.Application.Services
             _processoService.Dispose();
         }
 
-        public ProcessoViewModel Add(ProcessoViewModel obj)
+        public async Task<ProcessoViewModel> AddAsync(ProcessoViewModel obj)
         {
             var admin = _mapper.Map<ProcessoViewModel, Processo>(obj);           
-            _processoService.Add(admin);            
+            await _processoService.AddAsync(admin);            
             return obj;
         }
 
-        public ProcessoViewModel GetById(Guid id)
+        public async Task<ProcessoViewModel> GetByIdAsync(Guid id)
         {
-            return _mapper.Map<Processo, ProcessoViewModel>(_processoService.GetById(id));
+            return _mapper.Map<Processo, ProcessoViewModel>(await _processoService.GetByIdAsync(id));
         }
 
-        public IEnumerable<ProcessoViewModel> GetAll()
+        public async Task<IEnumerable<ProcessoViewModel>> GetAllAsync()
         {
-            return _mapper.Map<IEnumerable<Processo>, IEnumerable<ProcessoViewModel>>(_processoService.GetAll());
+            return _mapper.Map<IEnumerable<Processo>, IEnumerable<ProcessoViewModel>>(await _processoService.GetAllAsync());
         }
 
-        public ProcessoViewModel Update(ProcessoViewModel obj)
-        {           
-            _processoService.Update(_mapper.Map<ProcessoViewModel, Processo>(obj));            
+        public async Task<ProcessoViewModel> UpdateAsync(ProcessoViewModel obj)
+        {
+            await _processoService.UpdateAsync(_mapper.Map<ProcessoViewModel, Processo>(obj));            
             return obj;
         }
 
-        public void Remove(Guid id)
+        public async Task RemoveAsync(Guid id)
         {           
-            _processoService.Remove(id);            
+            await _processoService.RemoveAsync(id);            
         }
 
-        public IEnumerable<ProcessoViewModel> Search(Expression<Func<Processo, bool>> predicate)
+        public async Task<IEnumerable<ProcessoViewModel>> SearchAsync(Expression<Func<Processo, bool>> predicate)
         {
             return _mapper.Map<IEnumerable<Processo>, IEnumerable<ProcessoViewModel>>(
-                _processoService.Search(predicate));
+                await _processoService.SearchAsync(predicate));
         }
 
-        public ProcessoViewModel GetOne(Expression<Func<Processo, bool>> predicate)
+        public async Task<ProcessoViewModel> GetOneAsync(Expression<Func<Processo, bool>> predicate)
         {
-            return _mapper.Map<Processo, ProcessoViewModel>(_processoService.GetOne(predicate));
+            return _mapper.Map<Processo, ProcessoViewModel>(await _processoService.GetOneAsync(predicate));
         }
     }
 }

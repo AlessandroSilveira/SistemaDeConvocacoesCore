@@ -16,7 +16,7 @@ namespace SistemaDeConvocacoes.Domain.Services
             _processoRepository = processoRepository;
         }
 
-        public void Dispose()
+        public void DisposeAsync()
         {
             _processoRepository.Dispose();
         }

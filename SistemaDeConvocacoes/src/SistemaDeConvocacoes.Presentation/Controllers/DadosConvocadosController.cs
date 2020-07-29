@@ -26,7 +26,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         {
             ViewBag.id = id;
             ViewBag.ProcessoId = id;
-            ViewBag.dadosProcesso = _processoAppService.GetById(id);
+            ViewBag.dadosProcesso = _processoAppService.GetByIdAsync(id);
             return View();
         }
 
@@ -45,10 +45,10 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
 
             if (SalvarArquivoConvocados(out _))
 
-                _dadosConvocacaoAppService.SalvarCargos(dadosConvocadosViewModel.Id,
+                _dadosConvocacaoAppService.SalvarCargosAsync(dadosConvocadosViewModel.Id,
                     string.Format("{0}{1}", pathArquivo, nomeArquivo));
 
-            _dadosConvocacaoAppService.SalvarCandidatos(dadosConvocadosViewModel.Id,
+            _dadosConvocacaoAppService.SalvarCandidatosAsync(dadosConvocadosViewModel.Id,
                 string.Format("{0}{1}", pathArquivo, nomeArquivo));
 
             return RedirectToAction("Index", "Processos");

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using SistemaDeConvocacoes.Domain.Entities;
 using SistemaDeConvocacoes.Domain.Interfaces.Repositories;
 using SistemaDeConvocacoes.Domain.Interfaces.Services;
@@ -21,39 +22,39 @@ namespace SistemaDeConvocacoes.Domain.Services
             _adminRepository.Dispose();
         }
 
-        public Admin Add(Admin obj)
+        public async Task<Admin> AddAsync(Admin obj)
         {
-            return _adminRepository.Add(obj);
+            return await _adminRepository.AddAsync(obj);
         }
 
-        public Admin GetById(Guid id)
+        public async Task<Admin> GetByIdAsync(Guid id)
         {
-            return _adminRepository.GetById(id);
+            return await _adminRepository.GetByIdAsync(id);
         }
 
-        public IEnumerable<Admin> GetAll()
+        public async Task<IEnumerable<Admin>> GetAllAsync()
         {
-            return _adminRepository.GetAll();
+            return await _adminRepository.GetAllAsync();
         }
 
-        public Admin Update(Admin obj)
+        public async Task<Admin> UpdateAsync(Admin obj)
         {
-            return _adminRepository.Update(obj);
+            return await _adminRepository.UpdateAsync(obj);
         }
 
-        public void Remove(Guid id)
+        public async Task RemoveAsync(Guid id)
         {
-            _adminRepository.Remove(id);
+            await _adminRepository.RemoveAsync(id);
         }
 
-        public IEnumerable<Admin> Search(Expression<Func<Admin, bool>> predicate)
+        public async Task<IEnumerable<Admin>> SearchAsync(Expression<Func<Admin, bool>> predicate)
         {
-            return _adminRepository.Search(predicate);
+            return await _adminRepository.SearchAsync(predicate);
         }
 
-        public Admin GetOne(Expression<Func<Admin, bool>> predicate)
+        public async Task<Admin> GetOneAsync(Expression<Func<Admin, bool>> predicate)
         {
-            return _adminRepository.GetOne(predicate);
+            return await _adminRepository.GetOneAsync(predicate);
         }
     }
 }

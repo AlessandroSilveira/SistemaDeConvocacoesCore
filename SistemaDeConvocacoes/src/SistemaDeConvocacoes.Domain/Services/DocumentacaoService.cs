@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using SistemaDeConvocacoes.Domain.Entities;
 using SistemaDeConvocacoes.Domain.Interfaces.Repositories;
 using SistemaDeConvocacoes.Domain.Interfaces.Services;
@@ -21,39 +22,39 @@ namespace SistemaDeConvocacoes.Domain.Services
             _documentacaoRepository.Dispose();
         }
 
-        public Documentacao Add(Documentacao obj)
+        public async Task<Documentacao> AddAsync(Documentacao obj)
         {
-            return _documentacaoRepository.Add(obj);
+            return await _documentacaoRepository.AddAsync(obj);
         }
 
-        public Documentacao GetById(Guid id)
+        public async Task<Documentacao> GetByIdAsync(Guid id)
         {
-            return _documentacaoRepository.GetById(id);
+            return await _documentacaoRepository.GetByIdAsync(id);
         }
 
-        public IEnumerable<Documentacao> GetAll()
+        public async Task<IEnumerable<Documentacao>> GetAllAsync()
         {
-            return _documentacaoRepository.GetAll();
+            return await _documentacaoRepository.GetAllAsync();
         }
 
-        public Documentacao Update(Documentacao obj)
+        public async Task<Documentacao> UpdateAsync(Documentacao obj)
         {
-            return _documentacaoRepository.Update(obj);
+            return await _documentacaoRepository.UpdateAsync(obj);
         }
 
-        public void Remove(Guid id)
+        public async Task RemoveAsync(Guid id)
         {
-            _documentacaoRepository.Remove(id);
+            await _documentacaoRepository.RemoveAsync(id);
         }
 
-        public IEnumerable<Documentacao> Search(Expression<Func<Documentacao, bool>> predicate)
+        public async Task<IEnumerable<Documentacao>> SearchAsync(Expression<Func<Documentacao, bool>> predicate)
         {
-            return _documentacaoRepository.Search(predicate);
+            return await _documentacaoRepository.SearchAsync(predicate);
         }
 
-        public Documentacao GetOne(Expression<Func<Documentacao, bool>> predicate)
+        public async Task<Documentacao> GetOneAsync(Expression<Func<Documentacao, bool>> predicate)
         {
-            return _documentacaoRepository.GetOne(predicate);
+            return await _documentacaoRepository.GetOneAsync(predicate);
         }
     }
 }

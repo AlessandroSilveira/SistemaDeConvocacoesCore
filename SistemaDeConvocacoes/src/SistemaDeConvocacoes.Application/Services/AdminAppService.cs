@@ -28,23 +28,23 @@ namespace SistemaDeConvocacoes.Application.Services
         public Admin2ViewModel Add(Admin2ViewModel obj)
         {
             var admin = _mapper.Map<Admin2ViewModel, Admin>(obj);            
-            _adminService.Add(admin);            
+            _adminService.AddAsync(admin);            
             return obj;
         }
 
         public Admin2ViewModel GetById(Guid id)
         {
-            return _mapper.Map<Admin, Admin2ViewModel>(_adminService.GetById(id));
+            return _mapper.Map<Admin, Admin2ViewModel>(_adminService.GetByIdAsync(id));
         }
 
         public IEnumerable<Admin2ViewModel> GetAll()
         {
-            return _mapper.Map<IEnumerable<Admin>, IEnumerable<Admin2ViewModel>>(_adminService.GetAll());
+            return _mapper.Map<IEnumerable<Admin>, IEnumerable<Admin2ViewModel>>(_adminService.GetAllAsync());
         }
 
         public Admin2ViewModel Update(Admin2ViewModel obj)
         {           
-            _adminService.Update(_mapper.Map<Admin2ViewModel, Admin>(obj));           
+            _adminService.UpdateAsync(_mapper.Map<Admin2ViewModel, Admin>(obj));           
             return obj;
         }
 
@@ -55,12 +55,12 @@ namespace SistemaDeConvocacoes.Application.Services
 
         public IEnumerable<Admin2ViewModel> Search(Expression<Func<Admin, bool>> predicate)
         {
-            return _mapper.Map<IEnumerable<Admin>, IEnumerable<Admin2ViewModel>>(_adminService.Search(predicate));
+            return _mapper.Map<IEnumerable<Admin>, IEnumerable<Admin2ViewModel>>(_adminService.SearchAsync(predicate));
         }
 
         public Admin2ViewModel GetOne(Expression<Func<Admin, bool>> predicate)
         {
-            return _mapper.Map<Admin, Admin2ViewModel>(_adminService.GetOne(predicate));
+            return _mapper.Map<Admin, Admin2ViewModel>(_adminService.GetOneAsync(predicate));
         }
     }
 }

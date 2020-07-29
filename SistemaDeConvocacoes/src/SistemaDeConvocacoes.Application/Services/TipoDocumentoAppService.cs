@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AutoMapper;
 using SistemaDeConvocacoes.Application.Interfaces.Services;
 using SistemaDeConvocacoes.Application.ViewModels;
@@ -25,48 +26,48 @@ namespace SistemaDeConvocacoes.Application.Services
             _tipoDocumentoService.Dispose();
         }
 
-        public TipoDocumentoViewModel Add(TipoDocumentoViewModel obj)
+        public async Task<TipoDocumentoViewModel> AddAsync(TipoDocumentoViewModel obj)
         {
             var dados = _mapper.Map<TipoDocumentoViewModel, TipoDocumento>(obj);
             
-            _tipoDocumentoService.Add(dados);
+            await _tipoDocumentoService.AddAsync(dados);
             
             return obj;
         }
 
-        public TipoDocumentoViewModel GetById(Guid id)
+        public async Task<TipoDocumentoViewModel> GetByIdAsync(Guid id)
         {
-            return _mapper.Map<TipoDocumento, TipoDocumentoViewModel>(_tipoDocumentoService.GetById(id));
+            return _mapper.Map<TipoDocumento, TipoDocumentoViewModel>(await _tipoDocumentoService.GetByIdAsync(id));
         }
 
-        public IEnumerable<TipoDocumentoViewModel> GetAll()
+        public async Task<IEnumerable<TipoDocumentoViewModel>> GetAllAsync()
         {
-            return _mapper.Map<IEnumerable<TipoDocumento>, IEnumerable<TipoDocumentoViewModel>>(_tipoDocumentoService.GetAll());
+            return _mapper.Map<IEnumerable<TipoDocumento>, IEnumerable<TipoDocumentoViewModel>>(await _tipoDocumentoService.GetAllAsync());
         }
 
-        public TipoDocumentoViewModel Update(TipoDocumentoViewModel obj)
+        public async Task<TipoDocumentoViewModel> UpdateAsync(TipoDocumentoViewModel obj)
         {
            
-            _tipoDocumentoService.Update(_mapper.Map<TipoDocumentoViewModel, TipoDocumento>(obj));
+           await _tipoDocumentoService.UpdateAsync(_mapper.Map<TipoDocumentoViewModel, TipoDocumento>(obj));
             
             return obj;
         }
 
-        public void Remove(Guid id)
+        public async Task RemoveAsync(Guid id)
         {            
-            _tipoDocumentoService.Remove(id);            
+          await _tipoDocumentoService.RemoveAsync(id);            
         }
 
-        public IEnumerable<TipoDocumentoViewModel> Search(Expression<Func<TipoDocumento, bool>> predicate)
+        public async Task<IEnumerable<TipoDocumentoViewModel>> SearchAsync(Expression<Func<TipoDocumento, bool>> predicate)
         {
             return _mapper.Map<IEnumerable<TipoDocumento>, IEnumerable<TipoDocumentoViewModel>>(
-                _tipoDocumentoService.Search(predicate));
+                await _tipoDocumentoService.SearchAsync(predicate));
         }
 
-        public TipoDocumentoViewModel GetOne(Expression<Func<TipoDocumento, bool>> predicate)
+        public async Task<TipoDocumentoViewModel> GetOneAsync(Expression<Func<TipoDocumento, bool>> predicate)
         {
             return _mapper.Map<TipoDocumento, TipoDocumentoViewModel>(
-                _tipoDocumentoService.GetOne(predicate));
+                await _tipoDocumentoService.GetOneAsync(predicate));
         }
     }
 }

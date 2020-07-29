@@ -3,25 +3,26 @@ using SistemaDeConvocacoes.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace SistemaDeConvocacoes.Application.Interfaces.Services
 {
     public interface IDocumentoCandidatoAppService : IDisposable
     {
-        DocumentoCandidatoViewModel Add(DocumentoCandidatoViewModel obj);
+        Task<DocumentoCandidatoViewModel> AddAsync(DocumentoCandidatoViewModel obj);
 
-        DocumentoCandidatoViewModel GetById(Guid id);
+        Task<DocumentoCandidatoViewModel> GetByIdAsync(Guid id);
 
-        IEnumerable<DocumentoCandidatoViewModel> GetAll();
+        Task<IEnumerable<DocumentoCandidatoViewModel>> GetAllAsync();
 
-        DocumentoCandidatoViewModel Update(DocumentoCandidatoViewModel obj);
+        Task<DocumentoCandidatoViewModel> UpdateAsync(DocumentoCandidatoViewModel obj);
 
-        void Remove(Guid id);
+        Task RemoveAsync(Guid id);
 
-        IEnumerable<DocumentoCandidatoViewModel> Search(Expression<Func<DocumentoCandidato, bool>> predicate);
+        Task<IEnumerable<DocumentoCandidatoViewModel>> SearchAsync(Expression<Func<DocumentoCandidato, bool>> predicate);
 
-        DocumentoCandidatoViewModel GetOne(Expression<Func<DocumentoCandidato, bool>> predicate);
+        Task<DocumentoCandidatoViewModel> GetOneAsync(Expression<Func<DocumentoCandidato, bool>> predicate);
 
-        List<ListaDocumentosViewModel> MontarListaDeDocumentosDoCandidatos(IEnumerable<DocumentoCandidatoViewModel> documentos, IEnumerable<ConvocadoViewModel> dadosCandidatos);
+        Task<List<ListaDocumentosViewModel>> MontarListaDeDocumentosDoCandidatos(IEnumerable<DocumentoCandidatoViewModel> documentos, IEnumerable<ConvocadoViewModel> dadosCandidatos);
     }
 }

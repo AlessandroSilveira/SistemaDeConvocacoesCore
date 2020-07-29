@@ -58,7 +58,8 @@ namespace SistemaDeConvocacoes.Presentation.DependencyInjection
 
 
                 //Infra Dados
-                .AddScoped(typeof(IRepository<>), typeof(RepositoryBase<>))
+               
+                .AddScoped(typeof(IRepositoryBase<>), typeof(RepositoryBase<>))
                 .AddScoped<IClienteRepository, ClienteRepository>()
                 .AddScoped<IPessoaRepository, PessoaRepository>()
                 .AddScoped<ITelefoneRepository, TelefoneRepository>()
@@ -79,7 +80,8 @@ namespace SistemaDeConvocacoes.Presentation.DependencyInjection
                 .AddScoped<IDocumentoCandidatoRepository, DocumentoCandidatoRepository>()
                 .AddScoped<ITipoDocumentoRepository, TipoDocumentoRepository>()
 
-                .AddScoped<SeedHelpers>();
+                .AddScoped<SeedHelpers>()
+                .AddTransient<Infra.Context.ASPNetCoreIdentity.Data.ApplicationDbContext>();
         }      
     }
 }

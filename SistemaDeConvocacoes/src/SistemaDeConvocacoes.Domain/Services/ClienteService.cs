@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using SistemaDeConvocacoes.Domain.Entities;
 using SistemaDeConvocacoes.Domain.Interfaces.Repositories;
 using SistemaDeConvocacoes.Domain.Interfaces.Services;
@@ -22,39 +23,39 @@ namespace SistemaDeConvocacoes.Domain.Services
             GC.SuppressFinalize(this);
         }
 
-        public Cliente Add(Cliente obj)
+        public async Task<Cliente> Add(Cliente obj)
         {
-            return _clienteRepository.Add(obj);
+            return await _clienteRepository.AddAsync(obj);
         }
 
-        public Cliente GetById(Guid id)
+        public async Task<Cliente> GetById(Guid id)
         {
-            return _clienteRepository.GetById(id);
+            return await _clienteRepository.GetByIdAsync(id);
         }
 
-        public IEnumerable<Cliente> GetAll()
+        public async Task<IEnumerable<Cliente>> GetAll()
         {
-            return _clienteRepository.GetAll();
+            return await _clienteRepository.GetAllAsync();
         }
 
-        public Cliente Update(Cliente obj)
+        public async Task<Cliente> Update(Cliente obj)
         {
-            return _clienteRepository.Update(obj);
+            return await _clienteRepository.UpdateAsync(obj);
         }
 
-        public void Remove(Guid id)
+        public async Task Remove(Guid id)
         {
-            _clienteRepository.Remove(id);
+            await _clienteRepository.RemoveAsync(id);
         }
 
-        public IEnumerable<Cliente> Search(Expression<Func<Cliente, bool>> predicate)
+        public async Task<IEnumerable<Cliente>> Search(Expression<Func<Cliente, bool>> predicate)
         {
-            return _clienteRepository.Search(predicate);
+            return await _clienteRepository.SearchAsync(predicate);
         }
 
-        public Cliente GetOne(Expression<Func<Cliente, bool>> predicate)
+        public async Task<Cliente> GetOne(Expression<Func<Cliente, bool>> predicate)
         {
-            return _clienteRepository.GetOne(predicate);
+            return await _clienteRepository.GetOneAsync(predicate);
         }
     }
 }

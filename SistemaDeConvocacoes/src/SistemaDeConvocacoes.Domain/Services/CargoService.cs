@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using SistemaDeConvocacoes.Domain.Entities;
 using SistemaDeConvocacoes.Domain.Interfaces.Repositories;
 using SistemaDeConvocacoes.Domain.Interfaces.Services;
@@ -21,39 +22,39 @@ namespace SistemaDeConvocacoes.Domain.Services
             _cargoRepository.Dispose();
         }
 
-        public Cargo Add(Cargo obj)
+        public async Task<Cargo> AddAsync(Cargo obj)
         {
-            return _cargoRepository.Add(obj);
+            return await _cargoRepository.AddAsync(obj);
         }
 
-        public Cargo GetById(Guid id)
+        public async Task<Cargo> GetByIdAsync(Guid id)
         {
-            return _cargoRepository.GetById(id);
+            return await _cargoRepository.GetByIdAsync(id);
         }
 
-        public IEnumerable<Cargo> GetAll()
+        public async Task<IEnumerable<Cargo>> GetAllAsync()
         {
-            return _cargoRepository.GetAll();
+            return await _cargoRepository.GetAllAsync();
         }
 
-        public Cargo Update(Cargo obj)
+        public async Task<Cargo> UpdateAsync(Cargo obj)
         {
-            return _cargoRepository.Update(obj);
+            return await _cargoRepository.UpdateAsync(obj);
         }
 
-        public void Remove(Guid id)
+        public async Task RemoveAsync(Guid id)
         {
-            _cargoRepository.Remove(id);
+            await _cargoRepository.RemoveAsync(id);
         }
 
-        public IEnumerable<Cargo> Search(Expression<Func<Cargo, bool>> predicate)
+        public async Task<IEnumerable<Cargo>> SearchAsync(Expression<Func<Cargo, bool>> predicate)
         {
-            return _cargoRepository.Search(predicate);
+            return await _cargoRepository.SearchAsync(predicate);
         }
 
-        public Cargo GetOne(Expression<Func<Cargo, bool>> predicate)
+        public async Task<Cargo> GetOneAsync(Expression<Func<Cargo, bool>> predicate)
         {
-            return _cargoRepository.GetOne(predicate);
+            return await _cargoRepository.GetOneAsync(predicate);
         }
     }
 }

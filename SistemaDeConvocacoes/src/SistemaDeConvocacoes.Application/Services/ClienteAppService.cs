@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AutoMapper;
 using SistemaDeConvocacoes.Application.Interfaces.Services;
 using SistemaDeConvocacoes.Application.ViewModels;
@@ -22,46 +23,46 @@ namespace SistemaDeConvocacoes.Application.Services
 
         public void Dispose()
         {
-            _clienteService.Dispose();
+           _clienteService.Dispose();
         }
 
-        public ClienteViewModel Add(ClienteViewModel obj)
+        public async Task<ClienteViewModel> Add(ClienteViewModel obj)
         {
             var cliente = _mapper.Map<ClienteViewModel, Cliente>(obj);
-            _clienteService.Add(cliente);
+            await _clienteService.Add(cliente);
 
             return obj;
         }
 
-        public ClienteViewModel GetById(Guid id)
+        public async Task<ClienteViewModel> GetById(Guid id)
         {
-            return _mapper.Map<Cliente, ClienteViewModel>(_clienteService.GetById(id));
+            return _mapper.Map<Cliente, ClienteViewModel>(await _clienteService.GetById(id));
         }
 
-        public IEnumerable<ClienteViewModel> GetAll()
+        public async Task<IEnumerable<ClienteViewModel>> GetAll()
         {
-            return _mapper.Map<IEnumerable<Cliente>, IEnumerable<ClienteViewModel>>(_clienteService.GetAll());
+            return _mapper.Map<IEnumerable<Cliente>, IEnumerable<ClienteViewModel>>(await _clienteService.GetAll());
         }
 
-        public ClienteViewModel Update(ClienteViewModel obj)
+        public async Task<ClienteViewModel> Update(ClienteViewModel obj)
         {
-            _clienteService.Update(_mapper.Map<ClienteViewModel, Cliente>(obj));
+            await _clienteService.Update(_mapper.Map<ClienteViewModel, Cliente>(obj));
             return obj;
         }
 
-        public void Remove(Guid id)
+        public async Task Remove(Guid id)
         {
-            _clienteService.Remove(id);
+            await _clienteService.Remove(id);
         }
 
-        public IEnumerable<ClienteViewModel> Search(Expression<Func<Cliente, bool>> predicate)
+        public async Task<IEnumerable<ClienteViewModel>> Search(Expression<Func<Cliente, bool>> predicate)
         {
-            return _mapper.Map<IEnumerable<Cliente>, IEnumerable<ClienteViewModel>>(_clienteService.Search(predicate));
+            return _mapper.Map<IEnumerable<Cliente>, IEnumerable<ClienteViewModel>>(await _clienteService.Search(predicate));
         }
 
-        public ClienteViewModel GetOne(Expression<Func<Cliente, bool>> predicate)
+        public async Task<ClienteViewModel> GetOne(Expression<Func<Cliente, bool>> predicate)
         {
-            return _mapper.Map<Cliente, ClienteViewModel>(_clienteService.GetOne(predicate));
+            return _mapper.Map<Cliente, ClienteViewModel>(await _clienteService.GetOne(predicate));
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using SistemaDeConvocacoes.Application.ViewModels;
 using SistemaDeConvocacoes.Domain.Entities;
 
@@ -8,20 +9,20 @@ namespace SistemaDeConvocacoes.Application.Interfaces.Services
 {
     public interface IConvocadoAppService : IDisposable
     {
-        ConvocadoViewModel Add(ConvocadoViewModel obj);
+        Task<ConvocadoViewModel> AddAsync(ConvocadoViewModel obj);
 
-        ConvocadoViewModel GetById(Guid id);
+        Task<ConvocadoViewModel> GetByIdAsync(Guid id);
 
-        IEnumerable<ConvocadoViewModel> GetAll();
+        Task<IEnumerable<ConvocadoViewModel>> GetAllAsync();
 
-        ConvocadoViewModel Update(ConvocadoViewModel obj);
+        Task<ConvocadoViewModel> UpdateAsync(ConvocadoViewModel obj);
 
-        void Remove(Guid id);
+        Task RemoveAsync(Guid id);
 
-        IEnumerable<ConvocadoViewModel> Search(Expression<Func<Convocado, bool>> predicate);
+        Task<IEnumerable<ConvocadoViewModel>> SearchAsync(Expression<Func<Convocado, bool>> predicate);
 
-        bool VerificaSeHaSobrenome(string nome);
+        Task<bool> VerificaSeHaSobrenome(string nome);
 
-        ConvocadoViewModel GetOne(Expression<Func<Convocado, bool>> predicate);
+        Task<ConvocadoViewModel> GetOneAsync(Expression<Func<Convocado, bool>> predicate);
     }
 }

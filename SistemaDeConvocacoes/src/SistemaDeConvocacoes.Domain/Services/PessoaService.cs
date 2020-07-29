@@ -16,7 +16,7 @@ namespace SistemaDeConvocacoes.Domain.Services
             _pessoaRepository = pessoaRepository;
         }
 
-        public void Dispose()
+        public void DisposeAsync()
         {
             _pessoaRepository.Dispose();
             GC.SuppressFinalize(this);
@@ -27,7 +27,7 @@ namespace SistemaDeConvocacoes.Domain.Services
             return _pessoaRepository.Add(obj);
         }
 
-        public Pessoa GetById(Guid id)
+        public Pessoa GetByIdAsync(Guid id)
         {
             return _pessoaRepository.GetById(id);
         }

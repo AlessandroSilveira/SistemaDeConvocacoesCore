@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace SistemaDeConvocacoes.Application.Services
 {
@@ -34,43 +35,43 @@ namespace SistemaDeConvocacoes.Application.Services
             _convocacaoService.Dispose();
         }
 
-        public ConvocacaoViewModel Add(ConvocacaoViewModel obj)
+        public async Task<ConvocacaoViewModel> AddAsync(ConvocacaoViewModel obj)
         {
             var convocacao = _mapper.Map<ConvocacaoViewModel, Convocacao>(obj);
-            _convocacaoService.Add(convocacao);
+            await _convocacaoService.AddAsync(convocacao);
             return obj;
         }
 
-        public ConvocacaoViewModel GetById(Guid id)
+        public async Task<ConvocacaoViewModel> GetByIdAsync(Guid id)
         {
-            return _mapper.Map<Convocacao, ConvocacaoViewModel>(_convocacaoService.GetById(id));
+            return _mapper.Map<Convocacao, ConvocacaoViewModel>(await _convocacaoService.GetByIdAsync(id));
         }
 
-        public IEnumerable<ConvocacaoViewModel> GetAll()
+        public async Task<IEnumerable<ConvocacaoViewModel>> GetAllAsync()
         {
-            return _mapper.Map<IEnumerable<Convocacao>, IEnumerable<ConvocacaoViewModel>>(_convocacaoService.GetAll());
+            return _mapper.Map<IEnumerable<Convocacao>, IEnumerable<ConvocacaoViewModel>>(await _convocacaoService.GetAllAsync());
         }
 
-        public ConvocacaoViewModel Update(ConvocacaoViewModel obj)
+        public async Task<ConvocacaoViewModel> UpdateAsync(ConvocacaoViewModel obj)
         {
-            _convocacaoService.Update(_mapper.Map<ConvocacaoViewModel, Convocacao>(obj));
+            await _convocacaoService.UpdateAsync(_mapper.Map<ConvocacaoViewModel, Convocacao>(obj));
             return obj;
         }
 
-        public void Remove(Guid id)
+        public async Task RemoveAsync(Guid id)
         {
-            _convocacaoService.Remove(id);
+            await _convocacaoService.RemoveAsync(id);
         }
 
-        public IEnumerable<ConvocacaoViewModel> Search(Expression<Func<Convocacao, bool>> predicate)
+        public async Task<IEnumerable<ConvocacaoViewModel>> SearchAsync(Expression<Func<Convocacao, bool>> predicate)
         {
             return _mapper.Map<IEnumerable<Convocacao>, IEnumerable<ConvocacaoViewModel>>(
-                _convocacaoService.Search(predicate));
+               await _convocacaoService.SearchAsync(predicate));
         }
 
-        public string GerarSenhaUsuario()
+        public async Task<string> GerarSenhaUsuarioAsync()
         {
-            return _convocacaoService.GeneratePassword();
+            return await _convocacaoService.GeneratePasswordAsync();
         }
 
         public List<ConvocadoViewModel> MontaListaDeConvocados(IEnumerable<ConvocacaoViewModel> dadosConfirmados,
@@ -120,14 +121,14 @@ namespace SistemaDeConvocacoes.Application.Services
             return listaDeconvocados;
         }
 
-        public ConvocacaoViewModel GetOne(Expression<Func<Convocacao, bool>> predicate)
+        public async Task<ConvocacaoViewModel> GetOneAsync(Expression<Func<Convocacao, bool>> predicate)
         {
-            return _mapper.Map<Convocacao, ConvocacaoViewModel>(_convocacaoService.GetOne(predicate));
+            return _mapper.Map<Convocacao, ConvocacaoViewModel>(await _convocacaoService.GetOneAsync(predicate));
         }
 
-        public IEnumerable<ConvocacaoViewModel> Search(Expression<Func<ConvocacaoViewModel, bool>> predicate)
+        public async Task<IEnumerable<ConvocacaoViewModel>> SearchAsync(Expression<Func<Convocacao, bool>> predicate)
         {
-            throw new NotImplementedException();
+            return _mapper.Map<IEnumerable<Convocacao>, IEnumerable<ConvocacaoViewModel>>(await _convocacaoService.SearchAsync(predicate));
         }
 
 

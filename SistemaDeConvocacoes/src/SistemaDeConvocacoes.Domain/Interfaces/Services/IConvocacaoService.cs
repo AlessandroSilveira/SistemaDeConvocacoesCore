@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using SistemaDeConvocacoes.Domain.Entities;
 
 namespace SistemaDeConvocacoes.Domain.Interfaces.Services
 {
     public interface IConvocacaoService : IDisposable
     {
-        Convocacao Add(Convocacao obj);
-        Convocacao GetById(Guid id);
-        IEnumerable<Convocacao> GetAll();
-        Convocacao Update(Convocacao obj);
-        void Remove(Guid id);
-        IEnumerable<Convocacao> Search(Expression<Func<Convocacao, bool>> predicate);
-        Convocacao GetOne(Expression<Func<Convocacao, bool>> predicate);
-        string GeneratePassword();
+        Task<Convocacao> AddAsync(Convocacao obj);
+        Task<Convocacao> GetByIdAsync(Guid id);
+        Task<IEnumerable<Convocacao>> GetAllAsync();
+        Task<Convocacao> UpdateAsync(Convocacao obj);
+        Task RemoveAsync(Guid id);
+        Task<IEnumerable<Convocacao>> SearchAsync(Expression<Func<Convocacao, bool>> predicate);
+        Task<Convocacao> GetOneAsync(Expression<Func<Convocacao, bool>> predicate);
+        Task<string> GeneratePasswordAsync();
         IEnumerable<Convocacao> MontarListaDeConvocados(IEnumerable<Convocacao> dadosConfirmados, IEnumerable<Convocacao> convocados);
     }
 }

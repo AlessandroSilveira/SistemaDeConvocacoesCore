@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SistemaDeConvocacoes.Application.Interfaces.Services;
 using SistemaDeConvocacoes.Application.ViewModels;
@@ -14,59 +15,67 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             _pessoaAppService = pessoaAppService;
         }
 
-        public ActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
-            return View(_pessoaAppService.GetAll());
+            return View(await _pessoaAppService.GetAllAsync());
         }
 
-        public ActionResult Details(Guid id)
+        public async Task<IActionResult> DetailsAsync(Guid id)
         {
-            var pessoaViewModel = _pessoaAppService.GetById(id);
+            var pessoaViewModel = await _pessoaAppService.GetByIdAsync(id);
+
             return pessoaViewModel.Equals(null) ? (ActionResult) NotFound() : View(pessoaViewModel);
         }
 
-        public ActionResult Create()
+        public async Task<IActionResult> Create()
         {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(PessoaViewModel pessoaViewModel)
+        public async Task<IActionResult> CreateAsync(PessoaViewModel pessoaViewModel)
         {
-            if (!ModelState.IsValid) return View(pessoaViewModel);
-            _pessoaAppService.Add(pessoaViewModel);
+            if (!ModelState.IsValid) 
+                return View(pessoaViewModel);
+
+            await _pessoaAppService.AddAsync(pessoaViewModel);
+
             return RedirectToAction("Index");
         }
 
         // GET: Pessoa/Edit/5
-        public ActionResult Edit(Guid id)
+        public async Task<IActionResult> EditAsync(Guid id)
         {
-            var pessoaViewModel = _pessoaAppService.GetById(id);
-            return pessoaViewModel.Equals(null) ? (ActionResult) NotFound() : View(pessoaViewModel);
+            var pessoaViewModel = await _pessoaAppService.GetByIdAsync(id);
+
+            return pessoaViewModel.Equals(null) ? (IActionResult) NotFound() : View(pessoaViewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(PessoaViewModel pessoaViewModel)
+        public async Task<IActionResult> EditAsync(PessoaViewModel pessoaViewModel)
         {
-            if (!ModelState.IsValid) return View(pessoaViewModel);
-            _pessoaAppService.Update(pessoaViewModel);
+            if (!ModelState.IsValid) 
+                return View(pessoaViewModel);
+
+            await _pessoaAppService.UpdateAsync(pessoaViewModel);
+
             return RedirectToAction("Index");
         }
 
-        public ActionResult Delete(Guid id)
+        public async Task<IActionResult> DeleteAsync(Guid id)
         {
-            var pessoaViewModel = _pessoaAppService.GetById(id);
+            var pessoaViewModel = await _pessoaAppService.GetByIdAsync(id);
             return pessoaViewModel.Equals(null) ? (ActionResult) NotFound() : View(pessoaViewModel);
         }
 
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmedAsync(Guid id)
         {
-            _pessoaAppService.Remove(id);
+           await _pessoaAppService.RemoveAsync(id);
             return RedirectToAction("Index");
         }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using AutoMapper;
 using SistemaDeConvocacoes.Application.Interfaces.Services;
 using SistemaDeConvocacoes.Application.ViewModels;
@@ -34,47 +35,47 @@ namespace SistemaDeConvocacoes.Application.Services
             _documentoCandidatoService.Dispose();
         }
 
-        public DocumentoCandidatoViewModel Add(DocumentoCandidatoViewModel obj)
+        public async Task<DocumentoCandidatoViewModel> AddAsync(DocumentoCandidatoViewModel obj)
         {
             var dados = _mapper.Map<DocumentoCandidatoViewModel, DocumentoCandidato>(obj);
-            _documentoCandidatoService.Add(dados);
+            await _documentoCandidatoService.AddAsync(dados);
             return obj;
         }
 
-        public DocumentoCandidatoViewModel GetById(Guid id)
+        public async Task<DocumentoCandidatoViewModel> GetByIdAsync(Guid id)
         {
-            return _mapper.Map<DocumentoCandidato, DocumentoCandidatoViewModel>(_documentoCandidatoService.GetById(id));
+            return _mapper.Map<DocumentoCandidato, DocumentoCandidatoViewModel>(await _documentoCandidatoService.GetByIdAsync(id));
         }
 
-        public IEnumerable<DocumentoCandidatoViewModel> GetAll()
+        public async Task<IEnumerable<DocumentoCandidatoViewModel>> GetAllAsync()
         {
-            return _mapper.Map<IEnumerable<DocumentoCandidato>, IEnumerable<DocumentoCandidatoViewModel>>(_documentoCandidatoService.GetAll());
+            return _mapper.Map<IEnumerable<DocumentoCandidato>, IEnumerable<DocumentoCandidatoViewModel>>(await _documentoCandidatoService.GetAllAsync());
         }
 
-        public DocumentoCandidatoViewModel Update(DocumentoCandidatoViewModel obj)
+        public async Task<DocumentoCandidatoViewModel> UpdateAsync(DocumentoCandidatoViewModel obj)
         {
-            _documentoCandidatoService.Update(_mapper.Map<DocumentoCandidatoViewModel, DocumentoCandidato>(obj));
+            await _documentoCandidatoService.UpdateAsync(_mapper.Map<DocumentoCandidatoViewModel, DocumentoCandidato>(obj));
             return obj;
         }
 
-        public void Remove(Guid id)
+        public async Task RemoveAsync(Guid id)
         {
-            _documentoCandidatoService.Remove(id);
+            await _documentoCandidatoService.RemoveAsync(id);
         }
 
-        public IEnumerable<DocumentoCandidatoViewModel> Search(Expression<Func<DocumentoCandidato, bool>> predicate)
+        public async Task<IEnumerable<DocumentoCandidatoViewModel>> SearchAsync(Expression<Func<DocumentoCandidato, bool>> predicate)
         {
             return _mapper.Map<IEnumerable<DocumentoCandidato>, IEnumerable<DocumentoCandidatoViewModel>>(
-                _documentoCandidatoService.Search(predicate));
+                await _documentoCandidatoService.SearchAsync(predicate));
         }
 
-        public DocumentoCandidatoViewModel GetOne(Expression<Func<DocumentoCandidato, bool>> predicate)
+        public async Task<DocumentoCandidatoViewModel> GetOneAsync(Expression<Func<DocumentoCandidato, bool>> predicate)
         {
             return _mapper.Map<DocumentoCandidato, DocumentoCandidatoViewModel>(
-                _documentoCandidatoService.GetOne(predicate));
+               await _documentoCandidatoService.GetOneAsync(predicate));
         }
 
-        public List<ListaDocumentosViewModel> MontarListaDeDocumentosDoCandidatos(IEnumerable<DocumentoCandidatoViewModel> documentos,
+        public async Task<List<ListaDocumentosViewModel>> MontarListaDeDocumentosDoCandidatos(IEnumerable<DocumentoCandidatoViewModel> documentos,
             IEnumerable<ConvocadoViewModel> dadosCandidatos)
         {
             var result = documentos.GroupJoin(dadosCandidatos, docs => docs.ConvocadoId, cand => cand.ConvocadoId,

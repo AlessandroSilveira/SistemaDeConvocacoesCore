@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using SistemaDeConvocacoes.Domain.Entities;
 
 namespace SistemaDeConvocacoes.Domain.Interfaces.Services
 {
     public interface ITipoDocumentoService : IDisposable
     {
-        TipoDocumento Add(TipoDocumento obj);
-        TipoDocumento GetById(Guid id);
-        IEnumerable<TipoDocumento> GetAll();
-        TipoDocumento Update(TipoDocumento obj);
-        void Remove(Guid id);
-        IEnumerable<TipoDocumento> Search(Expression<Func<TipoDocumento, bool>> predicate);
-        TipoDocumento GetOne(Expression<Func<TipoDocumento, bool>> predicate);
+        Task<TipoDocumento> AddAsync(TipoDocumento obj);
+        Task<TipoDocumento> GetByIdAsync(Guid id);
+        Task<IEnumerable<TipoDocumento>> GetAllAsync();
+        Task<TipoDocumento> UpdateAsync(TipoDocumento obj);
+        Task RemoveAsync(Guid id);
+        Task<IEnumerable<TipoDocumento>> SearchAsync(Expression<Func<TipoDocumento, bool>> predicate);
+        Task<TipoDocumento> GetOneAsync(Expression<Func<TipoDocumento, bool>> predicate);
     }
 }

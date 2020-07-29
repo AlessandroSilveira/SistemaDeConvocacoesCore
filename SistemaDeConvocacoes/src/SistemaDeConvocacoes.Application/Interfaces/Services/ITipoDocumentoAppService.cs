@@ -3,23 +3,24 @@ using SistemaDeConvocacoes.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace SistemaDeConvocacoes.Application.Interfaces.Services
 {
     public interface ITipoDocumentoAppService : IDisposable
     {
-        TipoDocumentoViewModel Add(TipoDocumentoViewModel obj);
+        Task<TipoDocumentoViewModel> AddAsync(TipoDocumentoViewModel obj);
 
-        TipoDocumentoViewModel GetById(Guid id);
+        Task<TipoDocumentoViewModel> GetByIdAsync(Guid id);
 
-        IEnumerable<TipoDocumentoViewModel> GetAll();
+        Task<IEnumerable<TipoDocumentoViewModel>> GetAllAsync();
 
-        TipoDocumentoViewModel Update(TipoDocumentoViewModel obj);
+        Task<TipoDocumentoViewModel> UpdateAsync(TipoDocumentoViewModel obj);
 
-        void Remove(Guid id);
+        Task RemoveAsync(Guid id);
 
-        IEnumerable<TipoDocumentoViewModel> Search(Expression<Func<TipoDocumento, bool>> predicate);
+        Task<IEnumerable<TipoDocumentoViewModel>> SearchAsync(Expression<Func<TipoDocumento, bool>> predicate);
 
-        TipoDocumentoViewModel GetOne(Expression<Func<TipoDocumento, bool>> predicate);
+        Task<TipoDocumentoViewModel> GetOneAsync(Expression<Func<TipoDocumento, bool>> predicate);
     }
 }

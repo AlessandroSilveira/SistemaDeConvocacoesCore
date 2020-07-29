@@ -6,6 +6,7 @@ using SistemaDeConvocacoes.Domain.Interfaces.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace SistemaDeConvocacoes.Application.Services
 {
@@ -25,54 +26,54 @@ namespace SistemaDeConvocacoes.Application.Services
             _dadosConvocadosService.Dispose();
         }
 
-        public DadosConvocadosViewModel Add(DadosConvocadosViewModel obj)
+        public async Task<DadosConvocadosViewModel> AddAsync(DadosConvocadosViewModel obj)
         {
             var convocado = _mapper.Map<DadosConvocadosViewModel, Convocado>(obj);
-            _dadosConvocadosService.Add(convocado);
+            await _dadosConvocadosService.AddAsync(convocado);
             return obj;
         }
 
-        public DadosConvocadosViewModel GetById(Guid id)
+        public async Task<DadosConvocadosViewModel> GetByIdAsync(Guid id)
         {
-            return _mapper.Map<Convocado, DadosConvocadosViewModel>(_dadosConvocadosService.GetById(id));
+            return _mapper.Map<Convocado, DadosConvocadosViewModel>(await _dadosConvocadosService.GetByIdAsync(id));
         }
 
-        public IEnumerable<DadosConvocadosViewModel> GetAll()
+        public async Task<IEnumerable<DadosConvocadosViewModel>> GetAllAsync()
         {
-            return _mapper.Map<IEnumerable<Convocado>, IEnumerable<DadosConvocadosViewModel>>(_dadosConvocadosService
-                .GetAll());
+            return _mapper.Map<IEnumerable<Convocado>, IEnumerable<DadosConvocadosViewModel>>(await _dadosConvocadosService
+                .GetAllAsync());
         }
 
-        public DadosConvocadosViewModel Update(DadosConvocadosViewModel obj)
+        public async Task<DadosConvocadosViewModel> UpdateAsync(DadosConvocadosViewModel obj)
         {
-            _dadosConvocadosService.Update(_mapper.Map<DadosConvocadosViewModel, Convocado>(obj));
+            await _dadosConvocadosService.UpdateAsync(_mapper.Map<DadosConvocadosViewModel, Convocado>(obj));
             return obj;
         }
 
-        public void Remove(Guid id)
+        public async Task RemoveAsync(Guid id)
         {
-            _dadosConvocadosService.Remove(id);
+            await _dadosConvocadosService.RemoveAsync(id);
         }
 
-        public IEnumerable<DadosConvocadosViewModel> Search(Expression<Func<Convocado, bool>> predicate)
+        public async Task<IEnumerable<DadosConvocadosViewModel>> SearchAsync(Expression<Func<Convocado, bool>> predicate)
         {
             return _mapper.Map<IEnumerable<Convocado>, IEnumerable<DadosConvocadosViewModel>>(
-                _dadosConvocadosService.Search(predicate));
+               await _dadosConvocadosService.SearchAsync(predicate));
         }
 
-        public void SalvarCandidatos(Guid id, string file)
+        public async Task SalvarCandidatosAsync(Guid id, string file)
         {
-            _dadosConvocadosService.SalvarCandidatos(id, file);
+            await _dadosConvocadosService.SalvarCandidatosAsync(id, file);
         }
 
-        public void SalvarCargos(Guid id, string file)
+        public async Task SalvarCargosAsync(Guid id, string file)
         {
-            _dadosConvocadosService.SalvarCargos(id, file);
+            await _dadosConvocadosService.SalvarCargosAsync(id, file);
         }
 
-        public DadosConvocadosViewModel GetOne(Expression<Func<Convocado, bool>> predicate)
+        public async Task<DadosConvocadosViewModel> GetOneAsync(Expression<Func<Convocado, bool>> predicate)
         {
-            return _mapper.Map<Convocado, DadosConvocadosViewModel>(_dadosConvocadosService.GetOne(predicate));
+            return _mapper.Map<Convocado, DadosConvocadosViewModel>(await _dadosConvocadosService.GetOneAsync(predicate));
         }
     }
 }

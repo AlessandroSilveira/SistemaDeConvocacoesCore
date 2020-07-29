@@ -20,9 +20,9 @@ namespace SistemaDeConvocacoes.Application.Services
             _mapper = mapper;
         }
 
-        public void Dispose()
+        public void DisposeAsync()
         {
-            _telefoneService.Dispose();
+            _telefoneService.DisposeAsync();
         }
 
         public TelefoneViewModel Add(TelefoneViewModel obj)

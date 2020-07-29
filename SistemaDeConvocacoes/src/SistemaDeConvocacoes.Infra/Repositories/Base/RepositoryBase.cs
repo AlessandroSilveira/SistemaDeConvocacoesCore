@@ -2,74 +2,68 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SistemaDeConvocacoes.Domain.Interfaces.Base;
 using SistemaDeConvocacoes.Infra.Context.ASPNetCoreIdentity.Data;
 
 namespace SistemaDeConvocacoes.Infra.Repositories.Base
 {
-    public class RepositoryBase<TEntity> : IRepository<TEntity> where TEntity : class
+    public class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where TEntity : class
     {
-        protected DbSet<TEntity> DbSet;
+        
         protected ApplicationDbContext Context;
 
         public RepositoryBase(ApplicationDbContext context)
         {
-            Context = context;
-            DbSet = Context.Set<TEntity>();
+            Context = context;           
         }
 
-        public TEntity Add(TEntity obj)
+        public async Task<TEntity> Add(TEntity obj)
         {
-            Context.Set<TEntity>().Add(obj);
-            Context.SaveChangesAsync();
+            Context.Set<TEntity>().Add(obj);            
             return obj;
         }
 
-        public virtual TEntity GetById(Guid id)
+        public async Task<TEntity> GetById(Guid id)
         {
-            return DbSet.Find(id);
+            return Context.Set<TEntity>().Find(id);
         }
 
-        public virtual IEnumerable<TEntity> GetAll()
+        public async Task<IEnumerable<TEntity>> GetAll()
         {
-            return DbSet.ToList();
+            return Context.Set<TEntity>().ToList();
         }
 
-        public virtual TEntity Update(TEntity obj)
+        public async Task<TEntity> Update(TEntity obj)
         {
-            Context.Entry(obj).State = EntityState.Modified;
-             Context.SaveChangesAsync();
+            Context.Entry(obj).State = EntityState.Modified;            
             return obj;
         }
 
-        public virtual void Remove(Guid id)
+        public async Task Remove(Guid id)
         {
             var entity = Context.Set<TEntity>().FindAsync(id).Result;
 
             Context.Set<TEntity>().Remove(entity);
-            Context.SaveChangesAsync();
+           
         }
 
-        public IEnumerable<TEntity> Search(Expression<Func<TEntity, bool>> predicate)
+        public async Task<IEnumerable<TEntity>> Search(Expression<Func<TEntity, bool>> predicate)
         {
-            return DbSet.Where(predicate);
+            return Context.Set<TEntity>().Where(predicate);
         }
+       
 
-        public int SaveChanges()
-        {
-            return Context.SaveChanges();
-        }
-
-        public void Dispose()
+        public async Task Dispose()
         {
             Context.Dispose();
             GC.SuppressFinalize(this);
         }
 
-        public TEntity GetOne(Expression<Func<TEntity, bool>> predicate)
+        public async Task<TEntity> GetOne(Expression<Func<TEntity, bool>> predicate)
         {
-            return DbSet.Where(predicate).FirstOrDefault();
+            return Context.Set<TEntity>().Where(predicate).FirstOrDefault();
         }
     }
 }
