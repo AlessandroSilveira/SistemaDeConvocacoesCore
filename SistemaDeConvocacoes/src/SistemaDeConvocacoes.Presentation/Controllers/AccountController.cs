@@ -122,7 +122,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
-            return RedirectToAction(nameof(HomeController.IndexAsync), "Home");
+            return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
         private void VerificaPrimeiroAcesso(LoginViewModel model)
@@ -283,13 +283,9 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         private IActionResult RedirectToLocal(string returnUrl)
         {
             if (Url.IsLocalUrl(returnUrl))
-            {
                 return Redirect(returnUrl);
-            }
-            else
-            {
-                return RedirectToAction(nameof(HomeController.IndexAsync), "Home");
-            }
+
+            return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
         #endregion

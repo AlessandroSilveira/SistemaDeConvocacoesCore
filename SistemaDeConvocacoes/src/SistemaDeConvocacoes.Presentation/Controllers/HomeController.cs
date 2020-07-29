@@ -30,7 +30,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             _userManager = userManager;
         }
 
-        public async Task<IActionResult> IndexAsync()
+        public async Task<IActionResult> Index()
         {
             if (User.IsInRole("Cliente")) 
                 return RedirectToAction("Index", "Processos");
@@ -49,12 +49,14 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             var dadosConvocacao = _convocacaoAppService.Search(a =>
                     a.ConvocadoId.Equals(dadosConvocado.ConvocadoId) && a.ProcessoId.Equals(dadosProcesso.ProcessoId))
                 .FirstOrDefault();
+
             ViewBag.dadosConvocacao = dadosConvocacao;
 
             var listaDocumentacao = _documentacaoAppService.Search(a => a.ProcessoId.Equals(dadosProcesso.ProcessoId));
             ViewBag.ListaDocumentacao = listaDocumentacao;
 
-            if (string.IsNullOrEmpty(dadosConvocacao.Desistente)) return View();
+            if (dadosConvocacao == null || string.IsNullOrEmpty(dadosConvocacao.Desistente))
+                return View();
 
             if (dadosConvocacao.Desistente.Equals("N"))
                 return RedirectToAction("DocumentacaoConvocado", "Convocacao",

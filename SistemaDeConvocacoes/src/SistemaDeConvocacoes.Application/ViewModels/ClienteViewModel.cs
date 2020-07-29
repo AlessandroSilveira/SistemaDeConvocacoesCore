@@ -10,23 +10,24 @@ namespace SistemaDeConvocacoes.Application.ViewModels
             ClienteId = Guid.NewGuid();
         }
 
-        [Key] public Guid ClienteId { get; set; }
+        [Key] 
+        public Guid ClienteId { get; set; }
 
         [Required(AllowEmptyStrings = false)]
-        [Display(Name = "Nome")]
+        [Display(Name = "Nome do Cliente")]
         public string Nome { get; set; }
 
         [Required(AllowEmptyStrings = false)]
-        [Display(Name = "Cnpj")]
+        [Display(Name = "CNPJ do Cliente")]
         public string Cnpj { get; set; }
 
         [Required(AllowEmptyStrings = false)]
         [EmailAddress]
-        [Display(Name = "E-mail")]
+        [Display(Name = "E-mail do Cliente")]
         public string Email { get; set; }
 
         [Required(AllowEmptyStrings = false)]
-        [Display(Name = "Telefone")]
+        [Display(Name = "Telefone do Cliente")]
         public string Telefone { get; set; }
 
         [Required]
@@ -40,8 +41,12 @@ namespace SistemaDeConvocacoes.Application.ViewModels
         [Compare("Password", ErrorMessage = "A senha e a confirmação de senha não conferem")]
         public string ConfirmPassword { get; set; }
 
-        [Required] [Display(Name = "Ativo")] public bool Ativo { get; set; }
+        [Required] 
+        [Display(Name = "Ativo")] 
+        public bool Ativo { get; set; }
 
-        [Required] [Display(Name = "Imagem")] public string Imagem { get; set; }
+        //[Required] 
+        [Display(Name = "Logotipo do Cliente")] 
+        public string Imagem { get; set; }
     }
 }

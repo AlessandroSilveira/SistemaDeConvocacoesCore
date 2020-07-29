@@ -13,7 +13,6 @@ using SistemaDeConvocacoes.Application.ViewModels;
 using SistemaDeConvocacoes.Domain.Models;
 using SistemaDeConvocacoes.Presentation.Models;
 
-
 namespace SistemaDeConvocacoes.Presentation.Controllers
 {
     [Authorize(Roles = "Administrator")]
@@ -56,7 +55,8 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> CreateAsync(ClienteViewModel clienteViewModel, IFormFile Imagem)
         {
-            if (!ModelState.IsValid) return View(clienteViewModel);
+            if (!ModelState.IsValid) 
+                return View(clienteViewModel);
 
             clienteViewModel.ClienteId = Guid.NewGuid();
             var cliente = _clienteAppService.Add(clienteViewModel);
@@ -99,22 +99,19 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         {
             if (file == null) 
                 return;
-            string webRootPath = _webHostEnvironment.WebRootPath;
-            string contentRootPath = _webHostEnvironment.ContentRootPath;
-            string path = "";
+
+            var webRootPath = _webHostEnvironment.WebRootPath;
+            var contentRootPath = _webHostEnvironment.ContentRootPath;
+            var path = string.Empty;
+
             path = Path.Combine(webRootPath, "Images");
-           
 
             var strName = file.FileName.Split('.');
             var strExt = strName[strName.Count() - 1];
             var pathSave = $"{path}{cliente.ClienteId}.{strExt}";
 
-            using (var fileStream = new FileStream(pathSave, FileMode.Create))
-            {
-                file.CopyToAsync(fileStream);
-            }
-
-           
+            using var fileStream = new FileStream(pathSave, FileMode.Create);
+            file.CopyToAsync(fileStream);
         }
 
         public ActionResult Edit(Guid? id)
