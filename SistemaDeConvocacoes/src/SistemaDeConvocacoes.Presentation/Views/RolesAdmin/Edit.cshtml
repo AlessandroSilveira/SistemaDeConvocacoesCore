@@ -1,4 +1,4 @@
-﻿@model RoleModification
+﻿@model SisConv.Infra.CrossCutting.Identity.Model.RoleViewModel
 
 @{
     ViewBag.Title = "Edit";
@@ -14,13 +14,13 @@
         <h4>Editar</h4>
         <hr/>
         @Html.ValidationSummary(true)
-        @Html.HiddenFor(model => model.RoleId)
+        @Html.HiddenFor(model => model.Id)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.RoleName, new {@class = "control-label col-md-2"})
+            @Html.LabelFor(model => model.Name, new {@class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.TextBoxFor(model => model.RoleName, new {@class = "form-control"})
-                @Html.ValidationMessageFor(model => model.RoleName)
+                @Html.TextBoxFor(model => model.Name, new {@class = "form-control"})
+                @Html.ValidationMessageFor(model => model.Name)
             </div>
         </div>
 
@@ -36,6 +36,6 @@
     @Html.ActionLink("Voltar", "Index")
 </div>
 
-@*@section Scripts {
+@section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-}*@
+}

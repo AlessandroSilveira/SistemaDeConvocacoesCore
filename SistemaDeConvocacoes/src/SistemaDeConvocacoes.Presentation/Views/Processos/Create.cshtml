@@ -1,5 +1,5 @@
-﻿@using Microsoft.AspNetCore.Identity
-@model SistemaDeConvocacoes.Application.ViewModels.ProcessoViewModel
+﻿@using Microsoft.AspNet.Identity
+@model SisConv.Application.ViewModels.ProcessoViewModel
 
 @{
     Layout = "~/Views/Shared/Processos/LayoutPainelIndex.cshtml";
@@ -59,7 +59,7 @@
                     <div class="form-group">
                         @Html.HiddenFor(model => model.Ativo, new { Value = true })
                         @Html.HiddenFor(model => model.DataCriacao, new { Value = DateTime.Now.ToString("dd/MM/yyyy") })
-                        @Html.HiddenFor(model => model.ClienteId, new { Value = User.Identity.Name })
+                        @Html.HiddenFor(model => model.ClienteId, new { Value = User.Identity.GetUserId() })
                         <div class="col-md-offset-2 col-md-10">
                             <input type="submit" value="Salvar" class="btn btn-success" />
                             <button type="button" class="btn btn-secondary" title="" data-placement="left" onclick="history.back();">Voltar</button>

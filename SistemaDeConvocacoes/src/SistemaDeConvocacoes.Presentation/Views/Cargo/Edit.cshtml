@@ -1,7 +1,9 @@
-﻿@model SistemaDeConvocacoes.Application.ViewModels.CargoViewModel
+﻿@model SisConv.Application.ViewModels.CargoViewModel
 
-@{ Layout = "~/Views/Shared/Processos/Configuracoes/_LayoutProcessosConfiguracoes.cshtml";
-                ViewBag.Title = "Editar Cargo/Curso"; }
+@{
+    Layout = "~/Views/Shared/Processos/Configuracoes/_LayoutProcessosConfiguracoes.cshtml";
+    ViewBag.Title = "Editar Cargo/Curso";
+}
 <div class="row">
     <div class="col-lg-10">
         <h1 class="page-header"><b>@ViewBag.Title</b></h1>
@@ -15,7 +17,7 @@
 
                 @using (Html.BeginForm())
                 {
-    @Html.AntiForgeryToken()
+                    @Html.AntiForgeryToken()
 
                     <div class="form-horizontal">
                         <hr />
@@ -55,7 +57,8 @@
                                 <button type="button" class="btn btn-secondary" title="" data-placement="left" onclick="history.back();">Voltar</button>
                             </div>
                         </div>
-                    </div>}
+                    </div>
+                }
             </div>
         </div>
     </div>

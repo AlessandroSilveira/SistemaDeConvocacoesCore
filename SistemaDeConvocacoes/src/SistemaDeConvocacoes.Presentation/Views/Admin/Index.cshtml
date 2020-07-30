@@ -1,6 +1,8 @@
-﻿
-@model IEnumerable<SistemaDeConvocacoes.Application.ViewModels.Admin2ViewModel>
-@{ ViewBag.Title = "Index"; }
+﻿@model IEnumerable<SisConv.Application.ViewModels.Admin2ViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
 
 <h2>Index</h2>
 
@@ -33,35 +35,35 @@
         <th></th>
     </tr>
 
-    @foreach (var item in Model)
-    {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.Nome)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Email)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Empresa)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Cnpj)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Telefone)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Imagem)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Ativo)
-    </td>
-    <td>
-        @Html.ActionLink("Edit", "Edit", new { id = item.AdminId }) |
-        @Html.ActionLink("Details", "Details", new { id = item.AdminId }) |
-        @Html.ActionLink("Delete", "Delete", new { id = item.AdminId })
-    </td>
-</tr>}
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Empresa)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cnpj)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Telefone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Imagem)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Ativo)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.AdminId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.AdminId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.AdminId })
+        </td>
+    </tr>
+}
 
 </table>

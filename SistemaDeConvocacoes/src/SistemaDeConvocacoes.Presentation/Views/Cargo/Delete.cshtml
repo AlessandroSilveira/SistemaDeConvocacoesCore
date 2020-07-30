@@ -1,7 +1,9 @@
-﻿@model SistemaDeConvocacoes.Application.ViewModels.CargoViewModel
+﻿@model SisConv.Application.ViewModels.CargoViewModel
 
-@{ Layout = "~/Views/Shared/Processos/Configuracoes/_LayoutProcessosConfiguracoes.cshtml";
-                ViewBag.Title = "Deletar Cargo/Curso"; }
+@{
+    Layout = "~/Views/Shared/Processos/Configuracoes/_LayoutProcessosConfiguracoes.cshtml";
+    ViewBag.Title = "Deletar Cargo/Curso";
+}
 
 
 
@@ -51,12 +53,13 @@
 
                 @using (Html.BeginForm())
                 {
-    @Html.AntiForgeryToken()
+                    @Html.AntiForgeryToken()
 
                     <div class="form-actions no-color">
                         <input type="submit" value="Delete" class="btn btn-danger" />
                         <button type="button" class="btn btn-secondary" title="" data-placement="left" onclick="history.back();">Voltar</button>
-                    </div>}
+                    </div>
+                }
             </div>
         </div>
     </div>

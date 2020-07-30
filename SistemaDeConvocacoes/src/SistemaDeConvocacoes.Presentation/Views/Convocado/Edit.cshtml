@@ -1,4 +1,4 @@
-﻿@model SistemaDeConvocacoes.Application.ViewModels.ConvocadoViewModel
+﻿@model SisConv.Application.ViewModels.ConvocadoViewModel
 
 @{
     Layout = "~/Views/Shared/Convocacao/DocumentacaoConvocado/_LayoutConvocacaoDocumentacaoConvocado.cshtml";
@@ -61,7 +61,8 @@
                                         <option value=" ">Selecione</option>
                                         @foreach (var itens in ViewBag.ListaSexo)
                                         {
-                                            <option value="@itens.Key">
+                                            <option value="@itens.Key"
+                                                    @if (Model.Sexo.Equals(itens.Key.ToString())) { var selected = "selected"; @selected ; }>
                                                 @itens.Value
                                             </option>
                                         }
@@ -182,7 +183,8 @@
                                         <option value=" ">Selecione</option>
                                         @foreach (var itens in ViewBag.ListaEstados)
                                         {
-                                            <option value="@itens.Key">
+                                            <option value="@itens.Key"
+                                                    @if (Model.Uf.Equals(itens.Key.ToString())) { var selected = "selected"; @selected ; }>
                                                 @itens.Value
                                             </option>
                                         }
@@ -215,7 +217,7 @@
                                         @foreach (var itens in ViewBag.ListaNacionalidade)
                                         {
                                             <option value="@itens.Key.GetHashCode()"
-                                                    >
+                                                    @if (Model.EstadoCivil.ToString().Equals(itens.Key.GetHashCode().ToString())) { var selected = "selected"; @selected ; }>
                                                 @itens.Value
                                             </option>
                                         }
@@ -232,7 +234,7 @@
                                         @foreach (var itens in ViewBag.ListaEstadoCivil)
                                         {
                                             <option value="@itens.Key.GetHashCode()"
-                                                    >
+                                                    @if (Model.EstadoCivil.ToString().Equals(itens.Key.GetHashCode().ToString())) { var selected = "selected"; @selected ; }>
                                                 @itens.Value
                                             </option>
                                         }
@@ -250,7 +252,7 @@
                                         @foreach (var itens in ViewBag.ListaFatorSanguineo)
                                         {
                                             <option value="@itens.Value"
-                                                   >
+                                                    @if (Model.FatorSanguineo.Equals(itens.Value.ToString())) { var selected = "selected"; @selected ; }>
                                                 @itens.Value
                                             </option>
                                         }
@@ -269,7 +271,7 @@
                                         @foreach (var itens in ViewBag.ListaSimNao)
                                         {
                                             <option value="@itens.Key"
-                                                    >
+                                                    @if (Model.Doador.Equals(itens.Key.ToString())) { var selected = "selected"; @selected ; }>
                                                 @itens.Value
                                             </option>
                                         }
@@ -291,7 +293,7 @@
                                         @foreach (var itens in ViewBag.ListaGrauInstrucao)
                                         {
                                             <option value="@itens.Value"
-                                                 >
+                                                    @if (Model.GrauInstrucao.Equals(itens.Value.ToString())) { var selected = "selected"; @selected ; }>
                                                 @itens.Value
                                             </option>
                                         }
@@ -411,7 +413,7 @@
 </div>
 
 @section Scripts {
-    @*@Scripts.Render("~/bundles/jqueryval")*@
+    @Scripts.Render("~/bundles/jqueryval")
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="~/Scripts/jquery.mask.js"></script>

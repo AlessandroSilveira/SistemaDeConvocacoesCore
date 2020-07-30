@@ -1,4 +1,4 @@
-﻿@using SistemaDeConvocacoes.Domain.Enums
+﻿@using SisConv.Domain.Enums
 
 @{
     Layout = "~/Views/Shared/Processos/LayoutProcessosPainel.cshtml";
@@ -97,7 +97,8 @@
                                                 <option value="">Selecione</option>
                                                 @foreach (KeyValuePair<StatusConvocacao, string> row in ViewBag.ListaOpcoesContratacao)
                                                 {
-                                                    <option value="@row.Key">
+                                                    <option value="@row.Key"
+                                                            @if (!string.IsNullOrEmpty(itens.StatusContratacao)) { if (itens.StatusContratacao == row.Value) { @selected } }>
                                                         @row.Value
                                                     </option>
                                                 }
