@@ -15,6 +15,8 @@ namespace SistemaDeConvocacoes.Presentation.Profiles
             CreateMap<Admin2ViewModel, Admin>();
             CreateMap<CargoViewModel,Cargo> ();
             CreateMap<ClienteViewModel, Cliente>();
+            CreateMap<IEnumerable<ClienteViewModel>, IEnumerable<Cliente>>();
+            CreateMap<Cliente, ClienteViewModel>();
             CreateMap<ConvocacoesViewModel,Convocacao >();
             CreateMap<ConvocadoViewModel,Convocado>();
             CreateMap<DadosConvocadosViewModel,Convocado>();

@@ -69,7 +69,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             {
                 SalvarImagemCliente(Imagem, cliente);
 
-                return RegistarClienteParaFazerLoginAsync(cliente, out ActionResult actionResult)
+                return RegistarClienteParaFazerLoginAsync(clienteViewModel, out IActionResult actionResult)
                     ? actionResult
                     : RedirectToAction("Index");
             }
@@ -79,16 +79,15 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             }
         }
 
-        private bool RegistarClienteParaFazerLoginAsync(ClienteViewModel clienteViewModel, out ActionResult actionResult)
-        {
-            var cliente = _clienteAppService.SearchAsync(a => a.Email.Equals(clienteViewModel.Email)).Result.FirstOrDefault();
+        private bool RegistarClienteParaFazerLoginAsync(ClienteViewModel clienteViewModel, out IActionResult actionResult)
+        {           
             var user = new ApplicationUser
             {
-                Id = cliente.ClienteId.ToString(),
+                Id = clienteViewModel.ClienteId.ToString(),
                 UserName = clienteViewModel.Email,
                 Email = clienteViewModel.Email
             };
-            var result = _userManager.AddPasswordAsync(user, clienteViewModel.Password).Result;
+            var result = _userManager.CreateAsync(user, clienteViewModel.Password).Result;
 
             if (!result.Succeeded)
             {

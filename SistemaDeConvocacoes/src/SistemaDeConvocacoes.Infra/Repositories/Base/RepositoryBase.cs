@@ -45,9 +45,9 @@ namespace SistemaDeConvocacoes.Infra.Repositories.Base
         public async Task RemoveAsync(Guid id)
         {
             var entity = Context.Set<TEntity>().FindAsync(id).Result;
-
             Context.Set<TEntity>().Remove(entity);
-           
+            await Context.SaveChangesAsync();
+
         }
 
         public async Task<IEnumerable<TEntity>> SearchAsync(Expression<Func<TEntity, bool>> predicate)
