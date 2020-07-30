@@ -1,4 +1,4 @@
-﻿@model SisConv.Infra.CrossCutting.Identity.Model.RoleViewModel
+﻿@model SistemaDeConvocacoes.Application.ViewModels.RoleViewModel
 
 @{
     ViewBag.Title = "Create";
@@ -12,20 +12,20 @@
 
     <div class="form-horizontal">
         <h4>Role.</h4>
-        <hr/>
+        <hr />
         @Html.ValidationSummary(true)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Name, new {@class = "control-label col-md-2"})
+            @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextBoxFor(model => model.Name, new {@class = "form-control"})
+                @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Name)
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default"/>
+                <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </div>
     </div>
@@ -36,5 +36,5 @@
 </div>
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+    @RenderSection("~/bundles/jqueryval")
 }

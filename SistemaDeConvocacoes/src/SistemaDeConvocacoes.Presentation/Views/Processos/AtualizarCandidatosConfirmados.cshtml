@@ -1,4 +1,4 @@
-﻿@using SisConv.Domain.Enums;
+﻿@using SistemaDeConvocacoes.Domain.Enums;
 @{
     Layout = "~/Views/Shared/Processos/LayoutProcessosPainel.cshtml";
     ViewBag.Title = "AtualizarCandidatosConfirmados";
@@ -97,8 +97,7 @@
                                                 {
                                                     if (row.Key != StatusConvocacao.Contratado && row.Key != StatusConvocacao.Desistente)
                                                     {
-                                                        <option value="@row.Key.ToString()"
-                                                                @if (!string.IsNullOrEmpty(itens.StatusConvocacao)) { if (itens.StatusConvocacao == row.Key.ToString()) { @selected } }>
+                                                        <option value="@row.Key.ToString()">
                                                             @row.Value
                                                         </option>
                                                     }

@@ -2,12 +2,12 @@
     ViewBag.Title = "Home Page";
 }
 
-@if (Request.IsAuthenticated && User.IsInRole("Administrator"))
+@if (User.Identity.IsAuthenticated && User.IsInRole("Administrator"))
 {
-    
-        Layout = "~/Views/Shared/Admin/_LayoutAdmin.cshtml";
-        
-    
+
+    Layout = "~/Views/Shared/Admin/_LayoutAdmin.cshtml";
+
+
 
     <div class="col-lg-12">
         <div class="row">
@@ -39,7 +39,7 @@
         </div>
     </div>
 }
-@if (Request.IsAuthenticated && User.IsInRole("Cliente"))
+@if (User.Identity.IsAuthenticated && User.IsInRole("Cliente"))
 {
     <div class="col-lg-12">
         <div class="row">
@@ -73,7 +73,7 @@
     </div>
 
 }
-@if (Request.IsAuthenticated && User.IsInRole("Convocado"))
+@if (User.Identity.IsAuthenticated && User.IsInRole("Convocado"))
 {
     using (Html.BeginForm("ConfirmaConvocacao", "Convocacao", FormMethod.Post, new { id = "form" }))
     {

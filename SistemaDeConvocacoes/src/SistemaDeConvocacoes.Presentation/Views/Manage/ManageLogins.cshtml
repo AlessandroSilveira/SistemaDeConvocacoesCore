@@ -1,5 +1,8 @@
-﻿@using Microsoft.Owin.Security
-@model SisConv.Mvc.Models.ManageLoginsViewModel
+﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Http.Extensions
+@using Microsoft.Owin.Security
+@inject SignInManager<SistemaDeConvocacoes.Domain.Models.ApplicationUser> SignInManager
+@model SistemaDeConvocacoes.Application.ViewModels.ManageLoginsViewModel
 @{
     ViewBag.Title = "Manage your external logins";
 }
@@ -8,7 +11,7 @@
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 @{
-    var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
+    var loginProviders = (await SignInManager.GetExternalAuthenticationSchemesAsync()).ToList();
     if (loginProviders.Count() == 0)
     {
         <div>
@@ -25,47 +28,33 @@
             <h4>Registered Logins</h4>
             <table class="table">
                 <tbody>
-                @foreach (var account in Model.CurrentLogins)
-                {
-                    <tr>
-                        <td>@account.LoginProvider</td>
-                        <td>
-                            @if (ViewBag.ShowRemoveButton)
-                            {
-                                using (Html.BeginForm("RemoveLogin", "Manage"))
+                    @foreach (var account in Model.CurrentLogins)
+                    {
+                        <tr>
+                            <td>@account.LoginProvider</td>
+                            <td>
+                                @if (ViewBag.ShowRemoveButton)
                                 {
-                                    @Html.AntiForgeryToken()
-                                    <div>
-                                        @Html.Hidden("loginProvider", account.LoginProvider)
-                                        @Html.Hidden("providerKey", account.ProviderKey)
-                                        <input type="submit" class="btn btn-default" value="Remove" title="Remove this @account.LoginProvider login from your account"/>
-                                    </div>
+                                    using (Html.BeginForm("RemoveLogin", "Manage"))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <div>
+                                            @Html.Hidden("loginProvider", account.LoginProvider)
+                                            @Html.Hidden("providerKey", account.ProviderKey)
+                                            <input type="submit" class="btn btn-default" value="Remove" title="Remove this @account.LoginProvider login from your account" />
+                                        </div>
+                                    }
                                 }
-                            }
-                            else
-                            {
-                                @: &nbsp;
-                            }
-                        </td>
-                    </tr>
-                }
+                                else
+                                {
+                                    @: &nbsp;
+                                }
+                            </td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         }
-        if (Model.OtherLogins.Count > 0)
-        {
-            using (Html.BeginForm("LinkLogin", "Manage"))
-            {
-                @Html.AntiForgeryToken()
-                <div id="socialLoginList">
-                    <p>
-                        @foreach (AuthenticationDescription p in Model.OtherLogins)
-                        {
-                            <button type="submit" class="btn btn-default" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account">@p.AuthenticationType</button>
-                        }
-                    </p>
-                </div>
-            }
-        }
+        
     }
 }

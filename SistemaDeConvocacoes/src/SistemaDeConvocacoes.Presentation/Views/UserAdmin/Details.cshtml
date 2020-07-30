@@ -1,4 +1,4 @@
-﻿@model SisConv.Infra.CrossCutting.Identity.Model.ApplicationUser
+﻿@model SistemaDeConvocacoes.Domain.Models.ApplicationUser
 
 @{
     Layout = "~/Views/Shared/Admin/_LayoutAdmin.cshtml";
@@ -15,7 +15,7 @@
         <div class="col-lg-12">
             <div class="panel-body">
                 <div>
-                   
+
                     <dl class="dl-horizontal">
                         <dt>
                             @Html.DisplayNameFor(model => model.UserName):
@@ -47,7 +47,7 @@
                     <button type="button" class="btn btn-secondary" title="" data-placement="left" onclick="history.back();">Voltar</button>
 
                     @*@Html.ActionLink("Editar", "Edit", new { id = Model.Id }) |
-                    @Html.ActionLink("Voltar", "Index")*@
+                        @Html.ActionLink("Voltar", "Index")*@
                 </p>
             </div>
         </div>

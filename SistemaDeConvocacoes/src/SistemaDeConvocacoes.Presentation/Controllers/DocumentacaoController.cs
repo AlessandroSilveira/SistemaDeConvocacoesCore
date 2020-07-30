@@ -68,7 +68,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
 
         private string SalvarArquivoConvocados(DocumentacaoViewModel documentacaoViewModel)
         {
-            var pathArquivo = _configuration.GetSection("SisConvDocs").Value;
+            var pathArquivo = _configuration.GetSection("SistemaDeConvocacoesDocs").Value;
             pathArquivo = pathArquivo.ToString().Replace(@"\\", @"\");
             var arquivo = Request.Form.Files[0];
             if (arquivo == null)

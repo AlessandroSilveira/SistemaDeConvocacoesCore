@@ -252,7 +252,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
 
         public void Download(string arquivo)
         {
-            //var pathArquivo = _configuration.GetSection("SisConvDocs").Value;  /*WebConfigurationManager.AppSettings[@"SisConvDocs"];*/
+            //var pathArquivo = _configuration.GetSection("SistemaDeConvocacoesDocs").Value;  /*WebConfigurationManager.AppSettings[@"SistemaDeConvocacoesDocs"];*/
             //var caminhoArquivo = Path.Combine(pathArquivo, arquivo);
             //var fInfo = new FileInfo(caminhoArquivo);
             //HttpContext.Response.Clear();

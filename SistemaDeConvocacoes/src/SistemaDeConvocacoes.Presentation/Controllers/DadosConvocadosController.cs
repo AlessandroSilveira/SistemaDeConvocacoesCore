@@ -36,7 +36,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         {
             if (!ModelState.IsValid) return View(dadosConvocadosViewModel);
 
-            var pathArquivo = _configuration.GetSection("SisConvDocs").Value; /*WebConfigurationManager.AppSettings["SisConvDocs"];*/
+            var pathArquivo = _configuration.GetSection("SistemaDeConvocacoesDocs").Value; /*WebConfigurationManager.AppSettings["SistemaDeConvocacoesDocs"];*/
             var arquivo = Request.Form.Files[0];
 
             if (arquivo == null) return View(dadosConvocadosViewModel);
@@ -56,7 +56,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
 
         private bool SalvarArquivoConvocados(out ActionResult view)
         {
-            var pathArquivo = _configuration.GetSection("SisConvDocs").Value; 
+            var pathArquivo = _configuration.GetSection("SistemaDeConvocacoesDocs").Value; 
             var arquivo = Request.Form.Files[0];
             if (arquivo == null)
             {

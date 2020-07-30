@@ -7,7 +7,7 @@ namespace SistemaDeConvocacoes.Infra.Repositories
 {
     public class AdminRepository : RepositoryBase<Admin>, IAdminRepository
     {
-        public AdminRepository(ApplicationDbContext sisConvContext) : base(sisConvContext)
+        public AdminRepository(ApplicationDbContext SistemaDeConvocacoesContext) : base(SistemaDeConvocacoesContext)
         {
         }
     }

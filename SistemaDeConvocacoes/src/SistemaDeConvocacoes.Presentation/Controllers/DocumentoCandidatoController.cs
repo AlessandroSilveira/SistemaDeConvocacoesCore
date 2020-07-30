@@ -86,7 +86,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             if (!ModelState.IsValid) 
                 return View(documentoCandidatoViewModel);
 
-            var pathArquivo = _configuration.GetSection("SisConvDocs").Value;
+            var pathArquivo = _configuration.GetSection("SistemaDeConvocacoesDocs").Value;
             var arquivo = Request.Form.Files[0];
             var nomeArquivo = Path.GetFileName(arquivo.FileName);
 
@@ -109,7 +109,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
 
         public string SalvarDocumemento(DocumentoCandidatoViewModel documentoCandidatoViewModel)
         {
-            var pathArquivo = _configuration.GetSection("SisConvDocs").Value; 
+            var pathArquivo = _configuration.GetSection("SistemaDeConvocacoesDocs").Value; 
             var caminho = pathArquivo.Replace(@"\\\\", @"\");
             var arquivo = Request.Form.Files[0];
             if (arquivo == null)
@@ -187,7 +187,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
 
             //var dadosDocumento = _documentoCandidatoAppService.GetById(DocumentoCandidatoId);
 
-            //var pathArquivo = WebConfigurationManager.AppSettings[@"SisConvDocs"];
+            //var pathArquivo = WebConfigurationManager.AppSettings[@"SistemaDeConvocacoesDocs"];
             //var caminhoArquivo = Path.Combine(pathArquivo, dadosDocumento.Path);
             //var fInfo = new FileInfo(caminhoArquivo);
             //HttpContext.Response.Clear();

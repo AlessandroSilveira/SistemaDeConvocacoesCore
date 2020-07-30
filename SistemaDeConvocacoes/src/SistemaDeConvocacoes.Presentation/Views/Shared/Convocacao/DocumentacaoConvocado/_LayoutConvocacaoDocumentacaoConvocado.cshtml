@@ -62,8 +62,9 @@
             $('[data-toggle="tooltip"]').tooltip();
         })
     </script>
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("~/bundles/jquery")
+    @RenderSection("~/bundles/bootstrap")
+    @RenderSection("~/bundles/modernizr")
     @RenderSection("scripts", false)
 </body>
 </html>
