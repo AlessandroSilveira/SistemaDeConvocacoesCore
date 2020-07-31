@@ -35,7 +35,6 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             _convocadoAppService = convocadoAppService;
         }
 
-
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Register(string returnUrl = null)

@@ -8,61 +8,72 @@
 <div class="col-lg-12">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header"><b>@ViewBag.Title</b></h1>
+
         </div>
     </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="panel-body">
-                <div class="table-responsive">
-                    <h3>Deseja realmente excluir esse cliente?</h3>
-                    <div>
-                        <dl class="dl-horizontal">
-                            <dt>
-                                @Html.DisplayNameFor(model => model.Nome)
-                            </dt>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">@ViewBag.Title</h6>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel-body">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <div class="table-responsive">
+                                <h3>Deseja realmente excluir esse cliente?</h3>
+                                <div>
+                                    <dl class="dl-horizontal">
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.Nome)
+                                        </dt>
 
-                            <dd>
-                                @Html.DisplayFor(model => model.Nome)
-                            </dd>
+                                        <dd>
+                                            @Html.DisplayFor(model => model.Nome)
+                                        </dd>
 
-                            <dt>
-                                @Html.DisplayNameFor(model => model.Cnpj)
-                            </dt>
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.Cnpj)
+                                        </dt>
 
-                            <dd>
-                                @Html.DisplayFor(model => model.Cnpj)
-                            </dd>
+                                        <dd>
+                                            @Html.DisplayFor(model => model.Cnpj)
+                                        </dd>
 
-                            <dt>
-                                @Html.DisplayNameFor(model => model.Email)
-                            </dt>
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.Email)
+                                        </dt>
 
-                            <dd>
-                                @Html.DisplayFor(model => model.Email)
-                            </dd>
+                                        <dd>
+                                            @Html.DisplayFor(model => model.Email)
+                                        </dd>
 
-                            <dt>
-                                @Html.DisplayNameFor(model => model.Telefone)
-                            </dt>
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.Telefone)
+                                        </dt>
 
-                            <dd>
-                                @Html.DisplayFor(model => model.Telefone)
-                            </dd>
-                        </dl>
+                                        <dd>
+                                            @Html.DisplayFor(model => model.Telefone)
+                                        </dd>
+                                    </dl>
 
-                        @using (Html.BeginForm())
-                        {
-                            @Html.AntiForgeryToken()
+                                    @using (Html.BeginForm())
+                                    {
+                                        @Html.AntiForgeryToken()
 
-                            <div class="form-actions no-color">
-                                <input type="submit" value="Delete" class="btn btn-danger" />
-                                <button type="button" class="btn btn-secondary" title="" data-placement="left" onclick="history.back();">Voltar</button>
+                                        <div class="form-actions no-color">
+                                            <input type="submit" value="Delete" class="btn btn-danger" />
+                                            <button type="button" class="btn btn-secondary" title="" data-placement="left" onclick="history.back();">Voltar</button>
+                                        </div>
+                                    }
+                                </div>
                             </div>
-                        }
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+ </div>
+
