@@ -27,10 +27,11 @@
 
 </head>
 
-<body>
+<body id="page-top">
 
     <div id="wrapper">
-        @{ Html.RenderPartial("Admin/_NavBarAdmin"); }
+       @{ Html.RenderPartial("Admin/_SideBarAdmin"); }
+       @{ Html.RenderPartial("Admin/_NavBarAdmin"); }
 
         <div id="page-wrapper">
             @RenderBody()
