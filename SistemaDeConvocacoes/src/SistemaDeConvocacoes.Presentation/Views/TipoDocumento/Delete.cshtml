@@ -3,7 +3,7 @@
 @{
     Layout = "~/Views/Shared/Processos/Configuracoes/_LayoutProcessosConfiguracoes.cshtml";
 }
-<div class="col-lg-12">
+@*<div class="col-lg-12">
     <div class="row">
         <div class="col-lg-12">
             <h1 class="page-header"><b>@ViewBag.dadosProcesso.Nome</b></h1>
@@ -15,40 +15,68 @@
                 <div class="panel-heading">
                     <b>Você tem certeza que deseja excluir esse item?</b>
                 </div>
-            </div>
-            <div class="panel-body">
-                <div>
+            </div>*@
 
-                    <hr />
-                    <dl class="dl-horizontal">
-                        <dt>
-                            @Html.DisplayNameFor(model => model.TipoDocumentos)
-                        </dt>
 
-                        <dd>
-                            @Html.DisplayFor(model => model.TipoDocumentos)
-                        </dd>
 
-                        <dt>
-                            @Html.DisplayNameFor(model => model.Ativo)
-                        </dt>
+<div class="col-lg-12">
+    <div class="row">
+        <div class="col-lg-12">
 
-                        <dd>
-                            @Html.DisplayFor(model => model.Ativo)
-                        </dd>
+        </div>
+    </div>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">@ViewBag.dadosProcesso.Nome - @ViewBag.Title</h6>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel-body">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <div class="panel-body">
 
-                    </dl>
+                                <div class="panel-body">
+                                    <div>
+                                        <div class="panel-heading">
+                                            <b>Você tem certeza que deseja excluir esse item?</b>
+                                        </div>
+                                        <hr />
+                                        <dl class="dl-horizontal">
+                                            <dt>
+                                                @Html.DisplayNameFor(model => model.TipoDocumentos)
+                                            </dt>
 
-                    @using (Html.BeginForm())
-                    {
-                        @Html.AntiForgeryToken()
+                                            <dd>
+                                                @Html.DisplayFor(model => model.TipoDocumentos)
+                                            </dd>
 
-                    <div class="form-actions no-color">
-                        <input type="submit" value="Delete" class="btn btn-danger" /> 
-                        <button type="button" class="btn btn-secondary" title="" data-placement="left" onclick="history.back();">Voltar</button>
+                                            <dt>
+                                                @Html.DisplayNameFor(model => model.Ativo)
+                                            </dt>
+
+                                            <dd>
+                                                @Html.DisplayFor(model => model.Ativo)
+                                            </dd>
+
+                                        </dl>
+
+                                        @using (Html.BeginForm())
+                                        {
+                                            @Html.AntiForgeryToken()
+
+                                            <div class="form-actions no-color">
+                                                <input type="submit" value="Delete" class="btn btn-danger" />
+                                                <button type="button" class="btn btn-secondary" title="" data-placement="left" onclick="history.back();">Voltar</button>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    }
                 </div>
+
             </div>
         </div>
     </div>

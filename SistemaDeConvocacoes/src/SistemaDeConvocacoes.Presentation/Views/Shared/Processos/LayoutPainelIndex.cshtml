@@ -27,14 +27,12 @@
 
 </head>
 
-<body>
+<body id="page-top">
 
     <div id="wrapper">
+        @{ Html.RenderPartial("Processos/_SideBarPainelIndex"); }
         @{ Html.RenderPartial("Processos/_NavBarPainelIndex"); }
-
-        <div id="page-wrapper">
-            @RenderBody()
-        </div>
+        @RenderBody()
     </div>
 
     <!-- jQuery -->
@@ -48,16 +46,7 @@
     <!-- Custom scripts for all pages-->
     <script src="~/js/sb-admin-2.min.js"></script>
 
-    <script src="~/lib/jquery/dist/jquery.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-
-    <script>
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip();
-        })
-    </script>
+    @*<script src="~/js/site.js" asp-append-version="true"></script>*@
     @RenderSection("scripts", false)
-
 </body>
 </html>

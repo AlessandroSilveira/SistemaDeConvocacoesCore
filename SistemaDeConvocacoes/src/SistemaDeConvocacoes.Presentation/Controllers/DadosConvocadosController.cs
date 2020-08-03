@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -15,40 +16,44 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         private readonly IProcessoAppService _processoAppService;
         private readonly IConfiguration _configuration; 
 
-        public DadosConvocadosController(IDadosConvocacaoAppService dadosConvocacaoAppService, IProcessoAppService processoAppService, IConfiguration configuration)
+        public DadosConvocadosController(
+            IDadosConvocacaoAppService dadosConvocacaoAppService, 
+            IProcessoAppService processoAppService, 
+            IConfiguration configuration)
         {
             _dadosConvocacaoAppService = dadosConvocacaoAppService;
             _processoAppService = processoAppService;
             _configuration = configuration;
         }
 
-        public ActionResult Create(Guid id)
+        public async Task<IActionResult> Create(Guid id)
         {
             ViewBag.id = id;
             ViewBag.ProcessoId = id;
-            ViewBag.dadosProcesso = _processoAppService.GetByIdAsync(id);
+            ViewBag.dadosProcesso = await _processoAppService.GetByIdAsync(id);
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(DadosConvocadosViewModel dadosConvocadosViewModel)
+        public async Task<IActionResult> Create(DadosConvocadosViewModel dadosConvocadosViewModel)
         {
-            if (!ModelState.IsValid) return View(dadosConvocadosViewModel);
+            if (!ModelState.IsValid) 
+                return View(dadosConvocadosViewModel);
 
             var pathArquivo = _configuration.GetSection("SistemaDeConvocacoesDocs").Value; /*WebConfigurationManager.AppSettings["SistemaDeConvocacoesDocs"];*/
             var arquivo = Request.Form.Files[0];
 
-            if (arquivo == null) return View(dadosConvocadosViewModel);
+            if (arquivo == null) 
+                return View(dadosConvocadosViewModel);
 
             var nomeArquivo = Path.GetFileName(arquivo.FileName);
 
             if (SalvarArquivoConvocados(out _))
-
-                _dadosConvocacaoAppService.SalvarCargosAsync(dadosConvocadosViewModel.Id,
+                await _dadosConvocacaoAppService.SalvarCargosAsync(dadosConvocadosViewModel.Id,
                     string.Format("{0}{1}", pathArquivo, nomeArquivo));
 
-            _dadosConvocacaoAppService.SalvarCandidatosAsync(dadosConvocadosViewModel.Id,
+            await _dadosConvocacaoAppService.SalvarCandidatosAsync(dadosConvocadosViewModel.Id,
                 string.Format("{0}{1}", pathArquivo, nomeArquivo));
 
             return RedirectToAction("Index", "Processos");

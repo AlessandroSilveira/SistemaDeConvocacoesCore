@@ -5,61 +5,59 @@
     ViewBag.Title = "Deletar Cargo/Curso";
 }
 
-
-
-<h3></h3>
-
 <div class="col-lg-12">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header"><b>@ViewBag.Title</b></h1>
+
         </div>
     </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="panel panel-default" style="margin-bottom:-30px !important">
-                <div class="panel-heading">
-                    <b>Você tem certeza que deseja excluír esse cargo?</b>
-                </div>
-            </div>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">@ViewBag.Title</h6>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel-body">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <dl class="dl-horizontal">
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.CodigoCargo)
+                                </dt>
 
-            <div>
-                <hr />
-                <dl class="dl-horizontal">
-                    <dt>
-                        @Html.DisplayNameFor(model => model.CodigoCargo)
-                    </dt>
+                                <dd>
+                                    @Html.DisplayFor(model => model.CodigoCargo)
+                                </dd>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.CodigoCargo)
-                    </dd>
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.Nome)
+                                </dt>
 
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Nome)
-                    </dt>
+                                <dd>
+                                    @Html.DisplayFor(model => model.Nome)
+                                </dd>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.Nome)
-                    </dd>
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.Ativo)
+                                </dt>
 
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Ativo)
-                    </dt>
+                                <dd>
+                                    @Html.DisplayFor(model => model.Ativo)
+                                </dd>
+                            </dl>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.Ativo)
-                    </dd>
-                </dl>
+                            @using (Html.BeginForm())
+                            {
+                                @Html.AntiForgeryToken()
 
-                @using (Html.BeginForm())
-                {
-                    @Html.AntiForgeryToken()
-
-                    <div class="form-actions no-color">
-                        <input type="submit" value="Delete" class="btn btn-danger" />
-                        <button type="button" class="btn btn-secondary" title="" data-placement="left" onclick="history.back();">Voltar</button>
+                                <div class="form-actions no-color">
+                                    <input type="submit" value="Delete" class="btn btn-danger" />
+                                    <button type="button" class="btn btn-secondary" title="" data-placement="left" onclick="history.back();">Voltar</button>
+                                </div>
+                            }
+                        </div>
                     </div>
-                }
+                </div>
             </div>
         </div>
     </div>

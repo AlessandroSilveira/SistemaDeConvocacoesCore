@@ -22,29 +22,35 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         }
 
         // GET: Cargo
-        public ActionResult Index(Guid id)
+        public async Task<IActionResult> Index(Guid id)
         {
             ViewBag.id = id;
             ViewBag.ProcessoId = id;
-            return View(_cargoAppService.GetAllAsync().Result.OrderBy(a => a.CodigoCargo));
+            ViewBag.DadosProcesso = await _processoAppService.GetByIdAsync(id);
+            var cargos = _cargoAppService.GetAllAsync().Result.OrderBy(a => a.CodigoCargo);
+            return View(cargos);
         }
 
         // GET: Cargo/Details/5
-        public ActionResult Details(Guid? id, Guid ProcessoId)
+        public async Task<IActionResult> Details(Guid? id, Guid ProcessoId)
         {
             ViewBag.Id = ProcessoId;
             ViewBag.ProcessoId = ProcessoId;
-            if (id.Equals(null)) return new StatusCodeResult((int)HttpStatusCode.BadRequest);
-            var cargoViewModel = _cargoAppService.GetByIdAsync(Guid.Parse(id.ToString()));
+
+            if (id.Equals(null)) 
+                return new StatusCodeResult((int)HttpStatusCode.BadRequest);
+
+            var cargoViewModel = await _cargoAppService.GetByIdAsync(Guid.Parse(id.ToString()));
+
             return cargoViewModel.Equals(null) ? (ActionResult) NotFound() : View(cargoViewModel);
         }
 
         // GET: Cargo/Create
-        public ActionResult Create(Guid Id)
+        public async Task<IActionResult> Create(Guid Id)
         {
             ViewBag.id = Id;
             ViewBag.ProcessoId = Id;
-            ViewBag.dadosProcesso = _processoAppService.GetByIdAsync(Id);
+            ViewBag.dadosProcesso = await _processoAppService.GetByIdAsync(Id);
             return View();
         }
 
@@ -53,22 +59,29 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(CargoViewModel cargoViewModel)
+        public async Task<IActionResult> CreateAsync(CargoViewModel cargoViewModel)
         {
             ViewBag.ProcessoId = cargoViewModel.ProcessoId;
-            if (!ModelState.IsValid) return View(cargoViewModel);
+
+            if (!ModelState.IsValid) 
+                return View(cargoViewModel);
+
             cargoViewModel.CargoId = Guid.NewGuid();
-            _cargoAppService.AddAsync(cargoViewModel);
+
+            await _cargoAppService.AddAsync(cargoViewModel);
+
             return RedirectToAction("Index", new {Id = cargoViewModel.ProcessoId});
         }
 
         // GET: Cargo/Edit/5
-        public async Task<ActionResult> EditAsync(Guid? id)
-        {
-           
-            if (id.Equals(null)) return new StatusCodeResult((int)HttpStatusCode.BadRequest);
+        public async Task<IActionResult> EditAsync(Guid? id)
+        {           
+            if (id.Equals(null)) 
+                return new StatusCodeResult((int)HttpStatusCode.BadRequest);
+
             var cargoViewModel = await _cargoAppService.GetByIdAsync(Guid.Parse(id.ToString()));
             ViewBag.ProcessoId = cargoViewModel.ProcessoId;
+
             return cargoViewModel.Equals(null) ? (ActionResult) NotFound() : View(cargoViewModel);
         }
 
@@ -77,21 +90,29 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(CargoViewModel cargoViewModel)
+        public async Task<IActionResult> EditAsync(CargoViewModel cargoViewModel)
         {
             ViewBag.ProcessoId = cargoViewModel.ProcessoId;
-            if (!ModelState.IsValid) return View(cargoViewModel);
-            _cargoAppService.UpdateAsync(cargoViewModel);
+
+            if (!ModelState.IsValid) 
+                return View(cargoViewModel);
+
+            await _cargoAppService.UpdateAsync(cargoViewModel);
+
             return RedirectToAction("Index", new {Id = cargoViewModel.ProcessoId});
         }
 
         // GET: Cargo/Delete/5
-        public ActionResult Delete(Guid? id, Guid ProcessoId)
+        public async Task<IActionResult> Delete(Guid? id, Guid ProcessoId)
         {
             ViewBag.Id = ProcessoId;
             ViewBag.ProcessoId = ProcessoId;
-            if (id.Equals(null)) return new StatusCodeResult((int)HttpStatusCode.BadRequest);
-            var cargoViewModel = _cargoAppService.GetByIdAsync(Guid.Parse(id.ToString()));
+
+            if (id.Equals(null)) 
+                return new StatusCodeResult((int)HttpStatusCode.BadRequest);
+
+            var cargoViewModel = await _cargoAppService.GetByIdAsync(Guid.Parse(id.ToString()));
+
             return cargoViewModel.Equals(null) ? (ActionResult) NotFound() : View(cargoViewModel);
         }
 
@@ -102,6 +123,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         public async Task<IActionResult> DeleteConfirmedAsync(Guid id)
         {
            await _cargoAppService.RemoveAsync(id);
+
             return RedirectToAction("Index");
         }
 

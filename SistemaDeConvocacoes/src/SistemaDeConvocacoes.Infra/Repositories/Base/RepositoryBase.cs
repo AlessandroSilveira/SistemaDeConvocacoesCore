@@ -21,9 +21,16 @@ namespace SistemaDeConvocacoes.Infra.Repositories.Base
 
         public async Task<TEntity> AddAsync(TEntity obj)
         {
-            await Context.Set<TEntity>().AddAsync(obj);
-            await Context.SaveChangesAsync();
-            return obj;
+            try
+            {
+                await Context.Set<TEntity>().AddAsync(obj);
+                await Context.SaveChangesAsync();
+                return obj;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public async Task<TEntity> GetByIdAsync(Guid id)
@@ -38,7 +45,8 @@ namespace SistemaDeConvocacoes.Infra.Repositories.Base
 
         public async Task<TEntity> UpdateAsync(TEntity obj)
         {
-            Context.Entry(obj).State = EntityState.Modified;            
+            Context.Entry(obj).State = EntityState.Modified;
+            await Context.SaveChangesAsync();
             return obj;
         }
 

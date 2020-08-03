@@ -5,54 +5,70 @@
     ViewBag.Title = "Cargos/Cursos";
 }
 
-<div class="row">
-    <div class="col-lg-12">
-        <h1 class="page-header"><b>@ViewBag.Title</b></h1>
-    </div>
-</div>
-<div class="panel-body">
-    <div class="table-responsive">
-        <p>
-            @Html.ActionLink("Novo Cargo", "Create", new { Id = ViewBag.id }, null)
-        </p>
-        <table class="table">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.CodigoCargo)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Nome)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Ativo)
-                </th>
-                <th></th>
-            </tr>
 
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CodigoCargo)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Nome)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Ativo)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Editar", "Edit", new { id = item.CargoId }) |
-                        @Html.ActionLink("Detalhes", "Details", new { id = item.CargoId, ProcessoId = ViewBag.id }) |
-                        @Html.ActionLink("Excluír", "Delete", new { id = item.CargoId, ProcessoId = ViewBag.id })
-                    </td>
-                </tr>
-            }
-            <tr>
-                <td>
-                    <button type="button" class="btn btn-secondary" title="" data-placement="left" onclick="history.back();">Voltar</button>
-                </td>
-            </tr>
-        </table>
+<div class="col-lg-12">
+    <div class="row">
+        <div class="col-lg-12">
+
+        </div>
+    </div>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">@ViewBag.DadosProcesso.Nome - @ViewBag.Title</h6>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel-body">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <p>
+                                @Html.ActionLink("Novo Cargo", "Create", new { Id = ViewBag.id }, null)
+                            </p>
+                            <table class="table">
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.CodigoCargo)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Nome)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Ativo)
+                                    </th>
+                                    <th></th>
+                                </tr>
+
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.CodigoCargo)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Nome)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Ativo)
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Editar", "Edit", new { id = item.CargoId }) |
+                                            @Html.ActionLink("Detalhes", "Details", new { id = item.CargoId, ProcessoId = ViewBag.id }) |
+                                            @Html.ActionLink("Excluír", "Delete", new { id = item.CargoId, ProcessoId = ViewBag.id })
+                                        </td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <td colspan="4">
+                                        <button type="button" class="btn btn-secondary" title="" data-placement="left" onclick="history.back();">Voltar</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+

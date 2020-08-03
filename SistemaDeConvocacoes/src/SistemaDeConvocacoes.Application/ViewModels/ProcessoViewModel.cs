@@ -5,9 +5,11 @@ namespace SistemaDeConvocacoes.Application.ViewModels
 {
     public class ProcessoViewModel
     {
-        [Key] public Guid ProcessoId { get; set; }
+        [Key] 
+        public Guid ProcessoId { get; set; }
 
-        [Required] public Guid ClienteId { get; set; }
+        [Required] 
+        public Guid ClienteId { get; set; }
 
         [Required(AllowEmptyStrings = false)]
         [MaxLength(100)]

@@ -56,8 +56,11 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateAsync(ProcessoViewModel processoViewModel)
         {
-            if (!ModelState.IsValid) return View(processoViewModel);
+            if (!ModelState.IsValid) 
+                return View(processoViewModel);
+
             await _processoAppService.AddAsync(processoViewModel);
+
             return RedirectToAction("Index");
         }
 
