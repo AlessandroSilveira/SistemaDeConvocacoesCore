@@ -27,32 +27,32 @@
 
                                     @Html.ValidationSummary("", new { @class = "text-error" })
                                     <div class="form-group">
-                                        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                                        @Html.LabelFor(m => m.Email, new { @class = "col-md-4 control-label", @style= "font-weight: bold" })
                                         <div class="col-md-10">
                                             @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @style = "width:50%" })
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                                        @Html.LabelFor(m => m.Password, new { @class = "col-md-4 control-label", @style = "font-weight: bold" })
                                         <div class="col-md-10">
                                             @Html.PasswordFor(m => m.Password, new { @class = "form-control", @style = "width:50%" })
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+                                        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-4 control-label", @style = "font-weight: bold" })
                                         <div class="col-md-10">
                                             @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @style = "width:50%" })
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-2 control-label">
-                                            Escolher tipo de usuário
+                                        <label class="col-md-4 control-label">
+                                            <b>Escolher tipo de usuário</b>
                                         </label>
                                         <div class="col-md-10">
                                             @foreach (var item in (SelectList)ViewBag.RoleId)
                                             {
                                                 <input type="checkbox" name="SelectedRoles" value="@item.Value" class="checkbox-inline" />
-                                                @Html.Label(item.Value, "", new { @class = "control-label" })
+                                                @Html.Label(item.Value, item.Value.ToString(), new { @class = "control-label" })<br>
                                             }
                                         </div>
                                     </div>
@@ -63,9 +63,7 @@
 
                                         </div>
                                     </div>
-                                }
-
-                              
+                                }                              
 
                             </div>
                         </div>

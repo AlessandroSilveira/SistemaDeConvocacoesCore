@@ -24,6 +24,7 @@ namespace SistemaDeConvocacoes.Infra.Context
             public virtual DbSet<DadosPessoais> DadosPessoais { get; set; }
             public virtual DbSet<DocumentoCandidato> DocumentoCandidato { get; set; }
             public virtual DbSet<Documento> Documentos { get; set; }
+            public virtual DbSet<Domain.Entities.Documentacao> Documentacao { get; set; }
             public virtual DbSet<MigrationHistory> MigrationHistory { get; set; }
             public virtual DbSet<Pessoa> Pessoa { get; set; }
             public virtual DbSet<PrimeiroAcesso> PrimeiroAcesso { get; set; }
@@ -598,6 +599,33 @@ namespace SistemaDeConvocacoes.Infra.Context
                         .HasConstraintName("FK_dbo.Documentos_dbo.Processos_ProcessoId");
                 }
                 );
+
+
+                builder.Entity<Domain.Entities.Documentacao>(entity =>
+                {
+                    entity.HasKey(e => e.DocumentoId)
+                       .HasName("PK_dbo.Documentacao");
+
+                    entity.Property(e => e.DocumentoId).ValueGeneratedNever();
+
+                    entity.Property(e => e.DataCriacao).HasColumnType("datetime");
+
+                    entity.Property(e => e.Descricao)
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .IsUnicode(false);
+
+                    entity.Property(e => e.Path)
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .IsUnicode(false);
+
+                    entity.HasOne(d => d.Convocacao)
+                        .WithMany(p => p.Documentacoes)
+                        .HasForeignKey(d => d.ConvocacaoId)
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("FK_dbo.Documentos_dbo.Convocacao_ConvocacaoId");
+                });
 
                 builder.Entity<MigrationHistory>(entity =>
                 {

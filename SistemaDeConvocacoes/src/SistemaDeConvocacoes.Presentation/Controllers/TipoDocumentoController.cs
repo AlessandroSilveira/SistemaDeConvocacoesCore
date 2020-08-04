@@ -77,7 +77,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
                 return new StatusCodeResult((int)HttpStatusCode.BadRequest);
 
             var docCandidatoViewModel = await _tipoDocumentoAppService.GetByIdAsync(Guid.Parse(id.ToString()));
-            ViewBag.dadosProcesso = _processoAppService.GetByIdAsync(docCandidatoViewModel.ProcessoId);
+            ViewBag.dadosProcesso = await _processoAppService.GetByIdAsync(docCandidatoViewModel.ProcessoId);
             ViewBag.ProcessoId = docCandidatoViewModel.ProcessoId;
 
             return docCandidatoViewModel.Equals(null) ? (ActionResult) NotFound() : View(docCandidatoViewModel);

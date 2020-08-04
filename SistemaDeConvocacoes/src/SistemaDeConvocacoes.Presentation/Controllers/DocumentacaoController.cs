@@ -25,29 +25,29 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             _configuration = configuration;
         }
 
-        public ActionResult Index(Guid Id)
+        public async Task<IActionResult> Index(Guid Id)
         {
             ViewBag.ProcessoId = Id;
-            ViewBag.dadosProcesso = _processoAppService.GetByIdAsync(Id);
-            return View(_documentacaoAppService.GetAllAsync());
+            ViewBag.dadosProcesso = await _processoAppService.GetByIdAsync(Id);
+            return View(await _documentacaoAppService.GetAllAsync());
         }
 
-        public ActionResult Details(Guid id)
+        public async Task<IActionResult> Details(Guid id)
         {
-            var documentacaoViewModel = _documentacaoAppService.GetByIdAsync(id);
+            var documentacaoViewModel = await _documentacaoAppService.GetByIdAsync(id);
             return documentacaoViewModel == null ? (ActionResult) NotFound() : View(documentacaoViewModel);
         }
 
-        public ActionResult Create(Guid Id)
+        public async Task<IActionResult> Create(Guid Id)
         {
             ViewBag.ProcessoId = Id;
-            ViewBag.dadosProcesso = _processoAppService.GetByIdAsync(Id);
+            ViewBag.dadosProcesso = await _processoAppService.GetByIdAsync(Id);
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(DocumentacaoViewModel documentacaoViewModel)
+        public async Task<IActionResult> Create(DocumentacaoViewModel documentacaoViewModel)
         {
             ViewBag.dadosProcesso = await _processoAppService.GetByIdAsync(documentacaoViewModel.ProcessoId);
             documentacaoViewModel.DataCriacao = DateTime.Now;
@@ -90,15 +90,15 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             return nomeArquivo;
         }
 
-        public ActionResult Edit(Guid id)
+        public async Task<IActionResult> Edit(Guid id)
         {
-            var documentacaoViewModel = _documentacaoAppService.GetByIdAsync(id);
+            var documentacaoViewModel = await _documentacaoAppService.GetByIdAsync(id);
             return documentacaoViewModel == null ? (ActionResult) NotFound() : View(documentacaoViewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(DocumentacaoViewModel documentacaoViewModel)
+        public async Task<IActionResult> Edit(DocumentacaoViewModel documentacaoViewModel)
         {
             if (!ModelState.IsValid) 
                 return View(documentacaoViewModel);

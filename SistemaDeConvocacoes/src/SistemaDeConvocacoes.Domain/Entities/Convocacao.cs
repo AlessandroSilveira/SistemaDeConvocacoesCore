@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace SistemaDeConvocacoes.Domain.Entities
 {
@@ -20,5 +21,6 @@ namespace SistemaDeConvocacoes.Domain.Entities
         public bool Ativo { get; set; }
         public string StatusConvocacao { get; set; }
         public string StatusContratacao { get; set; }
+        public virtual ICollection<Documentacao> Documentacoes { get; set; }
     }
 }

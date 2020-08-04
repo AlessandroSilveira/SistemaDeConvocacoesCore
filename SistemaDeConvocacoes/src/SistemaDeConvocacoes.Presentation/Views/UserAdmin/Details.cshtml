@@ -18,27 +18,32 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel-body">
-                    <div class="card-body">                        
-                            <div class="table-responsive">
-                                <div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <div>
+                                <dl class="dl-horizontal">
+                                    <dt>
+                                        @Html.DisplayNameFor(model => model.UserName):
+                                    </dt>
+                                    <dd>
+                                        @Html.DisplayFor(model => model.UserName)
+                                    </dd>
+                                </dl>
+                            </div>
 
-                                    <dl class="dl-horizontal">
-                                        <dt>
-                                            @Html.DisplayNameFor(model => model.UserName):
-                                        </dt>
-                                        <dd>
-                                            @Html.DisplayFor(model => model.UserName)
-                                        </dd>
-                                    </dl>
-                                </div>
-                                <h4>Regra de acesso para esse usuário.</h4>
+
+
+                            <table class="table">
+                                <dl class="dl-horizontal">
+                                    <dt>Regra de acesso para esse usuário.</dt>
+                                </dl>
                                 @if (ViewBag.RoleNames.Count == 0)
                                 {
-                                    <hr />
+                                    
                                     <p>Não há regras de acesso para esse usuário.</p>
                                 }
-
-                                <table class="table">
+                                else
+                                {
                                     <dl class="dl-horizontal">
                                         @foreach (var item in ViewBag.RoleNames)
                                         {
@@ -47,19 +52,21 @@
                                             </dt>
                                         }
                                     </dl>
-                                </table>
-                                <p>
-                                    <button type="button" class="btn btn-primary" title="" data-placement="left" onclick=" window.location.href='@Url.Content("~/UserAdmin/Edit/"+Model.Id)'">Editar</button>
-                                    <button type="button" class="btn btn-secondary" title="" data-placement="left" onclick="history.back();">Voltar</button>
+                                }
 
-                                    @*@Html.ActionLink("Editar", "Edit", new { id = Model.Id }) |
-                                        @Html.ActionLink("Voltar", "Index")*@
-                                </p>
-                            </div>
+                            </table>
+                            <p>
+                                <button type="button" class="btn btn-primary" title="" data-placement="left" onclick=" window.location.href='@Url.Content("~/UserAdmin/Edit/"+Model.Id)'">Editar</button>
+                                <button type="button" class="btn btn-secondary" title="" data-placement="left" onclick="history.back();">Voltar</button>
+
+                                @*@Html.ActionLink("Editar", "Edit", new { id = Model.Id }) |
+                                    @Html.ActionLink("Voltar", "Index")*@
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div></div>

@@ -23,6 +23,7 @@ namespace SistemaDeConvocacoes.Presentation.Profiles
             CreateMap<ConvocadoViewModel,Convocado>();
             CreateMap<DadosConvocadosViewModel,Convocado>();            
             CreateMap<DocumentacaoViewModel, Documentacao>();
+            CreateMap< IEnumerable<DocumentacaoViewModel>, IEnumerable<Documentacao>>();
             CreateMap<Documentacao, DocumentacaoViewModel>();
             CreateMap< IEnumerable<DocumentoCandidatoViewModel>, IEnumerable<DocumentoCandidato>>();
             CreateMap<PessoaViewModel,Pessoa>();
@@ -33,6 +34,8 @@ namespace SistemaDeConvocacoes.Presentation.Profiles
 
             CreateMap<TelefoneViewModel,Telefone>();
             CreateMap<TipoDocumentoViewModel,TipoDocumento>();
+            CreateMap<IEnumerable<TipoDocumentoViewModel>, IEnumerable<TipoDocumento>>();
+            CreateMap<TipoDocumento, TipoDocumentoViewModel >();
             CreateMap<UsuarioViewModel, Usuario>();
         }
     }
