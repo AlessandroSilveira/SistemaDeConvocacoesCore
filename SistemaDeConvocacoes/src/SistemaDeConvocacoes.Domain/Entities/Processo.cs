@@ -24,5 +24,6 @@ namespace SistemaDeConvocacoes.Domain.Entities
         public virtual ICollection<Cargo> Cargos { get; set; }
         public virtual ICollection<Documento> Documentos { get; set; }
 
+
     }
 }

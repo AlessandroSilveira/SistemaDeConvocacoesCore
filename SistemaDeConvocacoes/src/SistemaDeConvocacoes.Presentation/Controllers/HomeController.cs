@@ -53,7 +53,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
 
             ViewBag.dadosConvocacao = dadosConvocacao;
 
-            var listaDocumentacao = await _documentacaoAppService.SearchAsync(a => a.ConvocacaoId.Equals(dadosProcesso.ProcessoId));
+            var listaDocumentacao = await _documentacaoAppService.SearchAsync(a => a.ProcessoId.Equals(dadosProcesso.ProcessoId));
             ViewBag.ListaDocumentacao = listaDocumentacao;
 
             if (dadosConvocacao == null || string.IsNullOrEmpty(dadosConvocacao.FirstOrDefault().Desistente))

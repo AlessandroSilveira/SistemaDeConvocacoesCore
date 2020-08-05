@@ -246,7 +246,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             ViewBag.dadosProcesso = await  _processoAppService.GetByIdAsync(processoId);
             var dadosConvocado = _convocadoAppService.GetByIdAsync(Guid.Parse(IdentityExtensions.GetUserId(User.Identity)));
             ViewBag.dadosConvocado = dadosConvocado;
-            ViewBag.listaDocumentacao = await _documentacaoAppService.SearchAsync(a => a.ConvocacaoId.Equals(processoId));
+            ViewBag.listaDocumentacao = await _documentacaoAppService.SearchAsync(a => a.ProcessoId.Equals(processoId));
             return View();
         }
 

@@ -28,25 +28,25 @@ namespace SistemaDeConvocacoes.Application.Services
 
         public async Task<DocumentacaoViewModel> AddAsync(DocumentacaoViewModel obj)
         {
-            var documento = _mapper.Map<DocumentacaoViewModel, Documentacao>(obj);           
+            var documento = _mapper.Map<DocumentacaoViewModel, Documento>(obj);           
             await _documentacaoService.AddAsync(documento);           
             return obj;
         }
 
         public async Task<DocumentacaoViewModel> GetByIdAsync(Guid id)
         {
-            return _mapper.Map<Documentacao, DocumentacaoViewModel>(await _documentacaoService.GetByIdAsync(id));
+            return _mapper.Map<Documento, DocumentacaoViewModel>(await _documentacaoService.GetByIdAsync(id));
         }
 
         public async Task<IEnumerable<DocumentacaoViewModel>> GetAllAsync()
         {
-            return _mapper.Map<IEnumerable<Documentacao>, IEnumerable<DocumentacaoViewModel>>(
+            return _mapper.Map<IEnumerable<Documento>, IEnumerable<DocumentacaoViewModel>>(
                 await _documentacaoService.GetAllAsync());
         }
 
         public async Task<DocumentacaoViewModel> UpdateAsync(DocumentacaoViewModel obj)
         {            
-            await _documentacaoService.UpdateAsync(_mapper.Map<DocumentacaoViewModel, Documentacao>(obj));           
+            await _documentacaoService.UpdateAsync(_mapper.Map<DocumentacaoViewModel, Documento>(obj));           
             return obj;
         }
 
@@ -55,15 +55,15 @@ namespace SistemaDeConvocacoes.Application.Services
            await _documentacaoService.RemoveAsync(id);           
         }
 
-        public async Task<IEnumerable<DocumentacaoViewModel>> SearchAsync(Expression<Func<Documentacao, bool>> predicate)
+        public async Task<IEnumerable<DocumentacaoViewModel>> SearchAsync(Expression<Func<Documento, bool>> predicate)
         {
-            return _mapper.Map<IEnumerable<Documentacao>, IEnumerable<DocumentacaoViewModel>>(
+            return _mapper.Map<IEnumerable<Documento>, IEnumerable<DocumentacaoViewModel>>(
                 await _documentacaoService.SearchAsync(predicate));
         }
 
-        public async Task<DocumentacaoViewModel> GetOneAsync(Expression<Func<Documentacao, bool>> predicate)
+        public async Task<DocumentacaoViewModel> GetOneAsync(Expression<Func<Documento, bool>> predicate)
         {
-            return _mapper.Map<Documentacao, DocumentacaoViewModel>(await _documentacaoService.GetOneAsync(predicate));
-        }
+            return _mapper.Map<Documento, DocumentacaoViewModel>(await _documentacaoService.GetOneAsync(predicate));
+        }       
     }
 }

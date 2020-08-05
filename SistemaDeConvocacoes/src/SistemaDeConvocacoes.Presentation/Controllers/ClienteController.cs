@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using SistemaDeConvocacoes.Application.Interfaces.Services;
 using SistemaDeConvocacoes.Application.ViewModels;
 using SistemaDeConvocacoes.Domain.Models;
@@ -21,12 +22,14 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         private readonly IClienteAppService _clienteAppService;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IConfiguration _configuration;
 
-        public ClienteController(IClienteAppService clienteAppService, UserManager<ApplicationUser> userManager, IWebHostEnvironment webHostEnvironment)
+        public ClienteController(IClienteAppService clienteAppService, UserManager<ApplicationUser> userManager, IWebHostEnvironment webHostEnvironment, IConfiguration configuration)
         {
             _clienteAppService = clienteAppService;
             _userManager = userManager;
             _webHostEnvironment = webHostEnvironment;
+            _configuration = configuration;
         }
 
         public async Task<IActionResult> IndexAsync()
@@ -58,8 +61,16 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             if (!ModelState.IsValid) 
                 return View(clienteViewModel);
 
+            if (Imagem == null)
+                return View(clienteViewModel);
+
+
             clienteViewModel.ClienteId = Guid.NewGuid();
-            clienteViewModel.Imagem = Imagem.FileName;
+
+            var strFile = Imagem.FileName.Split('.');
+            var strNome = strFile[0];
+            var strExt = strFile[strFile.Count() - 1];
+            clienteViewModel.Imagem = $"{clienteViewModel.ClienteId}_{strNome}.{strExt}";         
             clienteViewModel.Ativo = true;
 
             var cliente = await _clienteAppService.AddAsync(clienteViewModel);
@@ -67,11 +78,11 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
            
             if(cliente != null)
             {
+                RegistarClienteParaFazerLoginAsync(clienteViewModel);
+
                 SalvarImagemCliente(Imagem, cliente);
 
-                return RegistarClienteParaFazerLoginAsync(clienteViewModel, out IActionResult actionResult)
-                    ? actionResult
-                    : RedirectToAction("Index");
+                return RedirectToAction("Index");
             }
             else
             {
@@ -79,7 +90,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             }
         }
 
-        private bool RegistarClienteParaFazerLoginAsync(ClienteViewModel clienteViewModel, out IActionResult actionResult)
+        private bool RegistarClienteParaFazerLoginAsync(ClienteViewModel clienteViewModel)
         {           
             var user = new ApplicationUser
             {
@@ -90,15 +101,14 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             var result = _userManager.CreateAsync(user, clienteViewModel.Password).Result;
 
             if (!result.Succeeded)
-            {
-                actionResult = RedirectToAction("Index");
+            {               
                 return false;
             }
 
             user = _userManager.FindByEmailAsync(clienteViewModel.Email).Result;
             var addrole = _userManager.AddToRoleAsync(user, RolesNames.ROLE_CLIENTE).Result;
 
-            actionResult = null;
+            
             return true;
         }
 
@@ -107,15 +117,15 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             if (file == null) 
                 return;
 
-            var webRootPath = _webHostEnvironment.WebRootPath;
-            var contentRootPath = _webHostEnvironment.ContentRootPath;
-            var path = string.Empty;
+            var strFile = file.FileName.Split('.');            
+            var strExt = strFile[strFile.Count() - 1];
+            if (!strExt.Equals("png"))            
+                return;           
 
-            path = Path.Combine(webRootPath, "Images");
-
-            var strName = file.FileName.Split('.');
-            var strExt = strName[strName.Count() - 1];
-            var pathSave = $"{path}{cliente.ClienteId}.{strExt}";
+            var webRootPath = _webHostEnvironment.WebRootPath; 
+            var path = Path.Combine(webRootPath, "Images\\");
+            var user = _userManager.FindByEmailAsync(cliente.Email).Result;
+            var pathSave = $"{path}{user.Id}.{strExt}";
 
             using var fileStream = new FileStream(pathSave, FileMode.Create);
             file.CopyToAsync(fileStream);

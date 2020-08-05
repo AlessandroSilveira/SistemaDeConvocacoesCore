@@ -3,7 +3,7 @@ using SistemaDeConvocacoes.Domain.Interfaces.Base;
 
 namespace SistemaDeConvocacoes.Domain.Interfaces.Repositories
 {
-    public interface IDocumentacaoRepository : IRepositoryBase<Documentacao>
+    public interface IDocumentacaoRepository : IRepositoryBase<Documento>
     {
     }
 }

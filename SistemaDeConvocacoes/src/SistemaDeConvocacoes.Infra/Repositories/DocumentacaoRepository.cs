@@ -5,7 +5,7 @@ using SistemaDeConvocacoes.Infra.Repositories.Base;
 
 namespace SistemaDeConvocacoes.Infra.Repositories
 {
-    public class DocumentacaoRepository : RepositoryBase<Documentacao>, IDocumentacaoRepository
+    public class DocumentacaoRepository : RepositoryBase<Documento>, IDocumentacaoRepository
     {
         public DocumentacaoRepository(ApplicationDbContext context) : base(context)
         {

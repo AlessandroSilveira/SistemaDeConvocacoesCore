@@ -3,9 +3,11 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SistemaDeConvocacoes.Application.Interfaces.Services;
 using SistemaDeConvocacoes.Application.ViewModels;
+using SistemaDeConvocacoes.Domain.Entities;
 using SistemaDeConvocacoes.Domain.Enums;
 using SistemaDeConvocacoes.Domain.Interfaces.Services;
 
@@ -19,22 +21,32 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         private readonly IConvocadoAppService _convocadoAppService;
         private readonly IListaOpcoes _listaOpcoes;
         private readonly IProcessoAppService _processoAppService;
+        private readonly IClienteAppService _clienteAppService;
+        private readonly IHttpContextAccessor contextAccessor;
+        private readonly Microsoft.Extensions.Configuration.IConfiguration _configuration;
 
         public ProcessosController(IProcessoAppService processoAppService,
             ICargoAppService cargoAppService,
             IConvocadoAppService convocadoAppService,
             IConvocacaoAppService convocacaoAppService,
-            IListaOpcoes listaOpcoes)
+            IListaOpcoes listaOpcoes, IClienteAppService clienteAppService, IHttpContextAccessor contextAccessor, Microsoft.Extensions.Configuration.IConfiguration configuration)
         {
             _processoAppService = processoAppService;
             _cargoAppService = cargoAppService;
             _convocadoAppService = convocadoAppService;
             _convocacaoAppService = convocacaoAppService;
             _listaOpcoes = listaOpcoes;
+            _clienteAppService = clienteAppService;
+            this.contextAccessor = contextAccessor;
+            _configuration = configuration;
         }
 
         public async Task<IActionResult> IndexAsync()
-        {
+        {           
+            var cliente = await _clienteAppService.GetOneAsync(a =>a.Email == contextAccessor.HttpContext.User.Identity.Name);
+            ViewBag.Logo = cliente;
+            
+
             return View(await _processoAppService.GetAllAsync());
         }
 

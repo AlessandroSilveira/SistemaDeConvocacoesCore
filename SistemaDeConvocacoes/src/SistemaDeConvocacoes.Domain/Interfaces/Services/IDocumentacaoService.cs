@@ -8,12 +8,12 @@ namespace SistemaDeConvocacoes.Domain.Interfaces.Services
 {
     public interface IDocumentacaoService : IDisposable
     {
-        Task<Documentacao> AddAsync(Documentacao obj);
-        Task<Documentacao> GetByIdAsync(Guid id);
-        Task<IEnumerable<Documentacao>> GetAllAsync();
-        Task<Documentacao> UpdateAsync(Documentacao obj);
+        Task<Documento> AddAsync(Documento obj);
+        Task<Documento> GetByIdAsync(Guid id);
+        Task<IEnumerable<Documento>> GetAllAsync();
+        Task<Documento> UpdateAsync(Documento obj);
         Task RemoveAsync(Guid id);
-        Task<IEnumerable<Documentacao>> SearchAsync(Expression<Func<Documentacao, bool>> predicate);
-        Task<Documentacao> GetOneAsync(Expression<Func<Documentacao, bool>> predicate);
+        Task<IEnumerable<Documento>> SearchAsync(Expression<Func<Documento, bool>> predicate);
+        Task<Documento> GetOneAsync(Expression<Func<Documento, bool>> predicate);
     }
 }

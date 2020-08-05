@@ -10,18 +10,10 @@ namespace SistemaDeConvocacoes.Application.Interfaces.Services
     public interface IDocumentacaoAppService : IDisposable
     {
         Task<DocumentacaoViewModel> AddAsync(DocumentacaoViewModel obj);
-
         Task<DocumentacaoViewModel> GetByIdAsync(Guid id);
-
         Task<IEnumerable<DocumentacaoViewModel>> GetAllAsync();
-
         Task<DocumentacaoViewModel> UpdateAsync(DocumentacaoViewModel obj);
-
         Task RemoveAsync(Guid id);
-
-
-        Task<IEnumerable<DocumentacaoViewModel>> SearchAsync(Expression<Func<Documentacao, bool>> predicate);
-
-       
+        Task<IEnumerable<DocumentacaoViewModel>> SearchAsync(Expression<Func<Documento, bool>> predicate);       
     }
 }

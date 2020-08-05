@@ -23,12 +23,18 @@
                                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.Descricao, new { @class = "control-label col-md-2" })
+                                        @Html.LabelFor(model => model.Descricao, new { @class = "control-label col-md-4" })
                                         <div class="col-md-10">
-                                            @Html.HiddenFor(model => model.ProcessoId, new { Value = ViewBag.ProcessoId, htmlAttributes = new { @class = "form-control" } })
+                                            @*@Html.HiddenFor(model => model.ProcessoId, new { Value = ViewBag.ProcessoId, htmlAttributes = new { @class = "form-control" } })
                                             @Html.HiddenFor(model => model.DataCriacao, new { Value = DateTime.Now.ToString("dd/MM/yyyy"), htmlAttributes = new { @class = "form-control" } })
-                                            @Html.HiddenFor(model => model.Ativo, new { Value = true })
-                                            @Html.EditorFor(model => model.Descricao, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.HiddenFor(model => model.Ativo, new { Value = true })*@
+
+
+                                            <input type="hidden" name="ProcessoId" id="ProcessoId" class="form-control" style="width: 200px" value="@ViewBag.ProcessoId" />
+                                            <input type="hidden" name="DataCriacao" id="DataCriacao" class="form-control" style="width: 200px" value="@DateTime.Now.ToString("dd/MM/yyyy")" />
+                                            <input type="hidden" name="Ativo" id="Ativo" class="form-control" style="width: 200px" value="true" />
+
+                                            @Html.EditorFor(model => model.Descricao, new { htmlAttributes = new { @class = "form-control", @style = "width:400px" } })
                                             @Html.ValidationMessageFor(model => model.Descricao, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
@@ -36,7 +42,7 @@
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.Path, new { @class = "control-label col-md-2" })
                                         <div class="col-md-10">
-                                            <input type="file" name="Path" id="Path" class="form-control-file" />
+                                            <input type="file" name="Path" id="Path" class="form-control-file" style="width: 200px" />
                                             @Html.ValidationMessageFor(model => model.Path, "", new { @class = "text-danger" })
                                         </div>
                                     </div>

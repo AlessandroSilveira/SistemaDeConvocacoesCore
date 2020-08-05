@@ -22,9 +22,9 @@ namespace SistemaDeConvocacoes.Presentation.Profiles
             CreateMap<ConvocacoesViewModel,Convocacao >();
             CreateMap<ConvocadoViewModel,Convocado>();
             CreateMap<DadosConvocadosViewModel,Convocado>();            
-            CreateMap<DocumentacaoViewModel, Documentacao>();
-            CreateMap< IEnumerable<DocumentacaoViewModel>, IEnumerable<Documentacao>>();
-            CreateMap<Documentacao, DocumentacaoViewModel>();
+            CreateMap<DocumentacaoViewModel, Documento>();
+            CreateMap< IEnumerable<DocumentacaoViewModel>, IEnumerable<Documento>>();
+            CreateMap<Documento, DocumentacaoViewModel>();
             CreateMap< IEnumerable<DocumentoCandidatoViewModel>, IEnumerable<DocumentoCandidato>>();
             CreateMap<PessoaViewModel,Pessoa>();
             CreateMap<PrimeiroAcessoViewModel,PrimeiroAcesso >();
