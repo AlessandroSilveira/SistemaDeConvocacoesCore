@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.ComponentModel.DataAnnotations;
+
 
 namespace SistemaDeConvocacoes.Application.ViewModels
 {
@@ -9,6 +11,6 @@ namespace SistemaDeConvocacoes.Application.ViewModels
         public Guid Id { get; set; }
 
         [Display(Name = "Arquivo")]
-        public string File { get; set; }
+        public IFormFile File { get; set; }
     }
 }

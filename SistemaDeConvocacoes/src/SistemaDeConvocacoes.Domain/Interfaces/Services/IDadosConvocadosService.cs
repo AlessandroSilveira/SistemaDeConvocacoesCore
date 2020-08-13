@@ -15,7 +15,9 @@ namespace SistemaDeConvocacoes.Domain.Interfaces.Services
         Task RemoveAsync(Guid id);
         Task<IEnumerable<Convocado>> SearchAsync(Expression<Func<Convocado, bool>> predicate);
         Task<Convocado> GetOneAsync(Expression<Func<Convocado, bool>> predicate);
-        Task SalvarCandidatosAsync(Guid id, string file);
-        Task SalvarCargosAsync(Guid id, string file);
+        //Task SalvarCandidatosAsync(Guid id, string file);
+        //Task SalvarCargosAsync(Guid id, string file);
+        Task SalvarCargosAsync(Guid id, List<Cargo> listaCargo);
+        Task SalvarCandidatosAsync(Guid id, List<Convocado> listaConvocados);
     }
 }

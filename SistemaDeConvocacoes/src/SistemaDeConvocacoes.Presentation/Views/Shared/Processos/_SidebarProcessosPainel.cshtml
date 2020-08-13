@@ -26,11 +26,11 @@
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                 <i class="fas fa-fw fa-cog"></i>
-                <span>Clientes</span>
+                <span>Convocar Candidato</span>
             </a>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="@Url.Content("~/Cliente/Index/")">Cadastro de Clientes</a>
+                    <a class="collapse-item" href="@Url.Content("~/Processos/EscolherCargo/"+@ViewBag.dadosProcesso.ProcessoId)">Convocar Candidatos</a>
                 </div>
             </div>
         </li>
@@ -39,14 +39,46 @@
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
                 <i class="fas fa-fw fa-wrench"></i>
+                <span>Atualização de Convocacão</span>
+            </a>
+            <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="@Url.Content("~/Processos/AtualizarCandidatosConfirmados/"+@ViewBag.dadosProcesso.ProcessoId)">Atualizar candidatos confirmados.</a>
+                    <a class="collapse-item" href="@Url.Content("~/Processos/AtualizarStatusEstudante/"+@ViewBag.dadosProcesso.ProcessoId)">Atualização de Status dos candidatos.</a>
+                    <a class="collapse-item" href="@Url.Content("~/DocumentoCandidato/ListaDocumentos?ProcessoId="+@ViewBag.dadosProcesso.ProcessoId)">Documentação do Candidato</a>
+                </div>
+            </div>
+        </li>
+
+        @*<li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+                <i class="fas fa-fw fa-wrench"></i>
                 <span>Usuários</span>
             </a>
             <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="@Url.Content("~/UserAdmin/Index/")">Cadastro de Usuários</a>
+                    <a class="collapse-item" href="@Url.Content("~/Processos/AtualizarStatusEstudante/"+@ViewBag.dadosProcesso.ProcessoId)">Atualização de Status dos candidatos.</a>
                 </div>
             </div>
         </li>
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+                <i class="fas fa-fw fa-wrench"></i>
+                <span>Usuários</span>
+            </a>
+            <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="@Url.Content("~/DocumentoCandidato/ListaDocumentos?ProcessoId="+@ViewBag.dadosProcesso.ProcessoId)">Documentação do Candidato</a>
+                </div>
+            </div>
+        </li>*@
         <hr class="sidebar-divider">
     </ul>
 </div>
+
+
+@*<a href="@Url.Content("~/Processos/EscolherCargo/"+@ViewBag.dadosProcesso.ProcessoId)"><i class="fa fa-users fa-fw" aria-hidden="true"></i>Convocar Candidatos</a>
+<a href="@Url.Content("~/Processos/AtualizarCandidatosConfirmados/"+@ViewBag.dadosProcesso.ProcessoId)"><i class="fa fa-file-text fa-fw" aria-hidden="true"></i> Atualizar candidatos confirmados.</a>
+<a href="@Url.Content("~/Processos/AtualizarStatusEstudante/"+@ViewBag.dadosProcesso.ProcessoId)"><i class="fa fa-file-text fa-fw" aria-hidden="true"></i> Atualização de Status dos candidatos</a>
+<a href="@Url.Content("~/DocumentoCandidato/ListaDocumentos?ProcessoId="+@ViewBag.dadosProcesso.ProcessoId)"><i class="fa fa-file-text fa-fw" aria-hidden="true"></i> Documentação do Candidato</a>*@

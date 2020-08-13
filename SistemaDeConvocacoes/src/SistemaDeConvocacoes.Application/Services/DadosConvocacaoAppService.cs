@@ -61,19 +61,29 @@ namespace SistemaDeConvocacoes.Application.Services
                await _dadosConvocadosService.SearchAsync(predicate));
         }
 
-        public async Task SalvarCandidatosAsync(Guid id, string file)
-        {
-            await _dadosConvocadosService.SalvarCandidatosAsync(id, file);
-        }
+        //public async Task SalvarCandidatosAsync(Guid id, string file)
+        //{
+        //    await _dadosConvocadosService.SalvarCandidatosAsync(id, file);
+        //}
 
-        public async Task SalvarCargosAsync(Guid id, string file)
-        {
-            await _dadosConvocadosService.SalvarCargosAsync(id, file);
-        }
+        //public async Task SalvarCargosAsync(Guid id, string file)
+        //{
+        //    await _dadosConvocadosService.SalvarCargosAsync(id, file);
+        //}
 
         public async Task<DadosConvocadosViewModel> GetOneAsync(Expression<Func<Convocado, bool>> predicate)
         {
             return _mapper.Map<Convocado, DadosConvocadosViewModel>(await _dadosConvocadosService.GetOneAsync(predicate));
+        }
+
+        public async Task SalvarCargosAsync(Guid id, List<Cargo> listaCargo )
+        {
+            await _dadosConvocadosService.SalvarCargosAsync(id, listaCargo);
+        }
+
+        public async Task SalvarCandidatosAsync(Guid id, List<Convocado> listaConvocados)
+        {
+            await _dadosConvocadosService.SalvarCandidatosAsync(id, listaConvocados);
         }
     }
 }

@@ -117,7 +117,7 @@ namespace SistemaDeConvocacoes.Application.ViewModels
 
         [Required(AllowEmptyStrings = false)]
         [Display(Name = "Estado Civil:*")]
-        public int EstadoCivil { get; set; }
+        public string EstadoCivil { get; set; }
 
         public string EntrouNoSistema { get; set; }
 

@@ -77,7 +77,7 @@ namespace SistemaDeConvocacoes.Presentation
                     pattern: "{controller=Account}/{action=Login}/{id?}");
             });
 
-            //seed.Seed().Wait();
+            seed.Seed().Wait();
         }
     }
 }

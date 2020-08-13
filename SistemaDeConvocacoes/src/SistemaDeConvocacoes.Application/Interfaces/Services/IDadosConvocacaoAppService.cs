@@ -21,10 +21,12 @@ namespace SistemaDeConvocacoes.Application.Interfaces.Services
 
         Task<IEnumerable<DadosConvocadosViewModel>> SearchAsync(Expression<Func<Convocado, bool>> predicate);
 
-        Task SalvarCandidatosAsync(Guid id, string file);
+        //Task SalvarCandidatosAsync(Guid id, string file);
 
-        Task SalvarCargosAsync(Guid id, string format);
+        //Task SalvarCargosAsync(Guid id, string format);
 
         Task<DadosConvocadosViewModel> GetOneAsync(Expression<Func<Convocado, bool>> predicate);
+        Task SalvarCargosAsync(Guid id, List<Cargo> listaCargo);
+        Task SalvarCandidatosAsync(Guid id, List<Convocado> listaConvocados );
     }
 }

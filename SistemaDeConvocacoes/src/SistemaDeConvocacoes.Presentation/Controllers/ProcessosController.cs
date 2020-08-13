@@ -148,9 +148,12 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             var convocados = await _convocacaoAppService.SearchAsync(a => a.ProcessoId.Equals(dadosConvocadoViewModel.ProcessoId));
 
             ViewBag.DadosConvocacao = await _processoAppService.GetByIdAsync(dadosConvocadoViewModel.ProcessoId);
-            ViewBag.ListaCandidatos = _convocadoAppService
-                .SearchAsync(a => a.CargoId.Equals(dadosConvocadoViewModel.CargoId)).Result.OrderBy(a => a.Posicao)
-                .Where(a => convocados.All(p2 => p2.ConvocadoId != a.ConvocadoId));
+            var ListaCandidatos = await _convocadoAppService
+                .SearchAsync(a => a.CargoId.Equals(dadosConvocadoViewModel.CargoId));
+            //.OrderBy(a => a.Posicao)
+            //    .Where(a => convocados.All(p2 => p2.ConvocadoId != a.ConvocadoId));
+
+            ViewBag.ListaCandidatos = ListaCandidatos.OrderBy(a => a.Posicao).Where(a => convocados.All(p2 => p2.ConvocadoId != a.ConvocadoId));
 
             ViewBag.DadosCargo = await _cargoAppService.GetByIdAsync(dadosConvocadoViewModel.CargoId);
             ViewBag.ProcessoId = ProcessoId;
