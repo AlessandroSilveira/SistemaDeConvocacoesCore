@@ -202,8 +202,20 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
 
         public async Task<IActionResult> PainelAsync(Guid id)
         {
+            var totalCandidatos = await _convocadoAppService.SearchAsync(a => a.ProcessoId.Equals(id));
+            var totalConvocados = await _convocacaoAppService.SearchAsync(a => a.ProcessoId.Equals(id));
+            var totalDeConvocadosConfirmados =
+                await _convocacaoAppService.SearchAsync(a => a.Desistente.Equals("S") && a.ProcessoId.Equals(id));
+            var totalDeConvocadosDesistentes =
+                await _convocacaoAppService.SearchAsync(a => a.Desistente.Equals("N") && a.ProcessoId.Equals(id));
+            
+            
             ViewBag.dadosProcesso = await _processoAppService.GetByIdAsync(id);
-
+            ViewBag.TotalDeCandidatos = totalCandidatos.Count();
+            ViewBag.TotalDeConvocados = totalConvocados.Count();
+            ViewBag.TotalDeConvocadosConfirmados = totalDeConvocadosConfirmados.Count();
+            ViewBag.TotalDeConvocadosDesistentes = totalDeConvocadosDesistentes.Count();
+            
             return View();
         }
 

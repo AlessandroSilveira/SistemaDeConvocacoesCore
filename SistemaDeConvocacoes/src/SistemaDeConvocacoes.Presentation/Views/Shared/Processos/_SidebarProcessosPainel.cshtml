@@ -1,5 +1,4 @@
-﻿
-<div id="wrapper">
+﻿<div id="wrapper">
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
@@ -21,7 +20,17 @@
 
         <!-- Divider -->
         <hr class="sidebar-divider">
-
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                <i class="fas fa-fw fa-cog"></i>
+                <span>Painel</span>
+            </a>
+            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="@Url.Content("~/Processos/Painel/" + @ViewBag.dadosProcesso.ProcessoId)">Painel</a>
+                </div>
+            </div>
+        </li>
         <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
@@ -30,7 +39,7 @@
             </a>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="@Url.Content("~/Processos/EscolherCargo/"+@ViewBag.dadosProcesso.ProcessoId)">Convocar Candidatos</a>
+                    <a class="collapse-item" href="@Url.Content("~/Processos/EscolherCargo/" + @ViewBag.dadosProcesso.ProcessoId)">Convocar Candidatos</a>
                 </div>
             </div>
         </li>
@@ -43,13 +52,12 @@
             </a>
             <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a style="white-space: normal;" class="collapse-item" href="@Url.Content("~/Processos/AtualizarCandidatosConfirmados/"+@ViewBag.dadosProcesso.ProcessoId)">Atualizar candidatos confirmados.</a>
-                    <a style="white-space: normal;" class="collapse-item" href="@Url.Content("~/Processos/AtualizarStatusEstudante/"+@ViewBag.dadosProcesso.ProcessoId)">Atualização de Status dos candidatos.</a>
-                    <a style="white-space: normal;" class="collapse-item" href="@Url.Content("~/DocumentoCandidato/ListaDocumentos?ProcessoId="+@ViewBag.dadosProcesso.ProcessoId)">Documentação do Candidato</a>
+                    <a style="white-space: normal;" class="collapse-item" href="@Url.Content("~/Processos/AtualizarCandidatosConfirmados/" + @ViewBag.dadosProcesso.ProcessoId)">Atualizar candidatos confirmados.</a>
+                    <a style="white-space: normal;" class="collapse-item" href="@Url.Content("~/Processos/AtualizarStatusEstudante/" + @ViewBag.dadosProcesso.ProcessoId)">Atualização de Status dos candidatos.</a>
+                    <a style="white-space: normal;" class="collapse-item" href="@Url.Content("~/DocumentoCandidato/ListaDocumentos?ProcessoId=" + @ViewBag.dadosProcesso.ProcessoId)">Documentação do Candidato</a>
                 </div>
             </div>
         </li>
         <hr class="sidebar-divider">
     </ul>
 </div>
-
