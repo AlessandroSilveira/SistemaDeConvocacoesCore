@@ -5,7 +5,8 @@ namespace SistemaDeConvocacoes.Application.ViewModels
 {
     public class ConvocacaoViewModel
     {
-        [Key] public Guid ConvocacaoId { get; set; }
+        [Key] 
+        public Guid ConvocacaoId { get; set; }
 
         public Guid ProcessoId { get; set; }
         public Guid ConvocadoId { get; set; }

@@ -18,7 +18,7 @@ using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
 namespace SistemaDeConvocacoes.Presentation.Controllers
 {
-    [Authorize(Roles = "Cliente, Convocado")]
+    //[Authorize(Roles = "Cliente, Convocado")]
     public class ConvocacaoController : Controller
     {
         private readonly IConvocacaoAppService _convocacaoAppService;
@@ -71,13 +71,16 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateAsync(ConvocacaoViewModel convocacaoViewModel, string cargo)
+        //[ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(ConvocacaoViewModel convocacaoViewModel, string cargo)
         {
-            if (!ModelState.IsValid) return View(convocacaoViewModel);
-
-            var selecionado = convocacaoViewModel.CandidatosSelecionados.Split(',');
             var confirmacao = false;
+
+            if (!ModelState.IsValid)
+                return RedirectToAction("ListaConvocados", "Processos",
+                 new { ProcessoId = convocacaoViewModel.ProcessoId.ToString(), cargo, confirmacao });
+
+            var selecionado = convocacaoViewModel.CandidatosSelecionados.Split(',');          
 
             convocacaoViewModel.StatusConvocacao = StatusConvocacao.EmConvocacao.ToString();
 
