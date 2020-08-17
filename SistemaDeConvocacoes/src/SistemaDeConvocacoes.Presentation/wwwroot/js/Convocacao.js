@@ -25,6 +25,24 @@
             $("#mensagemDadosConvocados").trigger("click");
         }
     });
+    
+    $("#salvar").click(function(){
+       if($("#DataEntregaDocumentos").val()==="" ||$("#DataEntregaDocumentos").val()==null){
+           alert("Informe a Data da entrega dos documentos.");
+           return false
+       }
+        if($("#HorarioEntregaDocumento").val()==="" ||$("#HorarioEntregaDocumento").val()==null){
+            alert("Informe o Horário de entrega dos documentos.");
+            return false
+        }
+        if($("#EnderecoEntregaDocumento").val()==="" ||$("#EnderecoEntregaDocumento").val()==null){
+            alert("Informe o Endereço de Entrega dos documentos.");
+            return false
+        }
+        $("#form").submit();
+        
+    });
+    
 
     $("#DataEntregaDocumentos").datepicker({
         dateFormat: 'dd/mm/yy',

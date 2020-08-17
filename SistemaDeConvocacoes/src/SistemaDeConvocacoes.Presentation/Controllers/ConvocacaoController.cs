@@ -76,9 +76,9 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         {
             var confirmacao = false;
 
-            if (!ModelState.IsValid)
-                return RedirectToAction("ListaConvocados", "Processos",
-                 new { ProcessoId = convocacaoViewModel.ProcessoId.ToString(), cargo, confirmacao });
+            // if (!ModelState.IsValid)
+            //     return RedirectToAction("ListaConvocados", "Processos",
+            //      new { ProcessoId = convocacaoViewModel.ProcessoId.ToString(), cargo, confirmacao });
 
             var selecionado = convocacaoViewModel.CandidatosSelecionados.Split(',');          
 
@@ -217,7 +217,8 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
 
             var dados = _userManager.FindByEmailAsync(user.Email);
             if (dados != null) return;
-            await _userManager.CreateAsync(user, await GerarSenha());
+            var senha = await GerarSenha();
+            await _userManager.CreateAsync(user, senha);
             var user2 = await _userManager.FindByNameAsync(dadosConvocado.Email);
             await _userManager.AddToRoleAsync(user2, RolesNames.ROLE_CONVOCADO);
         }

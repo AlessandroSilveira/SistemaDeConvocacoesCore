@@ -21,6 +21,9 @@ namespace SistemaDeConvocacoes.Presentation.Profiles
             CreateMap<Cliente, ClienteViewModel>();
 
             CreateMap<ConvocacoesViewModel,Convocacao >();
+            CreateMap<ConvocacaoViewModel,Convocacao >();
+            CreateMap<Convocacao ,ConvocacaoViewModel>();
+            
             CreateMap<Convocacao, ConvocacoesViewModel>();
             CreateMap< IEnumerable<ConvocacoesViewModel>, IEnumerable<Convocacao>>();
             CreateMap< IEnumerable<Convocacao>, IEnumerable<ConvocacoesViewModel>>();

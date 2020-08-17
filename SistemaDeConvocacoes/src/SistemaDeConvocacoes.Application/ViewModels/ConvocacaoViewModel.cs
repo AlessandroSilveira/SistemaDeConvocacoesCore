@@ -20,8 +20,8 @@ namespace SistemaDeConvocacoes.Application.ViewModels
         public string TextoParaDesistentes { get; set; }
         public string StatusConvocacao { get; set; }
         public string StatusContratacao { get; set; }
-        public object EntrouNoSistema { get; internal set; }
-        public string Email { get; set; }
-        public string Nome { get; set; }
+        public string EntrouNoSistema { get;  set; }
+        // public string Email { get; set; }
+        // public string Nome { get; set; }
     }
 }

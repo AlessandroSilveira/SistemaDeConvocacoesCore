@@ -82,7 +82,7 @@
                                 </table>
                                 <div class="modal fade" id="myModal" role="dialog">
                                     <div class="modal-dialog">
-                                        @using (Html.BeginForm("Create", "Convocacao", FormMethod.Post, new { form = "form" }))
+                                        @using (Html.BeginForm("Create", "Convocacao", FormMethod.Post, new { form = "form", id="form" }))
                                         {
                                             @Html.AntiForgeryToken()
                                             <div class="modal-content">
@@ -130,7 +130,7 @@
                                                     </form>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="Submit" class="btn btn-success">Salvar</button>
+                                                    <button type="button"  id="salvar" name="salvar" class="btn btn-success">Salvar</button>
                                                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                                                 </div>
                                             </div>
@@ -212,4 +212,5 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
