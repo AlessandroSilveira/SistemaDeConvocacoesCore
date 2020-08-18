@@ -19,18 +19,18 @@
                                 <table class="table table-striped table-hover ">
                                     <tbody>
                                         @*<tr>
-                                            <td>
-                                                @Html.ActionLink("Cadastro e Gerenciamento de Clientes", "Index", "Cliente")
-                                            </td>
-                                        </tr>
+                                                <td>
+                                                    @Html.ActionLink("Cadastro e Gerenciamento de Clientes", "Index", "Cliente")
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    @Html.ActionLink("Cadastro e Gerenciamento de Usuários", "Index", "UserAdmin")
+                                                </td>
+                                            </tr>*@
                                         <tr>
                                             <td>
-                                                @Html.ActionLink("Cadastro e Gerenciamento de Usuários", "Index", "UserAdmin")
-                                            </td>
-                                        </tr>*@
-                                        <tr>
-                                            <td>
-                                               <b> @User.Identity.Name, aqui você pode fazer o cadastro dos Clientes que farão as convocações e também os usuários que farão acesso ao sistema. <br> Tudo isso pode ser acessado no Menu Lateral. </b>
+                                                <b> @User.Identity.Name, aqui você pode fazer o cadastro dos Clientes que farão as convocações e também os usuários que farão acesso ao sistema. <br> Tudo isso pode ser acessado no Menu Lateral. </b>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -80,40 +80,60 @@
 }
 @if (User.Identity.IsAuthenticated && User.IsInRole("Convocado"))
 {
+    Layout = "~/Views/Shared/Convocado/_LayoutConvocado.cshtml";
     using (Html.BeginForm("ConfirmaConvocacao", "Convocacao", FormMethod.Post, new { id = "form" }))
     {
-        <div class="col-lg-12">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header"><b>Bem-vindo(a) @ViewBag.dadosConvocado.Nome</b></h1>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
 
-                    <br />
-                    <div class="panel-body">
-                        <div class="table-responsive">
-                            <div class="container" style="width:auto !important">
-                                <div class="form-horizontal">
-                                    <p class="lead">Prezado Candidato(a), você foi convocado para o @ViewBag.dadosProcesso.Nome </p>
-                                    <p class="lead">@ViewBag.dadosProcesso.TextoInicialTelaConvocado</p>
-                                    <p class="lead">Por favor apresentar-se no dia e endereço abaixo:</p>
-                                    <p class="lead">Dia: @ViewBag.dadosConvocacao.DataEntregaDocumentos.ToString("dd/MM/yyyy"), às @ViewBag.dadosConvocacao.HorarioEntregaDocumento Hrs.</p>
-                                    <p class="lead">Endereço: @ViewBag.dadosConvocacao.EnderecoEntregaDocumento</p>
-                                    <p class="lead">
-                                        Você aceita participar dessa convocação?
-                                    </p>
-                                    <p class="lead">
-                                        <input type="hidden" name="ProcessoId" value="@ViewBag.dadosProcesso.ProcessoId" />
-                                        <input type="hidden" name="ConvocadoId" value="@ViewBag.dadosConvocacao.ConvocadoId" />
-                                        <input type="hidden" name="ConvocacaoId" value="@ViewBag.dadosConvocacao.ConvocacaoId" />
-                                        <input type="radio" name="decisao" value="N" /> SIM, DESEJO PARTICIPAR<br>
-                                        <input type="radio" name="decisao" value="S" /> NÃO DESEJO PARTICIPAR
-                                    </p>
-                                    <p class="lead">
-                                        <button type="submit" class="btn btn-success" id="envia_selecionados">Salvar</button>
-                                    </p>
+        <div class="col-lg-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">@ViewBag.Title</h6>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel-body">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <div class="col-lg-12">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <h1 class="page-header"><b>Bem-vindo(a) @ViewBag.dadosConvocado.Nome</b></h1>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12">
+
+                                                <br />
+                                                <div class="panel-body">
+                                                    <div class="table-responsive">
+                                                        <div class="container" style="width:auto !important">
+                                                            <div class="form-horizontal">
+                                                                <p class="lead">Prezado Candidato(a), você foi convocado para o @ViewBag.dadosProcesso.Nome </p>
+                                                                <p class="lead">@ViewBag.dadosProcesso.TextoInicialTelaConvocado</p>
+                                                                <p class="lead">Por favor apresentar-se no dia e endereço abaixo:</p>
+                                                                <p class="lead">Endereço: @ViewBag.dadosConvocacao.EnderecoEntregaDocumento</p>
+                                                                <p class="lead">Dia: @ViewBag.dadosConvocacao.DataEntregaDocumentos.ToString("dd/MM/yyyy"), às @ViewBag.dadosConvocacao.HorarioEntregaDocumento Hrs.</p>
+                                                                <p class="lead">
+                                                                    Você aceita participar dessa convocação?
+                                                                </p>
+                                                                <p class="lead">
+                                                                    <input type="hidden" name="ProcessoId" value="@ViewBag.dadosProcesso.ProcessoId" />
+                                                                    <input type="hidden" name="ConvocadoId" value="@ViewBag.dadosConvocacao.ConvocadoId" />
+                                                                    <input type="hidden" name="ConvocacaoId" value="@ViewBag.dadosConvocacao.ConvocacaoId" />
+                                                                    <input type="radio" name="decisao" value="N" /> <b>SIM, DESEJO PARTICIPAR</b><br>
+                                                                    <input type="radio" name="decisao" value="S" /> <b>NÃO DESEJO PARTICIPAR</b>
+                                                                </p>
+                                                                <p class="lead">
+                                                                    <button type="submit" class="btn btn-success" id="envia_selecionados">Salvar</button>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -121,6 +141,7 @@
                 </div>
             </div>
         </div>
+
     }
 }
 

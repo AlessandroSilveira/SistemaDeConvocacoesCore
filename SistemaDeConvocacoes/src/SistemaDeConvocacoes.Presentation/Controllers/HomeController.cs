@@ -35,8 +35,8 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             if (User.IsInRole("Cliente")) 
                 return RedirectToAction("Index", "Processos");
 
-            if (!User.IsInRole("Convocado")) 
-                return View();
+            //if (!User.IsInRole("CONVOCADO")) 
+            //    return View();
 
             var user = await _userManager.FindByEmailAsync(User.Identity.Name);
 
@@ -48,10 +48,9 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
 
             var dadosConvocacao = await _convocacaoAppService.SearchAsync(a =>
                     a.ConvocadoId.Equals(dadosConvocado.ConvocadoId) && a.ProcessoId.Equals(dadosProcesso.ProcessoId));
+                     
 
-            dadosConvocacao.FirstOrDefault();
-
-            ViewBag.dadosConvocacao = dadosConvocacao;
+            ViewBag.dadosConvocacao = dadosConvocacao.FirstOrDefault(); 
 
             var listaDocumentacao = await _documentacaoAppService.SearchAsync(a => a.ProcessoId.Equals(dadosProcesso.ProcessoId));
             ViewBag.ListaDocumentacao = listaDocumentacao;

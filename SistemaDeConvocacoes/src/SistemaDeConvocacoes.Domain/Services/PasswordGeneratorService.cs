@@ -12,7 +12,7 @@ namespace SistemaDeConvocacoes.Domain.Services
         public async Task<string> GetPassword()
         {
             const int
-                size = 8; //Convert.ToInt32(WebConfigurationManager.AppSettings["NumerosCaracteresSenha"]); TODO: ALterar essa linha para pegar esse valor no webconfig
+                size = 8; 
 
             var maxValue = ValidCharacters.Length;
             var random = new Random(DateTime.Now.Millisecond);

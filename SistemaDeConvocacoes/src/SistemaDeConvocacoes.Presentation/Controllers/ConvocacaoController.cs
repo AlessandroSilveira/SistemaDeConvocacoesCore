@@ -1,11 +1,8 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SistemaDeConvocacoes.Application.Interfaces.Services;
 using SistemaDeConvocacoes.Application.ViewModels;
@@ -60,8 +57,11 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
 
         public ActionResult Details(Guid? id)
         {
-            if (id.Equals(null)) return new StatusCodeResult((int)HttpStatusCode.BadRequest);
+            if (id.Equals(null))
+                return new StatusCodeResult((int)HttpStatusCode.BadRequest);
+
             var convocacaoViewModel = _convocacaoAppService.GetByIdAsync(Guid.Parse(id.ToString()));
+
             return convocacaoViewModel.Equals(null) ? (ActionResult) NotFound() : View(convocacaoViewModel);
         }
 
@@ -175,15 +175,21 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(ConvocacaoViewModel convocacaoViewModel)
         {
-            if (!ModelState.IsValid) return View(convocacaoViewModel);
+            if (!ModelState.IsValid)
+                return View(convocacaoViewModel);
+
             _convocacaoAppService.UpdateAsync(convocacaoViewModel);
+
             return RedirectToAction("Index");
         }
 
         public ActionResult Delete(Guid? id)
         {
-            if (id.Equals(null)) return new StatusCodeResult((int)HttpStatusCode.BadRequest);
+            if (id.Equals(null)) 
+                return new StatusCodeResult((int)HttpStatusCode.BadRequest);
+
             var convocacaoViewModel = _convocacaoAppService.GetByIdAsync(Guid.Parse(id.ToString()));
+
             return convocacaoViewModel.Equals(null) ? (ActionResult) NotFound() : View(convocacaoViewModel);
         }
 
@@ -204,9 +210,10 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             base.Dispose(disposing);
         }
 
-        private async void RegistarCandidatoParaFazerLogin(ConvocadoViewModel convocadoViewModel)
+        private  void RegistarCandidatoParaFazerLogin(ConvocadoViewModel convocadoViewModel)
         {
-            if (ObterDadosConvocado(convocadoViewModel, out var dadosConvocado)) return;
+            if (ObterDadosConvocado(convocadoViewModel, out var dadosConvocado)) 
+                return;
 
             var user = new ApplicationUser
             {
@@ -215,12 +222,21 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
                 Email = convocadoViewModel.Email
             };
 
-            var dados = _userManager.FindByEmailAsync(user.Email);
-            if (dados != null) return;
-            var senha = await GerarSenha();
-            await _userManager.CreateAsync(user, senha);
-            var user2 = await _userManager.FindByNameAsync(dadosConvocado.Email);
-            await _userManager.AddToRoleAsync(user2, RolesNames.ROLE_CONVOCADO);
+            var dados = _userManager.FindByEmailAsync(user.Email).Result;
+
+            if (dados != null) 
+                return;
+
+            var senha = GerarSenha().Result;
+           
+            var teste = _userManager.CreateAsync(user, senha);
+            if (teste.Result.Succeeded)
+            {
+                var user2 = _userManager.FindByNameAsync(dadosConvocado.Email).Result;
+
+                _userManager.AddToRoleAsync(user2, RolesNames.ROLE_CONVOCADO);
+            }
+          
         }
 
         private bool ObterDadosConvocado(ConvocadoViewModel convocadoViewModel, out ConvocadoViewModel dadosConvocado)
@@ -231,10 +247,10 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         }
 
         [HttpPost]
-        public ActionResult ConfirmaConvocacao(Guid processoId, Guid convocadoId, Guid convocacaoId, string decisao)
+        public Task<IActionResult> ConfirmaConvocacao(Guid processoId, Guid convocadoId, Guid convocacaoId, string decisao)
         {
             var dadosConvocacao =
-                _convocacaoAppService.GetByIdAsync(convocacaoId).Result;
+                await _convocacaoAppService.GetByIdAsync(convocacaoId);
 
             dadosConvocacao.Desistente = decisao;
 
