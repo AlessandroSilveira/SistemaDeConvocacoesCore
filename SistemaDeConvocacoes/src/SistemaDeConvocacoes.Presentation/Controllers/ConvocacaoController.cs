@@ -247,24 +247,27 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         }
 
         [HttpPost]
-        public Task<IActionResult> ConfirmaConvocacao(Guid processoId, Guid convocadoId, Guid convocacaoId, string decisao)
+        public ActionResult ConfirmaConvocacao(Guid processoId, Guid convocadoId, Guid convocacaoId, string decisao)
         {
-            var dadosConvocacao =
-                await _convocacaoAppService.GetByIdAsync(convocacaoId);
+            var dadosConvocacao = _convocacaoAppService.GetByIdAsync(convocacaoId).Result;
 
             dadosConvocacao.Desistente = decisao;
 
             dadosConvocacao.StatusConvocacao = decisao.Equals("S") ? StatusConvocacao.Desistente.ToString() : StatusConvocacao.EmConvocacao.ToString();
 
-            _convocacaoAppService.UpdateAsync(dadosConvocacao);
-            return RedirectToAction(decisao.Equals("S") ? "DesistenciaCandidato" : "DocumentacaoConvocado",
+            _convocacaoAppService.DetachLocal(a => a.ConvocacaoId.Equals(convocacaoId));
+            var update = _convocacaoAppService.UpdateAsync(dadosConvocacao).Result;
+
+            var redirect = decisao.Equals("S") ? "DesistenciaCandidato" : "DocumentacaoConvocado";
+            
+            return RedirectToAction(redirect,
                 "Convocacao", new {ProcessoId = processoId, ConvocadoId = convocadoId, ConvocacaoId = convocacaoId});
         }
 
         public async Task<ActionResult> DocumentacaoConvocado(Guid processoId, Guid convocadoId, Guid convocacaoId)
         {
             ViewBag.dadosProcesso = await  _processoAppService.GetByIdAsync(processoId);
-            var dadosConvocado = _convocadoAppService.GetByIdAsync(Guid.Parse(IdentityExtensions.GetUserId(User.Identity)));
+            var dadosConvocado = await _convocadoAppService.GetByIdAsync(Guid.Parse(IdentityExtensions.GetUserId(User.Identity)));
             ViewBag.dadosConvocado = dadosConvocado;
             ViewBag.listaDocumentacao = await _documentacaoAppService.SearchAsync(a => a.ProcessoId.Equals(processoId));
             return View();

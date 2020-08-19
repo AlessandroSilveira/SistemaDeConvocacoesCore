@@ -45,6 +45,9 @@ namespace SistemaDeConvocacoes.Infra.Repositories.Base
 
         public async Task<TEntity> UpdateAsync(TEntity obj)
         {
+           
+            
+            Context.Entry(obj).State = EntityState.Detached;
             Context.Entry(obj).State = EntityState.Modified;
             await Context.SaveChangesAsync();
             return obj;
@@ -73,6 +76,15 @@ namespace SistemaDeConvocacoes.Infra.Repositories.Base
         public async Task<TEntity> GetOneAsync(Expression<Func<TEntity, bool>> predicate)
         {
             return Context.Set<TEntity>().Where(predicate).FirstOrDefault();
+        }
+
+        public virtual void DetachLocal(Func<TEntity, bool> predicate)
+        {
+            var local = Context.Set<TEntity>().Local.Where(predicate).FirstOrDefault();
+            if (local !=null)
+            {
+                Context.Entry(local).State = EntityState.Detached;
+            }
         }
     }
 }

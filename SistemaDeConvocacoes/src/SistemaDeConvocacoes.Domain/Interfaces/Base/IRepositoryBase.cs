@@ -17,5 +17,6 @@ namespace SistemaDeConvocacoes.Domain.Interfaces.Base
        
         Task Dispose();
         Task<TEntity> GetOneAsync(Expression<Func<TEntity, bool>> predicate);
+        void DetachLocal(Func<TEntity, bool> predicate);
     }
 }

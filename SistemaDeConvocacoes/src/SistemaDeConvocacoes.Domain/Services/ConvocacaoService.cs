@@ -68,5 +68,10 @@ namespace SistemaDeConvocacoes.Domain.Services
         {
             throw new NotImplementedException();
         }
+
+        public async Task DetachLocal(Func<Convocacao, bool> func)
+        {
+            _convocacaoRepository.DetachLocal(func);
+        }
     }
 }

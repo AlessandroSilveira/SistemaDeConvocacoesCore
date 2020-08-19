@@ -81,7 +81,7 @@ namespace SistemaDeConvocacoes.Presentation.DependencyInjection
                 .AddScoped<ITipoDocumentoRepository, TipoDocumentoRepository>()
 
                 .AddScoped<SeedHelpers>()
-                .AddTransient<Infra.Context.ASPNetCoreIdentity.Data.ApplicationDbContext>();
+                .AddScoped<Infra.Context.ASPNetCoreIdentity.Data.ApplicationDbContext>();
         }      
     }
 }

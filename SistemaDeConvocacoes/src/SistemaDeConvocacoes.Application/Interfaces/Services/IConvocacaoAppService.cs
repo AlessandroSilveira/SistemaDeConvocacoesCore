@@ -27,5 +27,6 @@ namespace SistemaDeConvocacoes.Application.Interfaces.Services
             IEnumerable<ConvocadoViewModel> convocados);
 
         Task<ConvocacaoViewModel> GetOneAsync(Expression<Func<Convocacao, bool>> predicate);
+        void DetachLocal(Func<Convocacao, bool> func);
     }
 }

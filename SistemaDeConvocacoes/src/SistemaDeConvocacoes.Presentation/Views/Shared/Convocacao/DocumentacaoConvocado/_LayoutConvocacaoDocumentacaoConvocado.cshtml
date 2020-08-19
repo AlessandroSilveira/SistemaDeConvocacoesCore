@@ -30,12 +30,12 @@
 <body>
 
     <div id="wrapper">
-        @{ Html.RenderPartial("Convocacao/DocumentacaoConvocado/_NavBarConvocacaoDocumentacaoConvocado"); }
-
-        <div id="page-wrapper">
-            @RenderBody()
+         
+           @{ Html.RenderPartial("Convocacao/DocumentacaoConvocado/_SidebarConvocacaoDocumentacaoConvocado"); }
+            @{ Html.RenderPartial("Convocacao/DocumentacaoConvocado/_NavBarConvocacaoDocumentacaoConvocado"); }        
+           
+           @RenderBody()       
         </div>
-    </div>
 
     <!-- jQuery -->
 

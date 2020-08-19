@@ -126,5 +126,9 @@ namespace SistemaDeConvocacoes.Application.Services
             return _mapper.Map<Convocacao, ConvocacaoViewModel>(await _convocacaoService.GetOneAsync(predicate));
         }
 
+        public void DetachLocal(Func<Convocacao, bool> func)
+        {
+             _convocacaoService.DetachLocal(func);
+        }
     }
 }

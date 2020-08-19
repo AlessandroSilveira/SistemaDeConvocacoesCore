@@ -17,5 +17,6 @@ namespace SistemaDeConvocacoes.Domain.Interfaces.Services
         Task<Convocacao> GetOneAsync(Expression<Func<Convocacao, bool>> predicate);
         Task<string> GeneratePasswordAsync();
         IEnumerable<Convocacao> MontarListaDeConvocados(IEnumerable<Convocacao> dadosConfirmados, IEnumerable<Convocacao> convocados);
+        Task DetachLocal(Func<Convocacao, bool> func);
     }
 }
