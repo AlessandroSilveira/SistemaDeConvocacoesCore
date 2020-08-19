@@ -18,19 +18,7 @@
 <div class="table-responsive">
 <div class="col-lg-12">
 <div class="row">
-    <div class="col-lg-12">
-        <h6 class="page-header">
-            <b>@Html.ValueFor(model => model.Nome)</b>
-        </h6>
-    </div>
-</div>
-<div class="row">
 <div class="col-lg-12">
-<div class="panel panel-default" style="margin-bottom:-30px !important">
-    <div class="panel-heading">
-        <b>@ViewBag.Title</b>
-    </div>
-</div>
 <div class="panel-body">
 <div class="table-responsive">
 @using (Html.BeginForm())
@@ -39,7 +27,7 @@
 
     <div class="form-horizontal">
 
-    <hr/>
+    
     @Html.ValidationSummary(true, "", new {@class = "text-danger"})
     @Html.HiddenFor(model => model.ConvocadoId)
 
@@ -85,7 +73,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.DataNascimento, new {@class = "control-label col-md-2"})
+        @Html.LabelFor(model => model.DataNascimento, new {@class = "control-label col-md-4"})
         <div class="col-md-10">
             @Html.EditorFor(model => model.DataNascimento, new {htmlAttributes = new {@class = "form-control", @style = "width:50%"}})
             @Html.ValidationMessageFor(model => model.DataNascimento, "", new {@class = "text-danger"})
@@ -93,7 +81,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Documento, new {@class = "control-label col-md-2"})
+        @Html.LabelFor(model => model.Documento, new {@class = "control-label col-md-4"})
         <div class="col-md-10">
             @Html.EditorFor(model => model.Documento, new {htmlAttributes = new {@class = "form-control", @style = "width:50%"}})
             @Html.ValidationMessageFor(model => model.Documento, "", new {@class = "text-danger"})
@@ -125,7 +113,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Telefone, new {@class = "control-label col-md-2"})
+        @Html.LabelFor(model => model.Telefone, new {@class = "control-label col-md-4"})
         <div class="col-md-10">
             @Html.EditorFor(model => model.Telefone, new {htmlAttributes = new {@class = "form-control", @style = "width:50%"}})
             @Html.ValidationMessageFor(model => model.Telefone, "", new {@class = "text-danger"})
@@ -309,7 +297,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.InstituicaoEnsino, new {@class = "control-label col-md-2"})
+        @Html.LabelFor(model => model.InstituicaoEnsino, new {@class = "control-label col-md-4"})
         <div class="col-md-10">
             @Html.EditorFor(model => model.InstituicaoEnsino, new {htmlAttributes = new {@class = "form-control", @style = "width:50%"}})
             @Html.ValidationMessageFor(model => model.InstituicaoEnsino, "", new {@class = "text-danger"})
@@ -325,7 +313,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.HorarioAulaIes, new {@class = "control-label col-md-2"})
+        @Html.LabelFor(model => model.HorarioAulaIes, new {@class = "control-label col-md-4"})
         <div class="col-md-10">
             @Html.EditorFor(model => model.HorarioAulaIes, new {htmlAttributes = new {@class = "form-control", @style = "width:50%"}})
             @Html.ValidationMessageFor(model => model.HorarioAulaIes, "", new {@class = "text-danger"})
@@ -333,7 +321,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.PeriodoAtual, new {@class = "control-label col-md-2"})
+        @Html.LabelFor(model => model.PeriodoAtual, new {@class = "control-label col-md-4"})
         <div class="col-md-10">
             @Html.EditorFor(model => model.PeriodoAtual, new {htmlAttributes = new {@class = "form-control", @style = "width:50%"}})
             @Html.ValidationMessageFor(model => model.PeriodoAtual, "", new {@class = "text-danger"})
@@ -341,7 +329,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.ColacaoGrau, new {@class = "control-label col-md-2"})
+        @Html.LabelFor(model => model.ColacaoGrau, new {@class = "control-label col-md-4"})
         <div class="col-md-10">
             @Html.EditorFor(model => model.ColacaoGrau, new {htmlAttributes = new {@class = "form-control MesEAno", @style = "width:50%"}})
             @Html.ValidationMessageFor(model => model.ColacaoGrau, "", new {@class = "text-danger"})
