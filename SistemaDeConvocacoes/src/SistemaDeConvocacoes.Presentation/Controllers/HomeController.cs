@@ -35,8 +35,8 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             if (User.IsInRole("Cliente")) 
                 return RedirectToAction("Index", "Processos");
 
-            //if (!User.IsInRole("CONVOCADO")) 
-            //    return View();
+            if (User.IsInRole("Administrator")) 
+               return View();
 
             var user = await _userManager.FindByEmailAsync(User.Identity.Name);
 
