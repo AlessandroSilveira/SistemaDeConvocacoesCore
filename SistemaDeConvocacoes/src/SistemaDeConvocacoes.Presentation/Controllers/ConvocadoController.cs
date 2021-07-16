@@ -31,7 +31,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         public ActionResult Details(Guid id)
         {
             var convocadoViewModel = _convocadoAppService.GetByIdAsync(id);
-            return convocadoViewModel.Equals(null) ? (ActionResult) NotFound() : View(convocadoViewModel);
+            return  View(convocadoViewModel);
         }
 
         // GET: Convocado/Create
@@ -66,7 +66,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             ViewBag.dadosConvocado = await _convocadoAppService.GetByIdAsync(id);
             ViewBag.dadosProcesso = await _processoAppService.GetByIdAsync(pessoaViewModel.ProcessoId);
 
-            return pessoaViewModel.Equals(null) ? (ActionResult) NotFound() : View(pessoaViewModel);
+            return View(pessoaViewModel);
         }
 
         // POST: Convocado/Edit/5

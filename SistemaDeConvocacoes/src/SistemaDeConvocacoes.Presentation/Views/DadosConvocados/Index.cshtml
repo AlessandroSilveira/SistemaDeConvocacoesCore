@@ -9,12 +9,12 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+<table class="table"  aria-describedby="mydesc">
     <tr>
-        <th>
+        <th scope="col">
             @Html.DisplayNameFor(model => model.File)
         </th>
-        <th></th>
+        <th  scope="col"></th>
     </tr>
 
     @foreach (var item in Model)

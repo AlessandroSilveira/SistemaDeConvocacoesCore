@@ -30,11 +30,7 @@ namespace SistemaDeConvocacoes.Presentation.Profiles
 
             CreateMap<ConvocadoViewModel,Convocado>();
             CreateMap<Convocado, ConvocadoViewModel>();
-           // CreateMap < IEnumerable<ConvocadoViewModel>,  IEnumerable<Convocado>>();
-            //CreateMap < IEnumerable<Convocado>,  IEnumerable<ConvocadoViewModel>>();
-
-            //<IEnumerable<Convocado>, IEnumerable<ConvocadoViewModel>>();
-
+           
             CreateMap<DadosConvocadosViewModel,Convocado>();            
             CreateMap<DocumentacaoViewModel, Documento>();
             CreateMap< IEnumerable<DocumentacaoViewModel>, IEnumerable<Documento>>();

@@ -20,13 +20,6 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             return View(await _pessoaAppService.GetAllAsync());
         }
 
-        public async Task<IActionResult> DetailsAsync(Guid id)
-        {
-            var pessoaViewModel = await _pessoaAppService.GetByIdAsync(id);
-
-            return pessoaViewModel.Equals(null) ? (ActionResult) NotFound() : View(pessoaViewModel);
-        }
-
         public async Task<IActionResult> Create()
         {
             return View();
@@ -49,7 +42,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         {
             var pessoaViewModel = await _pessoaAppService.GetByIdAsync(id);
 
-            return pessoaViewModel.Equals(null) ? (IActionResult) NotFound() : View(pessoaViewModel);
+            return View(pessoaViewModel);
         }
 
         [HttpPost]
@@ -67,7 +60,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
             var pessoaViewModel = await _pessoaAppService.GetByIdAsync(id);
-            return pessoaViewModel.Equals(null) ? (ActionResult) NotFound() : View(pessoaViewModel);
+            return View(pessoaViewModel);
         }
 
         [HttpPost]

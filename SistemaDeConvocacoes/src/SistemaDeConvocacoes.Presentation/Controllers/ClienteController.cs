@@ -42,9 +42,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             if (id.Equals(null))
                 return new StatusCodeResult((int)HttpStatusCode.BadRequest);
 
-            var clienteViewModel = await _clienteAppService.GetByIdAsync(Guid.Parse(id.ToString()));
-            if (clienteViewModel.Equals(null))
-                return NotFound();
+            var clienteViewModel = await _clienteAppService.GetByIdAsync(Guid.Parse(id.ToString()));           
 
             return View(clienteViewModel);
         }
@@ -137,10 +135,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
                 return new StatusCodeResult((int)HttpStatusCode.BadRequest);
 
             var clienteViewModel = await _clienteAppService.GetByIdAsync(Guid.Parse(id.ToString()));
-
-            if (clienteViewModel.Equals(null))
-                return NotFound();
-
+           
             return View(clienteViewModel);
         }
 
@@ -163,8 +158,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
 
             var clienteViewModel = await _clienteAppService.GetByIdAsync(Guid.Parse(id.ToString()));
 
-            if (clienteViewModel.Equals(null))
-                return NotFound();
+            
 
             return View(clienteViewModel);
         }

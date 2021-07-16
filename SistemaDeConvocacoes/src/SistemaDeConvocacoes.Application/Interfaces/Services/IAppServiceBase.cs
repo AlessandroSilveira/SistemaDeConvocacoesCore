@@ -14,6 +14,5 @@ namespace SistemaDeConvocacoes.Application.Interfaces.Services
 
         void Remove(TEntity obj);
 
-        void Dispose();
     }
 }

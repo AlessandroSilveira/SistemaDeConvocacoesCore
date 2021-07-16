@@ -9,36 +9,36 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
+<table class="table" aria-describedby="mydesc">
+    <tr >
+        <th scope="col">
             @Html.DisplayNameFor(model => model.ProcessoId)
         </th>
-        <th>
+        <th scope="col">
             @Html.DisplayNameFor(model => model.ConvocadoId)
         </th>
-        <th>
+        <th scope="col">
             @Html.DisplayNameFor(model => model.DataEntregaDocumentos)
         </th>
-        <th>
+        <th scope="col">
             @Html.DisplayNameFor(model => model.HorarioEntregaDocumento)
         </th>
-        <th>
+        <th scope="col">
             @Html.DisplayNameFor(model => model.EnderecoEntregaDocumento)
         </th>
-        <th>
+        <th scope="col">
             @Html.DisplayNameFor(model => model.EnviouEmail)
         </th>
-        <th>
+        <th scope="col">
             @Html.DisplayNameFor(model => model.Desistente)
         </th>
-        <th>
+        <th scope="col">
             @Html.DisplayNameFor(model => model.Ativo)
         </th>
-        <th>
+        <th scope="col">
             @Html.DisplayNameFor(model => model.CandidatosSelecionados)
         </th>
-        <th></th>
+        <th scope="col"></th>
     </tr>
 
     @foreach (var item in Model)

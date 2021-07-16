@@ -104,7 +104,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             {
                 Id = user.Id,
                 Email = user.Email,
-                RolesList = _roleManager.Roles.ToList().Select(x => new SelectListItem
+                RolesList = _roleManager.Roles.AsEnumerable().Select(x => new SelectListItem
                 {
                     Selected = userRoles.Contains(x.Name),
                     Text = x.Name,

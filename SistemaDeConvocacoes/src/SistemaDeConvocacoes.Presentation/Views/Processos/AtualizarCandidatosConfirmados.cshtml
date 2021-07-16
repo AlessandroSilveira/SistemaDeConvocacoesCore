@@ -11,21 +11,21 @@
 <div class="col-lg-12">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header"><b>Atualização de Convocação</b></h1>
+            <h1 class="page-header"><strong>Atualização de Convocação</strong></h1>
         </div>
     </div>
     <div class="row">
         <div class="col-lg-12">
             <div class="panel-body">
                 <div class="table-responsive">
-                    <table class="table">
+                    <table class="table" aria-describedby="mydesc">
                         @using (Html.BeginForm("AtualizarCandidatosConfirmados", "Processos", FormMethod.Post, new { id = "form" }))
                         {
                             <tr>
-                                <th>
+                                <th scope="col">
                                     Escolha um Cargo:
                                 </th>
-                                <th>
+                                <th  scope="col">
                                     <select name="cargo" class="form-control" style="float: left; width:50%;">
                                         <option>Selecione</option>
                                         @foreach (var itens in ViewBag.Cargos)
@@ -47,24 +47,24 @@
                     </table>
                     @if (ViewBag.ListaDeCandidatos != null)
                     {
-                        <table class="table">
+                        <table class="table"  aria-describedby="mydesc">
 
                             @if (ViewBag.ListaDeCandidatos.Count == 0)
                             {
                                 <tr>
-                                    <td>A Busca não gerou resultados.</td>
+                                    <th  scope="col">A Busca não gerou resultados.</th>
                                 </tr>
                             }
                             else
                             {
                                 <tr>
-                                    <th>Inscrição</th>
-                                    <th>Nome</th>
-                                    <th>Classificação</th>
-                                    <th>Data de Comparecimento</th>
-                                    <th>Participará do Processo?</th>
-                                    <th>Status da convocação</th>
-                                    <th>Atualizar</th>
+                                    <th scope="col">Inscrição</th>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col">Classificação</th>
+                                    <th scope="col">Data de Comparecimento</th>
+                                    <th scope="col">Participará do Processo?</th>
+                                    <th scope="col">Status da convocação</th>
+                                    <th scope="col">Atualizar</th>
                                 </tr>
                                 foreach (var itens in ViewBag.ListaDeCandidatos)
                                 {

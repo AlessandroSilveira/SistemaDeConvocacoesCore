@@ -53,7 +53,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
                     users.Add(user);
 
             ViewBag.Users = users;
-            ViewBag.UserCount = users.Count();
+            ViewBag.UserCount = users.Count;
             return View(role);
         }
 
@@ -129,24 +129,17 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
                     if (!result.Succeeded)
                         Errors(result);
                 }
+
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                return await Edit(model.RoleId);
             }
 
-            if (ModelState.IsValid)
-                return RedirectToAction(nameof(Index));
-            else
-                return await Edit(model.RoleId);
-        }
-
-        //
-        // GET: /Roles/Delete/5
-        //public async Task<ActionResult> Delete(string id)
-        //{
-        //    if (id == null) 
-        //        return new StatusCodeResult((int)HttpStatusCode.BadRequest);
-        //    var role = await _roleManager.FindByIdAsync(id);
-        //    if (role == null) return NotFound();
-        //    return View(role);
-        //}
+           
+               
+        }      
 
         //
         // POST: /Roles/Delete/5

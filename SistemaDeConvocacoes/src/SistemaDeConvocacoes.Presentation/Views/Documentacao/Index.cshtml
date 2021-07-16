@@ -19,21 +19,21 @@
                                 @Html.ActionLink("Inserir novo documento.", "Create", new { Id = ViewBag.ProcessoId })
 
                             </div>
-                            <table class="table">
+                            <table class="table"   aria-describedby="mydesc">
                                 <tr>
-                                    <th>
+                                    <th scope="col">
                                         @Html.DisplayNameFor(model => model.Descricao)
                                     </th>
-                                    <th>
+                                    <th scope="col">
                                         @Html.DisplayNameFor(model => model.DataCriacao)
                                     </th>
-                                    <th>
+                                    <th scope="col">
                                         @Html.DisplayNameFor(model => model.Path)
                                     </th>
-                                    <th>
+                                    <th scope="col">
                                         @Html.DisplayNameFor(model => model.Ativo)
                                     </th>
-                                    <th>
+                                    <th scope="col">
 
                                     </th>
                                 </tr>
@@ -55,8 +55,6 @@
                                             @Html.DisplayFor(modelItem => item.Ativo)
                                         </td>
                                         <td>
-                                            @*@Html.ActionLink("Editar", "Edit", new { id = item.DocumentoId }) |
-                                                @Html.ActionLink("Detalhes", "Details", new { id = item.DocumentoId }) |*@
                                             @Html.ActionLink("Delete", "Delete", new { id = item.DocumentoId })
                                         </td>
                                     </tr>

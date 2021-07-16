@@ -9,30 +9,30 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+<table class="table" aria-describedby="CreateAdmin">
     <tr>
-        <th>
+        <th scope="col">
             @Html.DisplayNameFor(model => model.Nome)
         </th>
-        <th>
+        <th scope="col">
             @Html.DisplayNameFor(model => model.Email)
         </th>
-        <th>
+        <th scope="col">
             @Html.DisplayNameFor(model => model.Empresa)
         </th>
-        <th>
+        <th scope="col">
             @Html.DisplayNameFor(model => model.Cnpj)
         </th>
-        <th>
+        <th scope="col">
             @Html.DisplayNameFor(model => model.Telefone)
         </th>
-        <th>
+        <th scope="col">
             @Html.DisplayNameFor(model => model.Imagem)
         </th>
-        <th>
+        <th scope="col">
             @Html.DisplayNameFor(model => model.Ativo)
         </th>
-        <th></th>
+        <th scope="col"></th>
     </tr>
 
 @foreach (var item in Model) {

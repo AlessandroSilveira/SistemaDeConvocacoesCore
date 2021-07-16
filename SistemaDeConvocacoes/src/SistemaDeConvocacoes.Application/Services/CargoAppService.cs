@@ -14,6 +14,7 @@ namespace SistemaDeConvocacoes.Application.Services
     {
         private readonly ICargoService _cargoService;
         private readonly IMapper _mapper;
+        private bool disposedValue;
 
         public CargoAppService(ICargoService cargoService, IMapper mapper)
         {
@@ -21,11 +22,7 @@ namespace SistemaDeConvocacoes.Application.Services
             _mapper = mapper;
         }
 
-        public void Dispose()
-        {
-            _cargoService.Dispose();
-        }
-
+       
         public async Task<CargoViewModel> AddAsync(CargoViewModel obj)
         {
             var cargo = _mapper.Map<CargoViewModel, Cargo>(obj);
@@ -63,6 +60,35 @@ namespace SistemaDeConvocacoes.Application.Services
         public async Task<CargoViewModel> GetOneAsync(Expression<Func<Cargo, bool>> predicate)
         {
             return _mapper.Map<Cargo, CargoViewModel>(await _cargoService.GetOneAsync(predicate));
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    // TODO: dispose managed state (managed objects)
+                }
+
+                // TODO: free unmanaged resources (unmanaged objects) and override finalizer
+                // TODO: set large fields to null
+                disposedValue = true;
+            }
+        }
+
+        // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
+        // ~CargoAppService()
+        // {
+        //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+        //     Dispose(disposing: false);
+        // }
+
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

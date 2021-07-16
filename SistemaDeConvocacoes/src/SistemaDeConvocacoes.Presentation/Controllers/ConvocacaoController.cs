@@ -62,7 +62,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
 
             var convocacaoViewModel = _convocacaoAppService.GetByIdAsync(Guid.Parse(id.ToString()));
 
-            return convocacaoViewModel.Equals(null) ? (ActionResult) NotFound() : View(convocacaoViewModel);
+            return  View(convocacaoViewModel);
         }
 
         public ActionResult Create()
@@ -168,7 +168,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         {
             if (id.Equals(null)) return new StatusCodeResult((int)HttpStatusCode.BadRequest);
             var convocacaoViewModel = _convocacaoAppService.GetByIdAsync(Guid.Parse(id.ToString()));
-            return convocacaoViewModel.Equals(null) ? (ActionResult) NotFound() : View(convocacaoViewModel);
+            return  View(convocacaoViewModel);
         }
 
         [HttpPost]
@@ -190,7 +190,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
 
             var convocacaoViewModel = _convocacaoAppService.GetByIdAsync(Guid.Parse(id.ToString()));
 
-            return convocacaoViewModel.Equals(null) ? (ActionResult) NotFound() : View(convocacaoViewModel);
+            return View(convocacaoViewModel);
         }
 
         [HttpPost]

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ProjectInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.sonarsource.com/msbuild/integration/2015/1">
+  <ProjectName>SistemaDeConvocacoes.Domain</ProjectName>
+  <ProjectLanguage>C#</ProjectLanguage>
+  <ProjectType>Product</ProjectType>
+  <ProjectGuid>544ebe29-8ba4-47c3-97d0-0cd768adfd12</ProjectGuid>
+  <FullPath>C:\Users\alesi\source\repos\SistemaDeConvocacoesCore\SistemaDeConvocacoes\src\SistemaDeConvocacoes.Domain\SistemaDeConvocacoes.Domain.csproj</FullPath>
+  <IsExcluded>false</IsExcluded>
+  <AnalysisResults>
+    <AnalysisResult Id="FilesToAnalyze" Location="C:\Users\alesi\source\repos\SistemaDeConvocacoesCore\SistemaDeConvocacoes\src\.sonarqube\conf\0\FilesToAnalyze.txt" />
+  </AnalysisResults>
+  <AnalysisSettings>
+    <Property Name="sonar.cs.roslyn.reportFilePaths">C:\Users\alesi\source\repos\SistemaDeConvocacoesCore\SistemaDeConvocacoes\src\SistemaDeConvocacoes.Domain\bin\Debug\netcoreapp3.1\SistemaDeConvocacoes.Domain.dll.RoslynCA.json|C:\Users\alesi\source\repos\SistemaDeConvocacoesCore\SistemaDeConvocacoes\src\SistemaDeConvocacoes.Domain\bin\Debug\netcoreapp3.1\SistemaDeConvocacoes.Domain.dll.RoslynCA.json</Property>
+    <Property Name="sonar.cs.analyzer.projectOutPaths">C:\Users\alesi\source\repos\SistemaDeConvocacoesCore\SistemaDeConvocacoes\src\.sonarqube\out\0</Property>
+  </AnalysisSettings>
+  <Configuration>Debug</Configuration>
+  <Platform>AnyCPU</Platform>
+  <TargetFramework>netcoreapp3.1</TargetFramework>
+</ProjectInfo>

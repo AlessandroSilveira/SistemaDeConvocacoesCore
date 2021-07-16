@@ -109,8 +109,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
 
         public string SalvarDocumemento(DocumentoCandidatoViewModel documentoCandidatoViewModel)
         {
-            var pathArquivo = _configuration.GetSection("SistemaDeConvocacoesDocs").Value; 
-            var caminho = pathArquivo.Replace(@"\\\\", @"\");
+            var pathArquivo = _configuration.GetSection("SistemaDeConvocacoesDocs").Value;            
             var arquivo = Request.Form.Files[0];
             if (arquivo == null)
                 return string.Empty;
@@ -118,10 +117,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             var nomeArquivo = Path.GetFileName(arquivo.FileName);
 
             if (!Directory.Exists(pathArquivo))
-                Directory.CreateDirectory(pathArquivo);
-
-            //if (nomeArquivo != null)
-            //    arquivo.SaveAs(Path.Combine(pathArquivo, nomeArquivo));
+                Directory.CreateDirectory(pathArquivo);            
 
             return nomeArquivo;
         }
@@ -131,7 +127,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
         {
             if (id.Equals(null)) return new StatusCodeResult((int)HttpStatusCode.BadRequest);
             var docCandidatoViewModel = await _documentoCandidatoAppService.GetByIdAsync(Guid.Parse(id.ToString()));
-            return docCandidatoViewModel.Equals(null) ? (ActionResult) NotFound() : View(docCandidatoViewModel);
+            return View(docCandidatoViewModel);
         }
 
         // POST: DocumentoCandidato/Edit/5
@@ -182,23 +178,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             base.Dispose(disposing);
         }
 
-        public void Download(Guid DocumentoCandidatoId)
-        {
-
-            //var dadosDocumento = _documentoCandidatoAppService.GetById(DocumentoCandidatoId);
-
-            //var pathArquivo = WebConfigurationManager.AppSettings[@"SistemaDeConvocacoesDocs"];
-            //var caminhoArquivo = Path.Combine(pathArquivo, dadosDocumento.Path);
-            //var fInfo = new FileInfo(caminhoArquivo);
-            //HttpContext.Response.Clear();
-            //HttpContext.Response.ContentType = "application/octet-stream";
-            //HttpContext.Response.AddHeader("Content-Disposition", "attachment; filename=\"" + fInfo.Name + "\"");
-            //HttpContext.Response.AddHeader("Content-Length", fInfo.Length.ToString());
-            //HttpContext.Response.Flush();
-            //HttpContext.Response.WriteFile(fInfo.FullName);
-            //fInfo = null;
-        }
-
+       
         public ActionResult Protocolo(Guid id, Guid ConvocadoId, Guid ProcessoId)
         {
             ViewBag.dadosDocumentoCandidato = _documentoCandidatoAppService.GetByIdAsync(id);

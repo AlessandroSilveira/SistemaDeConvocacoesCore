@@ -12,20 +12,16 @@ namespace SistemaDeConvocacoes.Application.Services
 {
     public class AdminAppService : IAdminAppService
     {
+       
         private readonly IAdminService _adminService;
         private readonly IMapper _mapper;
+        private bool disposedValue;
 
         public AdminAppService(IAdminService adminService, IMapper mapper)
         {
             _adminService = adminService;
             _mapper = mapper;
         }
-
-        public void Dispose()
-        {
-            _adminService.Dispose();
-        }
-
         public async Task<Admin2ViewModel> AddAsync(Admin2ViewModel obj)
         {
             var admin = _mapper.Map<Admin2ViewModel, Admin>(obj);            
@@ -62,6 +58,35 @@ namespace SistemaDeConvocacoes.Application.Services
         public async Task<Admin2ViewModel> GetOneAsync(Expression<Func<Admin, bool>> predicate)
         {
             return _mapper.Map<Admin, Admin2ViewModel>(await _adminService.GetOneAsync(predicate));
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                //if (disposing)
+                //{
+                //     TODO: dispose managed state (managed objects)
+                //}
+
+                // TODO: free unmanaged resources (unmanaged objects) and override finalizer
+                // TODO: set large fields to null
+                disposedValue = true;
+            }
+        }
+
+        // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
+        ~AdminAppService()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: false);
+        }
+
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

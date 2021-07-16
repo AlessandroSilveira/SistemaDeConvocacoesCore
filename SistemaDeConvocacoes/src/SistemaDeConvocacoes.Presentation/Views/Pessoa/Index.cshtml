@@ -9,81 +9,81 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+<table class="table"  aria-describedby="mydesc">
     <tr>
-        <th>
+        <th scope="col">
             @Html.DisplayNameFor(model => model.Nome)
         </th>
-        <th>
+        <th scope="col">
             @Html.DisplayNameFor(model => model.Naturalidade)
         </th>
-        <th>
+        <th scope="col">
             @Html.DisplayNameFor(model => model.Mae)
         </th>
-        <th>
+        <th scope="col">
             @Html.DisplayNameFor(model => model.Pai)
         </th>
-        <th>
+        <th scope="col">
             @Html.DisplayNameFor(model => model.Documento)
-        </th>
-        <th>
+        </th scope="col">
+        <th scope="col">
             @Html.DisplayNameFor(model => model.OrgaoEmissor)
         </th>
-        <th>
+        <th scope="col">
             @Html.DisplayNameFor(model => model.Sexo)
         </th>
-        <th>
+        <th scope="col">
             @Html.DisplayNameFor(model => model.EstadoCivil)
         </th>
-        <th>
+        <th scope="col">
             @Html.DisplayNameFor(model => model.DataNascimento)
         </th>
-        <th>
+        <th scope="col">
             @Html.DisplayNameFor(model => model.Filhos)
         </th>
-        <th>
+        <th scope="col">
             @Html.DisplayNameFor(model => model.Endereco)
         </th>
-        <th>
+        <th scope="col">
             @Html.DisplayNameFor(model => model.Numero)
         </th>
-        <th>
+        <th scope="col">
             @Html.DisplayNameFor(model => model.Complemento)
         </th>
-        <th>
+        <th scope="col">
             @Html.DisplayNameFor(model => model.Bairro)
         </th>
-        <th>
+        <th scope="col">
             @Html.DisplayNameFor(model => model.Cep)
         </th>
-        <th>
+        <th scope="col">
             @Html.DisplayNameFor(model => model.Cidade)
         </th>
-        <th>
+        <th scope="col">
             @Html.DisplayNameFor(model => model.Uf)
         </th>
-        <th>
+        <th scope="col">
             @Html.DisplayNameFor(model => model.Cargo)
         </th>
-        <th>
+        <th scope="col">
             @Html.DisplayNameFor(model => model.Deficiente)
         </th>
-        <th>
+        <th scope="col">
             @Html.DisplayNameFor(model => model.Deficiencia)
         </th>
-        <th>
+        <th scope="col">
             @Html.DisplayNameFor(model => model.CondicaoEspecial)
         </th>
-        <th>
+        <th scope="col">
             @Html.DisplayNameFor(model => model.Cpf)
         </th>
-        <th>
+        <th scope="col">
             @Html.DisplayNameFor(model => model.Email)
         </th>
-        <th>
+        <th scope="col">
             @Html.DisplayNameFor(model => model.Afro)
         </th>
-        <th></th>
+        <th scope="col"></th>
     </tr>
 
     @foreach (var item in Model)

@@ -42,7 +42,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
 
             var cargoViewModel = await _cargoAppService.GetByIdAsync(Guid.Parse(id.ToString()));
 
-            return cargoViewModel.Equals(null) ? (ActionResult) NotFound() : View(cargoViewModel);
+            return View(cargoViewModel);
         }
 
         // GET: Cargo/Create
@@ -82,7 +82,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             var cargoViewModel = await _cargoAppService.GetByIdAsync(Guid.Parse(id.ToString()));
             ViewBag.ProcessoId = cargoViewModel.ProcessoId;
 
-            return cargoViewModel.Equals(null) ? (ActionResult) NotFound() : View(cargoViewModel);
+            return View(cargoViewModel);
         }
 
         // POST: Cargo/Edit/5
@@ -113,7 +113,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
 
             var cargoViewModel = await _cargoAppService.GetByIdAsync(Guid.Parse(id.ToString()));
 
-            return cargoViewModel.Equals(null) ? (ActionResult) NotFound() : View(cargoViewModel);
+            return View(cargoViewModel);
         }
 
         // POST: Cargo/Delete/5

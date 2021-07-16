@@ -9,25 +9,21 @@
     <div class="col-lg-12">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary"><b>Bem-vindo(a) @User.Identity.Name</b></h6>
+                <h6 class="m-0 font-weight-bold text-primary"><strong>Bem-vindo(a) @User.Identity.Name</strong></h6>
             </div>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel-body">
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-striped table-hover ">
+                                <table class="table table-striped table-hover " aria-describedby="mydesc">
+                                    <thead>
+                                        <tr>
+                                            <td>
+                                            </td>
+                                        </tr>
+                                    </thead>>
                                     <tbody>
-                                        @*<tr>
-                                                <td>
-                                                    @Html.ActionLink("Cadastro e Gerenciamento de Clientes", "Index", "Cliente")
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    @Html.ActionLink("Cadastro e Gerenciamento de Usuários", "Index", "UserAdmin")
-                                                </td>
-                                            </tr>*@
                                         <tr>
                                             <td>
                                                 <b> @User.Identity.Name, aqui você pode fazer o cadastro dos Clientes que farão as convocações e também os usuários que farão acesso ao sistema. <br> Tudo isso pode ser acessado no Menu Lateral. </b>
@@ -56,13 +52,19 @@
             <div class="col-lg-12">
                 <div class="panel panel-default" style="margin-bottom:-30px !important">
                     <div class="panel-heading">
-                        <b> ViewBag.DadosCargo.Nome</b>
+                        <strong> ViewBag.DadosCargo.Nome</strong>
                     </div>
                 </div>
                 <br />
                 <div class="panel-body">
                     <div class="table-responsive">
-                        <table class="table table-striped table-hover ">
+                        <table class="table table-striped table-hover" aria-describedby="mydesc">
+                            <thead>
+                                <th scope="col">
+                                    <td>
+                                    </td>
+                                </th>
+                            </thead>>
                             <tbody>
                                 <tr>
                                     <td>
@@ -97,12 +99,11 @@
                                     <div class="col-lg-12">
                                         <div class="row">
                                             <div class="col-lg-12">
-                                                <h1 class="page-header"><b>Bem-vindo(a) @ViewBag.dadosConvocado.Nome</b></h1>
+                                                <h1 class="page-header"><strong>Bem-vindo(a) @ViewBag.dadosConvocado.Nome</strong></h1>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-lg-12">
-
                                                 <br />
                                                 <div class="panel-body">
                                                     <div class="table-responsive">
@@ -132,7 +133,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -141,7 +141,6 @@
                 </div>
             </div>
         </div>
-
     }
 }
 

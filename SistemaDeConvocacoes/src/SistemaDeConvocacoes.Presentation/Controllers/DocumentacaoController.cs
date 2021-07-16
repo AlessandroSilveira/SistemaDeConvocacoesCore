@@ -55,7 +55,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             if (!ModelState.IsValid) 
                 return View(documentacaoViewModel);
 
-            var path = SalvarArquivoConvocados(documentacaoViewModel);
+            var path = SalvarArquivoConvocados();
 
             if (string.IsNullOrEmpty(path)) 
                 return RedirectToAction("Index");
@@ -66,7 +66,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             return RedirectToAction("Index", new {Id = documentacaoViewModel.ProcessoId});
         }
 
-        private string SalvarArquivoConvocados(DocumentacaoViewModel documentacaoViewModel)
+        private string SalvarArquivoConvocados()
         {
             var pathArquivo = _configuration.GetSection("SistemaDeConvocacoesDocs").Value;
             pathArquivo = pathArquivo.ToString().Replace(@"\\", @"\");
@@ -76,7 +76,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
 
             var nomeArquivo = Path.GetFileName(arquivo.FileName);
 
-            if (Directory.Exists(pathArquivo) == false)
+            if (!Directory.Exists(pathArquivo))
                 Directory.CreateDirectory(pathArquivo);
 
             if (nomeArquivo == null) 

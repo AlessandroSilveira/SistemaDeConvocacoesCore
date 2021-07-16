@@ -18,15 +18,15 @@
                             <p>
                                 @Html.ActionLink("Novo Cargo", "Create", new { Id = ViewBag.id }, null)
                             </p>
-                            <table class="table">
+                            <table class="table" aria-describedby="mydesc">
                                 <tr>
-                                    <th>
+                                    <th scope="col">
                                         @Html.DisplayNameFor(model => model.CodigoCargo)
                                     </th>
-                                    <th>
+                                    <th scope="col">
                                         @Html.DisplayNameFor(model => model.Nome)
                                     </th>
-                                    <th>
+                                    <th scope="col">
                                         @Html.DisplayNameFor(model => model.Ativo)
                                     </th>
                                     <th></th>

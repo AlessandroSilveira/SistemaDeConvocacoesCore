@@ -1,6 +1,6 @@
 ﻿namespace SistemaDeConvocacoes.Presentation.Models
 {
-    public class RolesNames
+    public static class RolesNames
     {
         public const string ROLE_ADMIN = "Administrator";
         public const string ROLE_CLIENTE = "Cliente";

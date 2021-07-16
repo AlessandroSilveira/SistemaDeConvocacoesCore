@@ -13,20 +13,17 @@ namespace SistemaDeConvocacoes.Application.Services
 {
     public class DocumentoCandidatoAppService : IDocumentoCandidatoAppService
     {
-        private readonly IDocumentoCandidatoService _documentoCandidatoService;
-        private readonly IConvocadoAppService _convocadoAppService;
+        private readonly IDocumentoCandidatoService _documentoCandidatoService;       
         private readonly IMapper _mapper;
 
         public string Inscricao { get; private set; }
 
         public DocumentoCandidatoAppService(
 
-            IDocumentoCandidatoService documentoCandidatoService,
-            IConvocadoAppService convocadoAppService
-            , IMapper mapper)
+            IDocumentoCandidatoService documentoCandidatoService,            
+            IMapper mapper)
         {
-            _documentoCandidatoService = documentoCandidatoService;
-            _convocadoAppService = convocadoAppService;
+            _documentoCandidatoService = documentoCandidatoService;            
             _mapper = mapper;
         }
 
@@ -109,7 +106,7 @@ namespace SistemaDeConvocacoes.Application.Services
                 }));
             }
 
-            return listaDeDocumentosCandidatos;
+            return await Task.FromResult(listaDeDocumentosCandidatos);
         }
     }
 }

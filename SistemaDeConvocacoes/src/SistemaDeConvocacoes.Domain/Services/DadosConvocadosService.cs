@@ -61,20 +61,6 @@ namespace SistemaDeConvocacoes.Domain.Services
                 FormataCelular(dados);
 
                 FormataTelefone(dados);
-
-                var itemCargo = dados.Cargo.Split('-');
-
-                var Codigo = itemCargo[0].Trim();
-
-                var dadosCargo = await _cargoRepository.SearchAsync(a =>
-                    a.ProcessoId.Equals(dados.ProcessoId) && a.CodigoCargo.Equals(Codigo));
-
-                foreach (var cargo in dadosCargo)
-                {
-                    dados.CargoId = cargo.CargoId;
-                    break;
-                }
-
                 try
                 {
                     var dadosConvocado = await _dadosConvocadosRepository.SearchAsync(a =>

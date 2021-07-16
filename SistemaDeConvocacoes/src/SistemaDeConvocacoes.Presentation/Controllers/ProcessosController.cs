@@ -56,7 +56,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             var processoViewModel = await _processoAppService.GetByIdAsync(Guid.Parse(id.ToString()));
             ViewBag.dadosProcesso = await _processoAppService.GetByIdAsync(Guid.Parse(id.ToString()));
             ViewBag.ProcessoId = id;
-            return processoViewModel.Equals(null) ? (ActionResult) NotFound() : View(processoViewModel);
+            return View(processoViewModel);
         }
 
         public IActionResult Create()
@@ -85,7 +85,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
 
             var processoViewModel = await _processoAppService.GetByIdAsync(Guid.Parse(id.ToString()));
 
-            return processoViewModel.Equals(null) ? (ActionResult) NotFound() : View(processoViewModel);
+            return View(processoViewModel);
         }
 
         [HttpPost]
@@ -109,7 +109,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             ViewBag.dadosProcesso = await _processoAppService.GetByIdAsync(Guid.Parse(id.ToString()));
             ViewBag.ProcessoId = id;
 
-            return processoViewModel.Equals(null) ? (ActionResult) NotFound() : View(processoViewModel);
+            return View(processoViewModel);
         }
 
         [HttpPost]

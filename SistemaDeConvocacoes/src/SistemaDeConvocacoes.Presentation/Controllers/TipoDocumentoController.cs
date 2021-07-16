@@ -80,7 +80,7 @@ namespace SistemaDeConvocacoes.Presentation.Controllers
             ViewBag.dadosProcesso = await _processoAppService.GetByIdAsync(docCandidatoViewModel.ProcessoId);
             ViewBag.ProcessoId = docCandidatoViewModel.ProcessoId;
 
-            return docCandidatoViewModel.Equals(null) ? (ActionResult) NotFound() : View(docCandidatoViewModel);
+            return View(docCandidatoViewModel);
         }
 
         // POST: TipoDocumento/Edit/5

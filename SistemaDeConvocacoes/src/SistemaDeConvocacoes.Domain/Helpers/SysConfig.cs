@@ -11,13 +11,6 @@ namespace SistemaDeConvocacoes.Domain.Helpers
         {
             var ret = "";
 
-            //if (page.Equals("")) return ret;
-            //var helpfile = HttpContext.Request.Body + @"public\" + page + ".pt.htm";
-            //if (!File.Exists(helpfile)) return ret;
-            //var sr = new StreamReader(helpfile, Encoding.Default);
-            //ret = sr.ReadToEnd();
-            //sr.Close();
-            //sr.Dispose();
             return ret;
         }
     }

@@ -16,7 +16,7 @@ namespace SistemaDeConvocacoes.Domain.Interfaces.Services
         IEnumerable<AspNetRoles> Search(Expression<Func<AspNetRoles, bool>> predicate);
         AspNetRoles GetOne(Expression<Func<AspNetRoles, bool>> predicate);
         int SaveChanges();
-        void Dispose();
+       
        
     }
 }

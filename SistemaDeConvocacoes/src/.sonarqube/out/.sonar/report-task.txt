@@ -1,0 +1,6 @@
+projectKey=SistemaDeConvocacoesCore
+serverUrl=http://localhost:9000
+serverVersion=9.0.0.45539
+dashboardUrl=http://localhost:9000/dashboard?id=SistemaDeConvocacoesCore
+ceTaskId=AXqtS-03FkyEgfSG19nD
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AXqtS-03FkyEgfSG19nD
