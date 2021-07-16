@@ -22,6 +22,7 @@ namespace SistemaDeConvocacoes.Application.Services
             _mapper = mapper;
         }
 
+
        
         public async Task<CargoViewModel> AddAsync(CargoViewModel obj)
         {
