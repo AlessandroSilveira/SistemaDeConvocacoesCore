@@ -2,8 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\SistemaDeConvocacoes",
-    "\\SistemaDeConvocacoes\\src"
+    "\\SistemaDeConvocacoes\\src",
+    "\\SistemaDeConvocacoes\\src\\SistemaDeConvocacoes.Application",
+    "\\SistemaDeConvocacoes\\src\\SistemaDeConvocacoes.Application\\Services"
   ],
-  "SelectedNode": "\\SistemaDeConvocacoes\\src\\SistemaDeConvocacoes.sln",
+  "SelectedNode": "\\SistemaDeConvocacoes\\src\\SistemaDeConvocacoes.Application\\Services\\CargoAppService.cs",
   "PreviewInSolutionExplorer": false
 }
